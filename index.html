@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ШИГШЭЭ 2026 — Дэлхийн Аварга Шалгаруулах Тэмцээн</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700;900&display=swap">
+    <style>
+        :root {
+            --bg-main: #0C0D14;
+            --bg-card: #161824;
+            --bg-nav: #12131C;
+            --brand-gold: #D6A429;
+            --brand-blue: #0066FF;
+            --text-main: #FFFFFF;
+            --text-muted: #7A829A;
+            --border-color: #242736;
+            --live-red: #FF3B30;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Sans', sans-serif; }
+        body { background-color: var(--bg-main); color: var(--text-main); overflow-x: hidden; }
+
+        /* HEADER BLOCK */
+        .site-header { background: #000000; height: 60px; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; border-bottom: 1px solid var(--border-color); }
+        .logo-area { display: flex; align-items: center; gap: 8px; font-weight: 900; font-size: 20px; letter-spacing: -0.5px; }
+        .logo-area span { color: var(--brand-gold); }
+        
+        .auth-zone { display: flex; align-items: center; gap: 12px; }
+        .btn-login { background: transparent; border: 1px solid var(--border-color); color: var(--text-muted); padding: 8px 16px; font-weight: 600; font-size: 13px; border-radius: 4px; cursor: pointer; transition: all 0.2s; }
+        .btn-login:hover { color: #fff; border-color: var(--text-muted); }
+        .btn-signup { background: var(--brand-gold); color: #000; padding: 8px 18px; font-weight: 700; font-size: 13px; border: none; border-radius: 4px; cursor: pointer; }
+        .user-logged-in { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 13px; color: var(--brand-gold); }
+
+        /* NAVIGATION BAR */
+        .nav-bar { background: var(--brand-gold); height: 48px; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .nav-links { display: flex; height: 100%; }
+        .nav-item { background: none; border: none; color: #000000; font-weight: 700; font-size: 13px; padding: 0 20px; height: 100%; cursor: pointer; display: flex; align-items: center; position: relative; letter-spacing: 0.3px; text-transform: uppercase; }
+        .nav-item.active { background: rgba(0,0,0,0.08); }
+        .nav-item.active::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: #000000; }
+        
+        .history-badge { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 900; background: #000000; color: var(--brand-gold); padding: 4px 10px; border-radius: 3px; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 0.8; } 50% { opacity: 1; } 100% { opacity: 0.8; } }
+
+        /* TICKER PANEL */
+        .ticker-panel { background: #05060A; height: 34px; display: flex; align-items: center; border-bottom: 1px solid var(--border-color); overflow: hidden; }
+        .ticker-title { background: var(--live-red); color: #fff; font-size: 11px; font-weight: 900; padding: 0 12px; height: 100%; display: flex; align-items: center; letter-spacing: 0.5px; z-index: 2; }
+        .ticker-wrap { overflow: hidden; flex: 1; position: relative; display: flex; align-items: center; }
+        .ticker-inner { display: inline-flex; white-space: nowrap; animation: scroll-ticker 40s linear infinite; gap: 30px; }
+        @keyframes scroll-ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .ticker-match { font-size: 12px; color: var(--text-muted); font-weight: 500; display: flex; align-items: center; gap: 6px; }
+        .ticker-match strong { color: #fff; }
+
+        /* APP MAIN WRAPPER */
+        .main-viewport { max-width: 1300px; margin: 0 auto; padding: 24px; display: none; }
+        .main-viewport.active-view { display: block; }
+
+        /* CORE GRID AND LAYOUT DEFS */
+        .view-title { font-size: 22px; font-weight: 900; margin-bottom: 18px; display: flex; align-items: center; gap: 10px; letter-spacing: -0.3px; }
+        .view-subtitle { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; font-weight: 700; }
+        
+        /* SCORECARD ELEMENT (FIFA STYLING) */
+        .match-row-strip { display: grid; grid-template-columns: 80px 1fr 120px 1fr 100px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 6px; padding: 16px; align-items: center; margin-bottom: 8px; text-decoration: none; color: inherit; transition: border-color 0.15s; }
+        .match-row-strip:hover { border-color: #34384E; }
+        .m-status-box { font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); }
+        .m-status-box.live { color: var(--live-red); display: flex; align-items: center; gap: 5px; }
+        .m-status-box.live::before { content: ''; width: 6px; height: 6px; background: var(--live-red); border-radius: 50%; display: inline-block; }
+        .team-unit { display: flex; align-items: center; gap: 12px; }
+        .team-unit.left-align { justify-content: flex-end; text-align: right; }
+        .team-unit.right-align { justify-content: flex-start; text-align: left; }
+        .team-flag { font-size: 22px; line-height: 1; }
+        .team-name { font-size: 14px; font-weight: 700; }
+        .score-center { display: flex; align-items: center; justify-content: center; gap: 14px; }
+        .score-num { font-size: 24px; font-weight: 900; width: 24px; text-align: center; color: var(--text-muted); }
+        .score-num.active-score { color: #fff; }
+        .score-divider { color: var(--border-color); font-weight: 700; }
+        .m-meta-info { font-size: 11px; color: var(--text-muted); text-align: right; line-height: 1.4; }
+
+        /* PREDICTIONS LAYOUT GRID */
+        .pred-workspace { display: grid; grid-template-columns: 1fr 320px; gap: 24px; }
+        .p-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; margin-bottom: 12px; }
+        .p-card-top { display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 16px; text-transform: uppercase; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; }
+        .p-input-row { display: flex; align-items: center; justify-content: space-around; margin: 12px 0; }
+        .p-team-block { width: 35%; text-align: center; }
+        .p-team-block .team-flag { font-size: 36px; margin-bottom: 6px; display: block; }
+        .p-input-box { width: 50px; height: 50px; background: #0C0D14; border: 1px solid var(--border-color); border-radius: 6px; text-align: center; font-size: 22px; font-weight: 900; color: var(--brand-gold); outline: none; }
+        .p-input-box:focus { border-color: var(--brand-gold); }
+        .p-action-row { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border-color); }
+        .btn-save-pred { background: var(--brand-gold); color: #000; border: none; padding: 8px 16px; font-weight: 700; font-size: 12px; border-radius: 4px; cursor: pointer; }
+        
+        /* SIDEBAR MODULES */
+        .sidebar-panel { display: flex; flex-direction: column; gap: 16px; }
+        .widget-box { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; }
+        .widget-title { font-size: 12px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; letter-spacing: 0.5px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; }
+        .leaderboard-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
+        .leaderboard-row:last-child { border-bottom: none; }
+        .user-rank { font-size: 12px; font-weight: 900; color: var(--text-muted); width: 20px; }
+        .user-rank.top-three { color: var(--brand-gold); }
+        .user-profile-name { font-size: 13px; font-weight: 600; flex: 1; }
+        .user-points-val { font-size: 13px; font-weight: 800; color: var(--brand-gold); }
+
+        /* HOMEPAGE NEWS FEATURE GRID */
+        .home-hero-layout { display: grid; grid-template-columns: 1.8fr 1fr; gap: 16px; margin-bottom: 24px; }
+        .editorial-hero-cover { background: linear-gradient(180deg, rgba(12,13,20,0.1) 30%, rgba(12,13,20,0.95) 100%), url('https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center; min-height: 380px; border-radius: 8px; border: 1px solid var(--border-color); display: flex; flex-direction: column; justify-content: flex-end; padding: 32px; }
+        .editorial-sub { color: var(--brand-gold); font-size: 11px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+        .editorial-main-title { font-size: 26px; font-weight: 900; line-height: 1.2; margin-bottom: 12px; }
+        .editorial-snippet { color: var(--text-muted); font-size: 13px; line-height: 1.6; max-width: 90%; }
+        
+        .side-news-column { display: flex; flex-direction: column; gap: 8px; }
+        .news-strip-item { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 6px; padding: 16px; cursor: pointer; transition: all 0.2s; }
+        .news-strip-item:hover { border-color: #34384E; background: #1C1E2D; }
+        .news-strip-title { font-size: 14px; font-weight: 700; color: #fff; line-height: 1.4; }
+        .news-strip-time { font-size: 11px; color: var(--text-muted); margin-top: 8px; display: block; }
+
+        /* HORIZONTAL SCROLL BUBBLES FOR HIGHLIGHTS */
+        .bubble-track-wrap { overflow-x: auto; display: flex; gap: 14px; padding: 4px 0 16px; scrollbar-width: none; }
+        .bubble-track-wrap::-webkit-scrollbar { display: none; }
+        .bubble-node { text-align: center; cursor: pointer; flex-shrink: 0; width: 76px; }
+        .bubble-visual { width: 68px; height: 68px; border-radius: 50%; border: 2px solid var(--brand-gold); background: var(--bg-card); display: flex; align-items: center; justify-content: center; font-size: 20px; margin: 0 auto 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .bubble-label { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
+
+        .group-header-label { background: #1F2233; color: var(--text-muted); font-size: 11px; font-weight: 800; padding: 4px 12px; border-radius: 4px; display: inline-block; margin: 16px 0 8px; letter-spacing: 0.5px; }
+        .past-evaluation { font-size: 12px; color: var(--text-muted); background: #0E1017; border: 1px dashed var(--border-color); padding: 10px; border-radius: 6px; margin-top: 8px; display: flex; align-items: center; justify-content: space-between; }
+        .eval-tag { font-weight: 700; font-size: 11px; padding: 2px 6px; border-radius: 3px; }
+        .eval-tag.correct { background: rgba(52,199,89,0.15); color: #34C759; }
+        .eval-tag.wrong { background: rgba(255,59,48,0.15); color: #FF3B30; }
+    </style>
+</head>
+<body>
+
+<header class="site-header">
+    <div class="logo-area">ШИГШЭЭ <span>2026</span></div>
+    <div class="auth-zone" id="auth-placement">
+        <!-- Rendered dynamically by runtime configuration engine -->
+        <button class="btn-login" onclick="simulateLogin()">НЭВТРЭХ</button>
+        <button class="btn-signup">БҮРТГҮҮЛЭХ</button>
+    </div>
+</header>
+
+<nav class="nav-bar">
+    <div class="nav-links">
+        <button class="nav-item active" onclick="switchView('home', this)">Нүүр хуудас</button>
+        <button class="nav-item" onclick="switchView('matches', this)">Тоглолтууд</button>
+        <button class="nav-item" onclick="switchView('predictions', this)">Таамаглал</button>
+    </div>
+    <div class="history-badge">ӨНӨӨДӨР ТҮҮХЭНД: 2014 ОНЫ ДЭЛХИЙН АВАРГА</div>
+</nav>
+
+<div class="ticker-panel">
+    <div class="ticker-title">ШУУД ОНОО</div>
+    <div class="ticker-wrap">
+        <div class="ticker-inner" id="ticker-target">
+            <!-- Programmatic ticker placement -->
+        </div>
+    </div>
+</div>
+
+<!-- PAGE VIEW: HOMEPAGE -->
+<main id="view-home" class="main-viewport active-view">
+    <div class="view-subtitle">ОНЦЛОХ МЭДЭЭ МЭДЭЭЛЭЛ</div>
+    <div class="home-hero-layout">
+        <div class="editorial-hero-cover">
+            <div class="editorial-sub">БРАЗИЛ · C БҮЛЭГ</div>
+            <div class="editorial-main-title">Дуглас Сантос: "Винисиус бол талбайн жинхэнэ удирдагч"</div>
+            <div class="editorial-snippet">Мароккогийн шигшээ багтай 1:1 харьцаатай тэнцсэн хүнд тоглолтын дараа багийн ахлагч ирээдүйн тактикийн өөрчлөлтүүдийн талаар хуваалцлаа.</div>
+        </div>
+        <div class="side-news-column">
+            <div class="news-strip-item">
+                <div class="editorial-sub">АНУ · D БҮЛЭГ</div>
+                <div class="news-strip-title">АНУ-ын шигшээ баг Парагвайг 4:1 харьцаатай бут ниргэж нээлтээ хийлээ</div>
+                <span class="news-strip-time">2 цагийн өмнө</span>
+            </div>
+            <div class="news-strip-item">
+                <div class="editorial-sub">ШОТЛАНД · C БҮЛЭГ</div>
+                <div class="news-strip-title">Шотландын шигшээ баг түүхэндээ анх удаа ДАШТ-ий эхний хожлоо авлаа</div>
+                <span class="news-strip-time">3 цагийн өмнө</span>
+            </div>
+            <div class="news-strip-item">
+                <div class="editorial-sub">АВСТРАЛИ · D БҮЛЭГ</div>
+                <div class="news-strip-title">Соккерүүс тактикийн давамгайллаар Туркийн хамгаалалтыг сэтлэв (2:0)</div>
+                <span class="news-strip-time">5 цагийн өмнө</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="view-subtitle">ТОГЛОЛТЫН ХАЛТГАЙ ХАРАГДАЦ (ВИДЕО)</div>
+    <div class="bubble-track-wrap">
+        <div class="bubble-node"><div class="bubble-visual">🇲🇽🇿🇦</div><div class="bubble-label">MEX 2-0</div></div>
+        <div class="bubble-node"><div class="bubble-visual">🇰🇷🇨🇿</div><div class="bubble-label">KOR 2-1</div></div>
+        <div class="bubble-node"><div class="bubble-visual">🇺🇸🇵🇾</div><div class="bubble-label">USA 4-1</div></div>
+        <div class="bubble-node"><div class="bubble-visual">🇧🇷🇲🇦</div><div class="bubble-label">BRA 1-1</div></div>
+        <div class="bubble-node"><div class="bubble-visual">🇶🇦🇨🇭</div><div class="bubble-label">QAT 1-1</div></div>
+    </div>
+</main>
+
+<!-- PAGE VIEW: MATCHES -->
+<main id="view-matches" class="main-viewport">
+    <div class="view-subtitle">ДАШТ 2026 ХУВААРЬ БОЛОН ҮР ДҮН</div>
+    <h2 class="view-title">Тоглолтууд</h2>
+    <div id="matches-render-target">
+        <!-- Rendered systematically from operational dataset -->
+    </div>
+</main>
+
+<!-- PAGE VIEW: PREDICTIONS -->
+<main id="view-predictions" class="main-viewport">
+    <div class="view-subtitle">ХӨГЖӨӨН ДЭМЖИГЧДИЙН ТЭМЦЭЭН</div>
+    <h2 class="view-title">Оноо цуглуулах таамаглал</h2>
+    
+    <div class="pred-workspace">
+        <div id="predictions-render-target">
+            <!-- Form arrays nested here -->
+        </div>
+        
+        <div class="sidebar-panel">
+            <div class="widget-box">
+                <div class="widget-title">Миний лиг</div>
+                <button class="btn-signup" style="width:100%; margin-bottom: 8px;">+ Шинэ лиг үүсгэх</button>
+                <button class="btn-login" style="width:100%; border-color:var(--brand-gold); color:#fff;">Кодоор лигт нэгдэх</button>
+            </div>
+            <div class="widget-box">
+                <div class="widget-title">Ерөнхий Лидэрүүд</div>
+                <div class="leaderboard-row"><span class="user-rank top-three">1</span><span class="user-profile-name">Эрхэмболд</span><span class="user-points-val">340 орон</span></div>
+                <div class="leaderboard-row"><span class="user-rank top-three">2</span><span class="user-profile-name">Тэргэлсайхан</span><span class="user-points-val">315 орон</span></div>
+                <div class="leaderboard-row"><span class="user-rank top-three">3</span><span class="user-profile-name">Мөнхбаяр</span><span class="user-points-val">298 орон</span></div>
+                <div class="leaderboard-row"><span class="user-rank">4</span><span class="user-profile-name">Эрхэмбилэг</span><span class="user-points-val">275 орон</span></div>
+                <div class="leaderboard-row"><span class="user-rank">5</span><span class="user-profile-name">Мөнх-Ирээдүй</span><span class="user-points-val">260 орон</span></div>
+            </div>
+            <div class="widget-box">
+                <div class="widget-title">Онооны журам</div>
+                <p style="font-size:12px; color:var(--text-muted); line-height: 1.6;">Үндсэн ялагчийг зөв таавал: <strong style="color:#fff;">+5 оноо</strong><br>Гоолын зөрүүг зөв таавал: <strong style="color:#fff;">+10 оноо</strong><br>Тоглолтын харьцааг яг таг таавал: <strong style="color:#fff;">+15 оноо</strong></p>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    // CENTRALIZED LIVE DATA ARCHITECTURE
+    // Whenever matches conclude, you only update this master state array.
+    // In production, this can be safely fetched via a single fetch() line from a GitHub Gist JSON file.
+    const databaseState = {
+        matches: [
+            { id: 1, date: "2026.06.11", group: "А Бүлэг", homeFlag: "🇲🇽", homeName: "Мексик", awayFlag: "🇿🇦", awayName: "Өмнөд Африк", homeScore: 2, awayScore: 0, status: "FT", venue: "Mexico City Stadium", userPredicted: "2-0", eval: "correct" },
+            { id: 2, date: "2026.06.11", group: "А Бүлэг", homeFlag: "🇰🇷", homeName: "Солонгос", awayFlag: "🇨🇿", awayName: "Чех", homeScore: 2, awayScore: 1, status: "FT", venue: "Estadio Guadalajara", userPredicted: "1-1", eval: "wrong" },
+            { id: 3, date: "2026.06.12", group: "B Бүлэг", homeFlag: "🇨🇦", homeName: "Канад", awayFlag: "🇧🇦", awayName: "Босни", homeScore: 1, awayScore: 1, status: "FT", venue: "Toronto Stadium", userPredicted: "1-1", eval: "correct" },
+            { id: 4, date: "2026.06.12", group: "D Бүлэг", homeFlag: "🇺🇸", homeName: "АНУ", awayFlag: "🇵🇾", awayName: "Парагвай", homeScore: 4, awayScore: 1, status: "FT", venue: "Los Angeles Stadium", userPredicted: "2-1", eval: "correct" },
+            { id: 5, date: "2026.06.13", group: "B Бүлэг", homeFlag: "🇶🇦", homeName: "Катар", awayFlag: "🇨🇭", awayName: "Швейцар", homeScore: 1, awayScore: 1, status: "FT", venue: "San Francisco Stadium", userPredicted: "0-2", eval: "wrong" },
+            { id: 6, date: "2026.06.13", group: "C Бүлэг", homeFlag: "🇧🇷", homeName: "Бразил", awayFlag: "🇲🇦", awayName: "Марокко", homeScore: 1, awayScore: 1, status: "FT", venue: "New York NJ Stadium", userPredicted: "1-1", eval: "correct" },
+            { id: 7, date: "2026.06.14", group: "E Бүлэг", homeFlag: "🇩🇪", homeName: "Герман", awayFlag: "🇨🇼", awayName: "Кюрасао", homeScore: null, awayScore: null, status: "LIVE", venue: "Houston Stadium", userPredicted: null, eval: null },
+            { id: 8, date: "2026.06.14", group: "F Бүлэг", homeFlag: "🇳🇱", homeName: "Нидерланд", awayFlag: "🇯🇵", awayName: "Японы", homeScore: null, awayScore: null, status: "LIVE", venue: "Dallas Stadium", userPredicted: null, eval: null },
+            { id: 9, date: "2026.06.15", group: "H Бүлэг", homeFlag: "🇪🇸", homeName: "Испани", awayFlag: "🇨🇻", awayName: "Кабо Верде", homeScore: null, awayScore: null, status: "12:00", venue: "Atlanta Stadium", userPredicted: null, eval: null },
+            { id: 10, date: "2026.06.15", group: "G Бүлэг", homeFlag: "🇧🇪", homeName: "Бельги", awayFlag: "🇪🇬", awayName: "Египет", homeScore: null, awayScore: null, status: "15:00", venue: "Seattle Stadium", userPredicted: null, eval: null }
+        ]
+    };
+
+    // VIEW ENGINE CONTROLLER
+    function switchView(viewId, element) {
+        document.querySelectorAll('.main-viewport').forEach(view => view.classList.remove('active-view'));
+        document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
+        
+        document.getElementById(`view-${viewId}`).classList.add('active-view');
+        if(element) element.classList.add('active');
+    }
+
+    // AUTOMATIC DATA RENDERING ENGINE
+    function initializeApplication() {
+        const matchesTarget = document.getElementById('matches-render-target');
+        const predTarget = document.getElementById('predictions-render-target');
+        const tickerTarget = document.getElementById('ticker-target');
+
+        matchesTarget.innerHTML = '';
+        predTarget.innerHTML = '';
+        tickerTarget.innerHTML = '';
+
+        // Organize matches chronologically by date group blocks
+        const dateGroups = {};
+        databaseState.matches.forEach(m => {
+            if (!dateGroups[m.date]) dateGroups[m.date] = [];
+            dateGroups[m.date].push(m);
+        });
+
+        // 1. Build Matches Archive Page Dynamically
+        for (const date in dateGroups) {
+            const block = document.createElement('div');
+            block.innerHTML = `<div class="group-header-label">${date}</div>`;
+            
+            dateGroups[date].forEach(m => {
+                const liveClass = m.status === 'LIVE' ? 'live' : '';
+                const hScore = m.homeScore !== null ? m.homeScore : '–';
+                const aScore = m.awayScore !== null ? m.awayScore : '–';
+                const activeHome = m.homeScore !== null ? 'active-score' : '';
+                const activeAway = m.awayScore !== null ? 'active-score' : '';
+
+                block.innerHTML += `
+                    <div class="match-row-strip">
+                        <div class="m-status-box ${liveClass}">${m.status}</div>
+                        <div class="team-unit left-align">
+                            <span class="team-name">${m.homeName}</span>
+                            <span class="team-flag">${m.homeFlag}</span>
+                        </div>
+                        <div class="score-center">
+                            <span class="score-num ${activeHome}">${hScore}</span>
+                            <span class="score-divider">:</span>
+                            <span class="score-num ${activeAway}">${aScore}</span>
+                        </div>
+                        <div class="team-unit right-align">
+                            <span class="team-flag">${m.awayFlag}</span>
+                            <span class="team-name">${m.awayName}</span>
+                        </div>
+                        <div class="m-meta-info">${m.group}<br/><span style="font-size:10px; opacity:0.6;">${m.venue}</span></div>
+                    </div>
+                `;
+            });
+            matchesTarget.appendChild(block);
+        }
+
+        // 2. Build Interactive Predictions & History Evaluation Page
+        databaseState.matches.forEach(m => {
+            const card = document.createElement('div');
+            card.className = 'p-card';
+
+            if (m.homeScore !== null) {
+                // Completed Matches Template containing automated user evaluation markers
+                const evalLabel = m.eval === 'correct' ? '✓ ЗӨВ ТААСАН' : '✗ БУРУУ ТААСАН';
+                const evalClass = m.eval === 'correct' ? 'correct' : 'wrong';
+                
+                card.innerHTML = `
+                    <div class="p-card-top"><div>${m.group} · ҮР ДҮҮСГЭДЭГДЭНЭ</div><div>${m.venue}</div></div>
+                    <div class="p-input-row">
+                        <div class="p-team-block"><span class="team-flag">${m.homeFlag}</span><span class="team-name">${m.homeName}</span></div>
+                        <div style="font-size: 28px; font-weight: 900; letter-spacing: 4px;">${m.homeScore} : ${m.awayScore}</div>
+                        <div class="p-team-block"><span class="team-flag">${m.awayFlag}</span><span class="team-name">${m.awayName}</span></div>
+                    </div>
+                    <div class="past-evaluation">
+                        <div>Миний оруулсан таамаглал: <strong style="color:var(--brand-gold);">${m.userPredicted}</strong></div>
+                        <span class="eval-tag ${evalClass}">${evalLabel}</span>
+                    </div>
+                `;
+            } else {
+                // Active Entry Template for Upcoming/Live open prediction matching
+                card.innerHTML = `
+                    <div class="p-card-top"><div>${m.group} · ТААМАГЛАЛ НЭЭЛТТЭЙ</div><div>Эхлэх хугацаа: ${m.status}</div></div>
+                    <div class="p-input-row">
+                        <div class="p-team-block"><span class="team-flag">${m.homeFlag}</span><span class="team-name">${m.homeName}</span></div>
+                        <input type="number" class="p-input-box" id="pred-h-${m.id}" value="0" min="0">
+                        <span style="font-weight:700; color:var(--text-muted);">ХАРЬЦАА</span>
+                        <input type="number" class="p-input-box" id="pred-a-${m.id}" value="0" min="0">
+                        <div class="p-team-block"><span class="team-flag">${m.awayFlag}</span><span class="team-name">${m.awayName}</span></div>
+                    </div>
+                    <div class="p-action-row">
+                        <span style="font-size:11px; color:var(--text-muted);">Статистик: 54% Хэрэглэгчид энэ багийг дэмжсэн</span>
+                        <button class="btn-save-pred" onclick="commitUserPrediction(${m.id})">ТААМАГЛАЛЫГ ХАДГАЛАХ</button>
+                    </div>
+                `;
+            }
+            predTarget.appendChild(card);
+
+            // 3. Populate Live Horizontal Ticker Row Elements
+            if (m.homeScore !== null) {
+                tickerTarget.innerHTML += `
+                    <div class="ticker-match">
+                        ${m.homeFlag} ${m.homeName} <strong>${m.homeScore}:${m.awayScore}</strong> ${m.awayName} ${m.awayFlag} 
+                        <span style="color:var(--border-color); margin-left:15px;">•</span>
+                    </div>
+                `;
+            }
+        });
+        
+        // Duplicate content of ticker items seamlessly to allow looping animation wrap effect
+        tickerTarget.innerHTML += tickerTarget.innerHTML;
+    }
+
+    function commitUserPrediction(matchId) {
+        const homeVal = document.getElementById(`pred-h-${matchId}`).value;
+        const awayVal = document.getElementById(`pred-a-${matchId}`).value;
+        alert(`Амжилттай хадгалагдлаа! Таны таамаглал: ${homeVal}:${awayVal}`);
+    }
+
+    function simulateLogin() {
+        const zone = document.getElementById('auth-placement');
+        zone.innerHTML = `<div class="user-logged-in">👤 ЭРХЭМБОЛД (340 PTS)</div>`;
+    }
+
+    // Run core engine execution setup on layout launch
+    window.onload = initializeApplication;
+</script>
+</body>
+</html>
