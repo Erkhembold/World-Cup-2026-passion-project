@@ -645,4 +645,236 @@ function renderNews() {
         <div class="nc-foot"><span>${n.time}</span><span class="nc-score">Дэлгэрэнгүй →</span></div>
       </div>
     </div>
-  `).join
+  `).join('');
+}
+
+// QUIZ ENGINE
+function renderQuizList() {
+  const target = document.getElementById('quiz-list-target');
+  target.innerHTML = activeQuizList.map(q => `
+    <div class="qli" onclick="startQuiz(${q.id})">
+      <div>
+        <div class="qli-t">${q.title}</div>
+        <div class="qli-s">${q.sub}</div>
+      </div>
+      <div><span class="diff ${q.diff}">${q.diff.toUpperCase()}</span></div>
+      <div class="qpts">+${q.pts} XP</div>
+    </div>
+  `).join('');
+  updateXpBar();
+}
+
+function startQuiz(id) {
+  currentQuizIndex = activeQuizList.findIndex(x => x.id === id);
+  if (currentQuizIndex === -1) return;
+  
+  document.getElementById('quiz-list-view').style.display = 'none';
+  document.getElementById('quiz-play-view').style.display = 'block';
+  
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = activeQuizList[currentQuizIndex];
+  const target = document.getElementById('quiz-arena');
+  
+  target.innerHTML = `
+    <div class="prob-hdr">
+      <div class="prob-tr">
+        <span class="diff ${q.diff}">${q.diff.toUpperCase()}</span>
+        <span class="prob-ctr" style="margin-left:auto;">ШАНС: +${q.pts} XP</span>
+      </div>
+      <div class="prob-q">${q.q}</div>
+      <div class="prob-opts">
+        ${q.opts.map((o, idx) => `
+          <button class="popt" onclick="checkAnswer(${idx})">
+            <div class="popt-let">${String.fromCharCode(65 + idx)}</div>
+            <span>${o}</span>
+          </button>
+        `).join('')}
+      </div>
+      
+      <div class="prob-res" id="quiz-feedback">
+        <div class="prob-res-txt">
+          <strong id="feedback-title"></strong>
+          <span id="feedback-explanation">${q.exp}</span>
+        </div>
+      </div>
+      
+      <div class="prob-nav-row">
+        <div class="prob-ctr">Асуулт ${currentQuizIndex + 1} / ${activeQuizList.length}</div>
+        <button class="btn-np" id="next-quiz-btn" style="display:none;" onclick="nextQuestion()">Үргэлжлүүлэх →</button>
+      </div>
+    </div>
+  `;
+}
+
+function checkAnswer(chosenIdx) {
+  const q = activeQuizList[currentQuizIndex];
+  const buttons = document.querySelectorAll('.prob-opts .popt');
+  
+  buttons.forEach(b => b.disabled = true);
+  
+  const feedback = document.getElementById('quiz-feedback');
+  const title = document.getElementById('feedback-title');
+  const nextBtn = document.getElementById('next-quiz-btn');
+  
+  feedback.classList.add('show');
+  
+  if (chosenIdx === q.ans) {
+    buttons[chosenIdx].classList.add('correct');
+    feedback.classList.add('ok');
+    title.innerText = "🎉 ЗӨВ ХАРИУЛЛАА!";
+    title.style.color = "var(--mint)";
+    currentXp += q.pts;
+    if (currentXp >= 100) {
+      currentLvl += Math.floor(currentXp / 100);
+      currentXp = currentXp % 100;
+    }
+    updateXpBar();
+  } else {
+    buttons[chosenIdx].classList.add('wrong');
+    buttons[q.ans].classList.add('correct');
+    feedback.classList.add('no');
+    title.innerText = "❌ БУРУУ ХАРИУЛЛАА!";
+    title.style.color = "var(--red)";
+  }
+  
+  nextBtn.style.display = "block";
+}
+
+function nextQuestion() {
+  if (currentQuizIndex + 1 < activeQuizList.length) {
+    currentQuizIndex++;
+    renderQuestion();
+  } else {
+    alert("Баяр хүргэе! Та асуулт хариултыг дуусгалаа.");
+    exitQuiz();
+  }
+}
+
+function exitQuiz() {
+  document.getElementById('quiz-list-view').style.display = 'block';
+  document.getElementById('quiz-play-view').style.display = 'none';
+  currentQuizIndex = null;
+  renderQuizList();
+}
+
+function updateXpBar() {
+  document.getElementById('xp-fill').style.width = currentXp + '%';
+  document.getElementById('xp-current-text').innerText = `${currentXp} / 100 XP`;
+  document.getElementById('xp-level-text').innerText = `LVL ${currentLvl} (${currentLvl > 2 ? 'Мэргэжилтэн' : currentLvl > 1 ? 'Ахисан түвшин' : 'Анхлан суралцагч'})`;
+}
+
+// MOCK AUTHENTICATION
+function openAuth() { document.getElementById('auth-modal').classList.add('open'); }
+function closeAuth() { document.getElementById('auth-modal').classList.remove('open'); }
+
+function switchTab(tab) {
+  document.querySelectorAll('.mtab').forEach(t => t.classList.remove('active'));
+  if(tab === 'login') {
+    document.getElementById('tab-login').classList.add('active');
+    document.getElementById('login-form').style.display = 'block';
+    document.getElementById('register-form').style.display = 'none';
+  } else {
+    document.getElementById('tab-register').classList.add('active');
+    document.getElementById('login-form').style.display = 'none';
+    document.getElementById('register-form').style.display = 'block';
+  }
+}
+
+function doLogin() {
+  const user = document.getElementById('lu').value.trim();
+  if(!user) return alert("Нэрээ оруулна уу!");
+  
+  activeUser = user;
+  document.getElementById('auth-label').innerText = `⚡ ${user.toUpperCase()}`;
+  document.getElementById('my-panel').innerHTML = `
+    <p style="font-size:13px;font-weight:700;">Тавтай морил, ${user}!</p>
+    <p style="font-size:11px;color:var(--mint);margin-top:4px;">Идэвхтэй таамаглал: 0 · Нийт оноо: 0 pts</p>
+  `;
+  closeAuth();
+}
+
+function doRegister() {
+  const user = document.getElementById('ru').value.trim();
+  if(!user) return alert("Нэрээ оруулна уу!");
+  activeUser = user;
+  document.getElementById('auth-label').innerText = `⚡ ${user.toUpperCase()}`;
+  closeAuth();
+}
+
+// TEXT SCRAMBLE EFFECT FOR HERO TITLE
+function scrambleText(element, finalText) {
+  const chars = '!<>-_\\/[]{}—=+*^?#________';
+  let frame = 0;
+  const queue = [];
+  
+  for (let i = 0; i < finalText.length; i++) {
+    const from = element.innerText[i] || '';
+    const to = finalText[i];
+    const start = Math.floor(Math.random() * 20);
+    const end = start + Math.floor(Math.random() * 20);
+    queue.push({ from, to, start, end, char: '' });
+  }
+  
+  function update() {
+    let output = '';
+    let complete = 0;
+    for (let i = 0; i < queue.length; i++) {
+      let { from, to, start, end, char } = queue[i];
+      if (frame >= end) {
+        complete++;
+        output += to;
+      } else if (frame >= start) {
+        if (!char || Math.random() < 0.28) {
+          char = chars[Math.floor(Math.random() * chars.length)];
+          queue[i].char = char;
+        }
+        output += `<span style="color:var(--mint)">${char}</span>`;
+      } else {
+        output += from;
+      }
+    }
+    element.innerHTML = output;
+    if (complete < queue.length) {
+      frame++;
+      requestAnimationFrame(update);
+    }
+  }
+  update();
+}
+
+// KONAMI CODE EASTER EGG
+let konamiBuffer = "";
+window.addEventListener('keydown', (e) => {
+  konamiBuffer += e.key.toUpperCase();
+  konamiBuffer = konamiBuffer.slice(-20);
+  
+  if (konamiBuffer.includes('GOAL') || konamiBuffer.includes('MARVEL')) {
+    document.getElementById('konami-overlay').classList.add('show');
+    konamiBuffer = "";
+    
+    // Нууц асуултуудыг нэгтгэх
+    activeQuizList = [...quizData, ...secretQuizData];
+    if (document.getElementById('page-quiz').classList.contains('active')) {
+      renderQuizList();
+    }
+  }
+});
+
+// INITIALIZATION
+window.onload = () => {
+  initTicker();
+  refreshScores();
+  
+  const heroTitle = document.getElementById('hero-title');
+  if(heroTitle) {
+    setTimeout(() => scrambleText(heroTitle, "FIFA ДАШТ 2026 — Хөлбөмбөгийн Баяр"), 800);
+  }
+};
+</script>
+</body>
+</html>
+
+
