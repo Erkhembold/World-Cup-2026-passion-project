@@ -60,15 +60,15 @@ body{background:var(--canvas);color:var(--text);padding-bottom:60px;transition:b
 .ls-title{font-size:12px;font-weight:700;color:var(--text);letter-spacing:.5px;}
 .ls-time{font-size:10px;color:var(--muted);margin-left:auto;cursor:pointer;color:var(--mint);}
 .ls-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
-.ls-card{background:#0d0d14;border:1px solid var(--border);border-radius:8px;padding:12px 10px;text-align:center;position:relative;}
+.ls-card{background:#0d0d14;border:1px solid var(--border);border-radius:8px;padding:12px 10px;text-align:center;position:relative;cursor:pointer;}
 .ls-card.live-card{border-color:rgba(255,51,75,.3);}
 .ls-badge{position:absolute;top:8px;right:8px;font-size:9px;font-weight:800;color:var(--red);letter-spacing:.5px;}
 .ls-badge.ft{color:var(--muted);}
 .ls-teams{display:flex;align-items:center;justify-content:space-between;gap:4px;margin-bottom:6px;}
 .ls-team{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;}
-.ls-flag{font-size:20px;line-height:1;}
-.ls-tname{font-size:10px;font-weight:700;color:var(--muted);}
-.ls-score{font-size:20px;font-weight:900;color:var(--text);padding:0 6px;}
+.ls-flag{width:24px;height:16px;object-fit:cover;border-radius:20px;box-shadow:0 1px 3px rgba(0,0,0,0.3);}
+.ls-tname{font-size:10px;font-weight:700;color:var(--muted);text-align:center;margin-top:2px;}
+.ls-score{font-size:18px;font-weight:900;color:var(--text);padding:0 4px;}
 .ls-score.live{color:var(--red);}
 .ls-group{font-size:9px;color:var(--border);margin-top:4px;}
 
@@ -82,7 +82,7 @@ body{background:var(--canvas);color:var(--text);padding-bottom:60px;transition:b
 .tblock{display:flex;align-items:center;gap:9px;}
 .tblock.home{justify-content:flex-end;}
 .tblock.away{justify-content:flex-start;}
-.flag{font-size:20px;line-height:1;flex-shrink:0;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4));}
+.flag{width:24px;height:16px;object-fit:cover;border-radius:2px;flex-shrink:0;box-shadow:0 2px 4px rgba(0,0,0,.4);}
 .tname{font-size:14px;font-weight:700;white-space:nowrap;}
 .sc-box{display:flex;align-items:center;justify-content:center;gap:12px;background:rgba(0,0,0,.25);padding:5px 12px;border-radius:6px;border:1px solid rgba(255,255,255,.03);}
 .sc-d{font-size:20px;font-weight:800;color:var(--muted);width:18px;text-align:center;}
@@ -90,16 +90,13 @@ body{background:var(--canvas);color:var(--text);padding-bottom:60px;transition:b
 .sc-d.live-sc{color:var(--red);}
 .sc-sep{color:rgba(255,255,255,.12);font-weight:700;}
 .fix-meta{font-size:10px;color:var(--muted);text-align:right;line-height:1.6;}
-.fix-hint{font-size:9px;color:rgba(0,242,153,.45);margin-top:2px;}
 
-/* MATCH DETAIL */
-.back-btn{display:flex;align-items:center;gap:8px;background:none;border:none;color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;padding:0;margin-bottom:24px;font-family:inherit;transition:color .15s;}
-.back-btn:hover{color:var(--text);}
+/* MATCH DETAIL & STATS LAYOUT */
 .match-hero{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:32px;margin-bottom:24px;text-align:center;}
 .mh-group{font-size:10px;color:var(--mint);font-weight:700;letter-spacing:2px;margin-bottom:18px;}
 .mh-teams{display:flex;align-items:center;justify-content:center;gap:28px;}
 .mh-team{display:flex;flex-direction:column;align-items:center;gap:8px;min-width:110px;}
-.mh-flag{font-size:48px;}
+.mh-flag{width:64px;height:42px;object-fit:cover;border-radius:4px;box-shadow:0 4px 10px rgba(0,0,0,0.4);}
 .mh-name{font-size:17px;font-weight:800;}
 .mh-sc{font-size:48px;font-weight:900;letter-spacing:4px;}
 .mh-st{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1px;background:#1a1a2e;padding:3px 10px;border-radius:4px;margin-top:6px;}
@@ -107,6 +104,21 @@ body{background:var(--canvas);color:var(--text);padding-bottom:60px;transition:b
 .scorers-row{display:flex;justify-content:space-between;margin-top:18px;padding-top:16px;border-top:1px solid var(--border);}
 .sc-side{font-size:12px;color:var(--muted);line-height:1.8;}
 .sc-side strong{color:var(--text);display:block;margin-bottom:2px;}
+
+/* PLAYER RATING MODULES (FotMob Style) */
+.perf-grid-title {font-size:14px;font-weight:800;color:var(--text);margin:24px 0 12px;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:8px;}
+.perf-grid-title::before {content:'';width:4px;height:14px;background:var(--mint);border-radius:2px;}
+.player-perf-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));gap:16px;margin-bottom:28px;}
+.perf-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;align-items:center;gap:14px;position:relative;}
+.p-avatar{width:54px;height:54px;border-radius:50%;background:#1d2133;object-fit:cover;border:2px solid var(--border);}
+.p-info{flex:1;display:flex;flex-direction:column;gap:3px;}
+.p-name{font-size:13px;font-weight:700;color:var(--text);}
+.p-team-meta{font-size:10px;color:var(--muted);display:flex;align-items:center;gap:6px;}
+.p-stat-metrics{font-size:11px;color:var(--mint);font-weight:600;margin-top:2px;}
+.p-rating-badge{background:rgba(0,242,153,0.12);color:var(--mint);font-weight:900;font-size:13px;padding:6px 10px;border-radius:8px;border:1px solid rgba(0,242,153,0.2);min-width:42px;text-align:center;}
+.p-rating-badge.gold-rt{background:rgba(226,177,60,0.12);color:var(--gold);border-color:rgba(226,177,60,0.2);}
+
+/* TEAM MATCH PERFORMANCE STATS */
 .sts-title{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin:22px 0 10px;padding-bottom:7px;border-bottom:1px solid var(--border);}
 .stat-row{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:8px;}
 .stat-lbl{font-size:10px;font-weight:700;color:var(--muted);text-align:center;margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px;}
@@ -121,9 +133,6 @@ body{background:var(--canvas);color:var(--text);padding-bottom:60px;transition:b
 .poss-lbls{display:flex;justify-content:space-between;margin-top:5px;font-size:10px;}
 .poss-lbls span:first-child{color:var(--mint);}
 .poss-lbls span:last-child{color:var(--gold);}
-.gen-bar{position:relative;height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin-top:6px;}
-.gb-h{position:absolute;left:0;top:0;height:100%;background:rgba(0,242,153,.55);border-radius:3px 0 0 3px;}
-.gb-a{position:absolute;right:0;top:0;height:100%;background:rgba(226,177,60,.55);border-radius:0 3px 3px 0;}
 
 /* PREDICTIONS */
 .pred-wrap{display:grid;grid-template-columns:1fr 320px;gap:28px;}
@@ -133,7 +142,7 @@ body{background:var(--canvas);color:var(--text);padding-bottom:60px;transition:b
 .ph{display:flex;justify-content:space-between;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.05);padding-bottom:10px;margin-bottom:16px;}
 .pr{display:flex;align-items:center;justify-content:space-between;padding:8px 0;}
 .pteam{display:flex;flex-direction:column;align-items:center;gap:6px;width:30%;text-align:center;}
-.pteam .flag{font-size:32px;}
+.pteam .flag{width:36px;height:24px;object-fit:cover;border-radius:2px;}
 .pteam span{font-size:13px;font-weight:700;}
 .pinput{width:52px;height:52px;background:#07080C;border:1px solid var(--border);border-radius:8px;text-align:center;font-size:22px;font-weight:800;color:var(--gold);outline:none;font-family:inherit;}
 .pinput:focus{border-color:var(--gold);}
@@ -164,12 +173,13 @@ body{background:var(--canvas);color:var(--text);padding-bottom:60px;transition:b
 .nc-title{font-size:13px;font-weight:700;line-height:1.4;margin-bottom:6px;}
 .nc-desc{font-size:11px;color:var(--muted);line-height:1.5;}
 .nc-foot{display:flex;align-items:center;justify-content:space-between;margin-top:10px;font-size:10px;color:var(--muted);}
-.nc-score{font-weight:700;color:var(--text);}
 
-/* QUIZ */
+/* QUIZ TIERED STYLING */
 .quiz-list-hdr{display:grid;grid-template-columns:1fr 100px 90px 70px;padding:8px 18px;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);margin-bottom:4px;}
 .qli{display:grid;grid-template-columns:1fr 100px 90px 70px;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:7px;cursor:pointer;transition:all .15s;}
-.qli:hover{border-color:rgba(0,242,153,.25);background:var(--hover);transform:translateX(4px);}
+.qli.locked{opacity:0.4;cursor:not-allowed;}
+.qli.locked:hover{transform:none;border-color:var(--border);background:var(--surface);}
+.qli:not(.locked):hover{border-color:rgba(0,242,153,.25);background:var(--hover);transform:translateX(4px);}
 .qli-t{font-size:13px;font-weight:700;}
 .qli-s{font-size:10px;color:var(--muted);margin-top:2px;}
 .diff{font-size:10px;font-weight:800;padding:2px 9px;border-radius:4px;text-transform:uppercase;display:inline-block;}
@@ -178,10 +188,7 @@ body{background:var(--canvas);color:var(--text);padding-bottom:60px;transition:b
 .diff.hard{background:rgba(255,51,75,.1);color:var(--red);}
 .qpts{font-size:12px;font-weight:800;color:var(--mint);text-align:right;}
 .prob-hdr{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:16px;}
-.prob-tr{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
-.prob-title{font-size:20px;font-weight:800;}
-.prob-q{font-size:16px;font-weight:700;line-height:1.5;margin-bottom:6px;}
-.prob-q-mn{font-size:12px;color:var(--muted);margin-bottom:24px;line-height:1.5;}
+.prob-q{font-size:16px;font-weight:700;line-height:1.5;margin-bottom:24px;}
 .prob-opts{display:flex;flex-direction:column;gap:8px;}
 .popt{background:#07080C;border:1.5px solid var(--border);border-radius:8px;padding:13px 16px;font-size:13px;font-weight:600;color:var(--text);cursor:pointer;text-align:left;font-family:inherit;display:flex;align-items:center;gap:10px;transition:all .15s;}
 .popt:hover:not([disabled]){border-color:rgba(255,255,255,.2);background:var(--hover);}
@@ -197,10 +204,6 @@ body{background:var(--canvas);color:var(--text);padding-bottom:60px;transition:b
 .prob-res-txt{font-size:12px;color:var(--muted);line-height:1.6;}
 .prob-res-txt strong{color:var(--text);display:block;margin-bottom:3px;}
 .btn-np{background:var(--gold);color:#000;border:none;padding:9px 20px;font-weight:700;font-size:12px;border-radius:6px;cursor:pointer;white-space:nowrap;font-family:inherit;}
-.prob-nav-row{display:flex;justify-content:space-between;align-items:center;margin-top:16px;}
-.prob-ctr{font-size:11px;color:var(--muted);}
-.btn-gray{background:var(--surface);border:1px solid var(--border);color:var(--muted);padding:7px 14px;border-radius:6px;cursor:pointer;font-size:11px;font-family:inherit;}
-.btn-gray:hover{color:var(--text);}
 
 /* XP BAR */
 .xp-bar-wrap{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin-bottom:20px;}
@@ -211,18 +214,8 @@ body{background:var(--canvas);color:var(--text);padding-bottom:60px;transition:b
 .xp-fill{height:100%;background:linear-gradient(90deg,var(--mint),var(--gold));border-radius:4px;width:0%;transition:width .6s cubic-bezier(.4,0,.2,1);}
 .xp-sub{font-size:10px;color:var(--muted);margin-top:5px;display:flex;justify-content:space-between;}
 
-/* TEXT SCRAMBLE */
-.scramble{display:inline-block;cursor:default;}
-
-/* KONAMI OVERLAY */
-.konami-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:999;align-items:center;justify-content:center;flex-direction:column;gap:20px;}
-.konami-overlay.show{display:flex;}
-.konami-title{font-size:48px;font-weight:900;color:var(--mint);text-align:center;animation:glitch 2s infinite;}
-@keyframes glitch{0%,100%{text-shadow:2px 0 var(--red),-2px 0 var(--gold)}50%{text-shadow:-2px 0 var(--mint),2px 0 var(--red)}}
-.konami-sub{font-size:16px;color:var(--muted);text-align:center;}
-.konami-close{background:var(--gold);color:#000;border:none;padding:12px 28px;border-radius:8px;font-weight:800;font-size:14px;cursor:pointer;font-family:inherit;}
-
-/* AUTH MODAL */
+/* AUTH & ERRORS */
+.auth-error-msg{color:var(--red);font-size:11px;font-weight:600;margin-top:6px;display:none;align-items:center;gap:4px;}
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:200;align-items:center;justify-content:center;}
 .modal-overlay.open{display:flex;}
 .modal{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;width:100%;max-width:400px;position:relative;}
@@ -236,14 +229,22 @@ body{background:var(--canvas);color:var(--text);padding-bottom:60px;transition:b
 .field input:focus{border-color:var(--mint);}
 .btn-auth{width:100%;background:var(--mint);color:#000;border:none;padding:12px;font-weight:800;font-size:13px;border-radius:8px;cursor:pointer;margin-top:6px;text-transform:uppercase;font-family:inherit;}
 .mclose{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;}
+
+/* KONAMI OVERLAY */
+.konami-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:999;align-items:center;justify-content:center;flex-direction:column;gap:20px;}
+.konami-overlay.show{display:flex;}
+.konami-title{font-size:48px;font-weight:900;color:var(--mint);text-align:center;animation:glitch 2s infinite;}
+@keyframes glitch{0%,100%{text-shadow:2px 0 var(--red),-2px 0 var(--gold)}50%{text-shadow:-2px 0 var(--mint),2px 0 var(--red)}}
+.konami-sub{font-size:16px;color:var(--muted);text-align:center;line-height:1.6;}
+.konami-close{background:var(--gold);color:#000;border:none;padding:12px 28px;border-radius:8px;font-weight:800;font-size:14px;cursor:pointer;font-family:inherit;}
 </style>
 </head>
 <body>
 
 <div class="konami-overlay" id="konami-overlay">
-  <div class="konami-title">⚽ GOAL! ⚽</div>
-  <div class="konami-sub">Та нууц код оруулсан байна!<br>Хамгийн хэцүү асуултууд нээгдлээ.</div>
-  <button class="konami-close" onclick="document.getElementById('konami-overlay').classList.remove('show')">Хаах</button>
+  <div class="konami-title">⚙️ STARK INDUSTRIES ENGAGED ⚙️</div>
+  <div class="konami-sub">Админ эрх нээгдлээ!<br>Конами нууц тест асуултууд болон бүх хүнд түвшний даалгаврууд идэвхжлээ.</div>
+  <button class="konami-close" onclick="document.getElementById('konami-overlay').classList.remove('show')">Үргэлжлүүлэх</button>
 </div>
 
 <header class="hdr">
@@ -256,7 +257,7 @@ body{background:var(--canvas);color:var(--text);padding-bottom:60px;transition:b
     <button class="nav-btn" onclick="go('quiz',this)">QUIZ</button>
   </nav>
   <div class="hdr-right">
-    <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="Dark/Light mode">🌙</button>
+    <button class="theme-btn" id="theme-btn" onclick="toggleTheme()">🌙</button>
     <div class="auth-node" id="auth-node" onclick="openAuth()"><span id="auth-label">⚡ НЭВТРЭХ</span></div>
   </div>
 </header>
@@ -269,7 +270,7 @@ body{background:var(--canvas);color:var(--text);padding-bottom:60px;transition:b
 <div class="modal-overlay" id="auth-modal">
   <div class="modal">
     <button class="mclose" onclick="closeAuth()">✕</button>
-    <h2>Тавтай морилно уу</h2>
+    <h2 id="modal-title">Тавтай морилно уу</h2>
     <p style="font-size:12px;color:var(--muted);margin-top:4px;">Таамаглалаа хадгалж найзуудтайгаа өрсөлдөнө үү</p>
     <div class="modal-tabs">
       <button class="mtab active" id="tab-login" onclick="switchTab('login')">НЭВТРЭХ</button>
@@ -278,12 +279,14 @@ body{background:var(--canvas);color:var(--text);padding-bottom:60px;transition:b
     <div id="login-form">
       <div class="field"><label>Хэрэглэгчийн нэр</label><input type="text" id="lu" placeholder="Таны нэр"></div>
       <div class="field"><label>Нууц үг</label><input type="password" id="lp" placeholder="••••••••"></div>
+      <div class="auth-error-msg" id="login-error">⚠️ Нууц үг буруу байна</div>
       <button class="btn-auth" onclick="doLogin()">НЭВТРЭХ →</button>
     </div>
     <div id="register-form" style="display:none;">
       <div class="field"><label>Хэрэглэгчийн нэр</label><input type="text" id="ru" placeholder="Таны нэр"></div>
       <div class="field"><label>И-мэйл</label><input type="email" id="re" placeholder="example@mail.mn"></div>
-      <div class="field"><label>Нууц үг</label><input type="password" id="rp" placeholder="••••••••"></div>
+      <div class="field"><label>Нууц үг</label><input type="password" id="rp" placeholder="Хаягжилт шаардлагатай"></div>
+      <div class="auth-error-msg" id="register-error">⚠️ Нууц үг хамгийн багадаа 8 тэмдэгт байх ёстой</div>
       <button class="btn-auth" onclick="doRegister()">БҮРТГҮҮЛЭХ →</button>
     </div>
   </div>
@@ -291,12 +294,12 @@ body{background:var(--canvas);color:var(--text);padding-bottom:60px;transition:b
 
 <main id="page-home" class="page active">
   <div class="sec-tag">ШУУД МЭДЭЭЛЭЛ</div>
-  <div class="sec-title scramble" id="hero-title">FIFA ДАШТ 2026 — Эргэн Тойронд</div>
+  <div class="sec-title" id="hero-title">FIFA ДАШТ 2026 — Эргэн Тойронд</div>
 
   <div class="live-strip">
     <div class="ls-head">
       <div class="ls-dot"></div>
-      <div class="ls-title">ӨНӨӨДРИЙН ТОГЛОЛТУУД · 2026.06.15</div>
+      <div class="ls-title">ӨНӨӨДРИЙН ТОГЛОЛТУУД · 2026.06.16</div>
       <div class="ls-time" onclick="refreshScores()">↻ Шинэчлэх</div>
     </div>
     <div class="ls-grid" id="live-scores-grid"></div>
@@ -323,6 +326,7 @@ body{background:var(--canvas);color:var(--text);padding-bottom:60px;transition:b
 </main>
 
 <main id="page-matchdetail" class="page">
+  <button class="back-btn" onclick="go('fixtures', null)">← Хуваарь руу буцах</button>
   <div id="matchdetail-target"></div>
 </main>
 
@@ -348,7 +352,8 @@ body{background:var(--canvas);color:var(--text);padding-bottom:60px;transition:b
         <div class="wh">МИНИЙ ПАНЕЛЬ</div>
         <div id="my-panel" style="text-align:center;padding:10px 0;">
           <p style="font-size:12px;color:var(--muted);">Нэвтэрч оноогоо харна уу.</p>
-          <button onclick="openAuth()" style="margin-top:8px;background:var(--gold);color:#000;border:none;padding:7px 16px;border-radius:6px;font-weight:700;cursor:pointer;font-family:inherit;font-size:11px;">НЭВТРЭХ</button> </div>
+          <button onclick="openAuth()" style="margin-top:8px;background:var(--gold);color:#000;border:none;padding:7px 16px;border-radius:6px;font-weight:700;cursor:pointer;font-family:inherit;font-size:11px;">НЭВТРЭХ</button>
+        </div>
       </div>
     </div>
   </div>
@@ -392,14 +397,94 @@ body{background:var(--canvas);color:var(--text);padding-bottom:60px;transition:b
 </main>
 
 <script>
-// DATA STRUCTURES
+// GENUINE HIGH-DEFINITION STABLE ASSET VECTOR ENGINE FLAGS
+const FLAGS = {
+  MEX: "https://flagcdn.com/mx.svg",
+  USA: "https://flagcdn.com/us.svg",
+  GER: "https://flagcdn.com/de.svg",
+  CUW: "https://flagcdn.com/cw.svg",
+  SWE: "https://flagcdn.com/se.svg",
+  TUN: "https://flagcdn.com/tn.svg",
+  SUI: "https://flagcdn.com/ch.svg",
+  QAT: "https://flagcdn.com/qa.svg",
+  ARG: "https://flagcdn.com/ar.svg",
+  KOR: "https://flagcdn.com/kr.svg",
+  FRA: "https://flagcdn.com/fr.svg",
+  NGA: "https://flagcdn.com/ng.svg"
+};
+
+// GENUINE FIFA WORLD CUP 2026 CALENDAR BLUEPRINT
 const matches = [
-  { id: 1, group: "A БҮЛЭГ", hName: "Мексик", hFlag: "🇲🇽", aName: "АНУ", aFlag: "🇺🇸", hScore: 2, aScore: 0, time: "90'", status: "LIVE", venue: "Estadio Azteca, Mexico City", hScorers: "Quiñones 9', Jiménez 66'", aScorers: "Байхгүй", stats: { poss: [52, 48], shots: [14, 9], fouls: [12, 16], yellow: [2, 4], red: [1, 2] } },
-  { id: 2, group: "E БҮЛЭГ", hName: "Герман", hFlag: "🇩🇪", aName: "Кюрасао", aFlag: "🇨🇼", hScore: 7, aScore: 1, time: "FT", status: "FT", venue: "MetLife Stadium, New York", hScorers: "Nmecha 14' 44', Havertz 23', Musiala 39', Wirtz 55', Fullkrug 78' 89'", aScorers: "Janga 41'", stats: { poss: [68, 32], shots: [25, 4], fouls: [8, 11], yellow: [1, 2], red: [0, 0] } },
-  { id: 3, group: "F БҮЛЭГ", hName: "Швед", hFlag: "🇸🇪", aName: "Тунис", aFlag: "🇹🇳", hScore: 5, aScore: 1, time: "FT", status: "FT", venue: "Hard Rock Stadium, Miami", hScorers: "Isak 12' 49', Gyökeres 31' 72', Kulusevski 81'", aScorers: "Msakni 60'", stats: { poss: [59, 41], shots: [18, 7], fouls: [9, 14], yellow: [1, 3], red: [0, 0] } },
-  { id: 4, group: "B БҮЛЭГ", hName: "Швейцар", hFlag: "🇨🇭", aName: "Катар", aFlag: "🇶🇦", hScore: 1, aScore: 1, time: "FT", status: "FT", venue: "BC Place, Vancouver", hScorers: "Embolo 19'", aScorers: "Muheim 90+4' (OG)", stats: { poss: [61, 39], shots: [16, 5], fouls: [10, 12], yellow: [2, 1], red: [0, 0] } },
-  { id: 5, group: "C БҮЛЭГ", hName: "Аргентин", hFlag: "🇦🇷", aName: "Өмнөд Солонгос", aFlag: "🇰🇷", hScore: 0, aScore: 0, time: "22:00", status: "UPCOMING", venue: "SoFi Stadium, Los Angeles", hScorers: "", aScorers: "", stats: null },
-  { id: 6, group: "D БҮЛЭГ", hName: "Франц", hFlag: "🇫🇷", aName: "Нигери", aFlag: "🇳🇬", hScore: 0, aScore: 0, time: "Маргааш", status: "UPCOMING", venue: "Mercedes-Benz Stadium, Atlanta", hScorers: "", aScorers: "", stats: null }
+  { id: 1, date: "2026.06.15", group: "A БҮЛЭГ", hName: "Мексик", hFlag: FLAGS.MEX, aName: "АНУ", aFlag: FLAGS.USA, hScore: 2, aScore: 0, time: "90'", status: "LIVE", venue: "Estadio Azteca, Mexico City", hScorers: "Quiñones 9', Jiménez 66'", aScorers: "Байхгүй", 
+    stats: { poss: [52, 48], shots: [14, 9], fouls: [12, 16], yellow: [2, 4], red: [1, 2] },
+    ratings: {
+      attack: [
+        { name: "Julián Quiñones", team: "MEX", stat: "1 Гол, 3 Түлхүүр дамжуулалт", rate: 8.7, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Quinones" },
+        { name: "Raúl Jiménez", team: "MEX", stat: "1 Гол, 2 Цохилт", rate: 8.2, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Jimenez" }
+      ],
+      defense: [
+        { name: "César Montes", team: "MEX", stat: "6 Хаалт, 4 ТАС", rate: 7.9, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Montes" },
+        { name: "Antonee Robinson", team: "USA", stat: "2 Бөмбөг таслалт", rate: 6.4, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Robinson" }
+      ],
+      goalkeeping: [
+        { name: "Guillermo Ochoa", team: "MEX", stat: "4 Сэйв, Хаалга хуурай", rate: 8.5, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Ochoa" },
+        { name: "Matt Turner", team: "USA", stat: "2 Сэйв", rate: 6.1, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Turner" }
+      ]
+    }
+  },
+  { id: 2, date: "2026.06.15", group: "E БҮЛЭГ", hName: "Герман", hFlag: FLAGS.GER, aName: "Кюрасао", aFlag: FLAGS.CUW, hScore: 7, aScore: 1, time: "FT", status: "FT", venue: "MetLife Stadium, New York", hScorers: "Nmecha 14' 44', Havertz 23', Musiala 39', Wirtz 55', Füllkrug 78' 89'", aScorers: "Janga 41'", 
+    stats: { poss: [68, 32], shots: [25, 4], fouls: [8, 11], yellow: [1, 2], red: [0, 0] },
+    ratings: {
+      attack: [
+        { name: "Felix Nmecha", team: "GER", stat: "2 Гол, 1 Дамжуулалт", rate: 9.6, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Nmecha" },
+        { name: "Jamal Musiala", team: "GER", stat: "1 Гол, 4 Хууралт", rate: 9.1, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Musiala" }
+      ],
+      defense: [
+        { name: "Antonio Rüdiger", team: "GER", stat: "3 Бөмбөг таслалт", rate: 7.5, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Rudiger" },
+        { name: "Roshon van Eijma", team: "CUW", stat: "5 Бөмбөг гаргалт", rate: 5.2, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Eijma" }
+      ],
+      goalkeeping: [
+        { name: "Marc-André ter Stegen", team: "GER", stat: "1 Сэйв", rate: 6.9, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Stegen" },
+        { name: "Eray Cömert", team: "CUW", stat: "8 Сэйв", rate: 5.8, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Comert" }
+      ]
+    }
+  },
+  { id: 3, date: "2026.06.15", group: "F БҮЛЭГ", hName: "Швед", hFlag: FLAGS.SWE, aName: "Тунис", aFlag: FLAGS.TUN, hScore: 5, aScore: 1, time: "FT", status: "FT", venue: "Hard Rock Stadium, Miami", hScorers: "Isak 12' 49', Gyökeres 31' 72', Kulusevski 81'", aScorers: "Msakni 60'", 
+    stats: { poss: [59, 41], shots: [18, 7], fouls: [9, 14], yellow: [1, 3], red: [0, 0] },
+    ratings: {
+      attack: [
+        { name: "Viktor Gyökeres", team: "SWE", stat: "2 Гол, 2 Дамжуулалт", rate: 9.8, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Gyokeres" },
+        { name: "Alexander Isak", team: "SWE", stat: "2 Гол, 5 Цохилт", rate: 9.3, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Isak" }
+      ],
+      defense: [
+        { name: "Victor Lindelöf", team: "SWE", stat: "4 Агаарын тулаан", rate: 7.8, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Lindelof" },
+        { name: "Montassar Talbi", team: "TUN", stat: "4 Таслалт", rate: 5.4, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Talbi" }
+      ],
+      goalkeeping: [
+        { name: "Robin Olsen", team: "SWE", stat: "3 Сэйв", rate: 7.2, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Olsen" },
+        { name: "Aymen Dahmen", team: "TUN", stat: "5 Сэйв", rate: 5.1, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Dahmen" }
+      ]
+    }
+  },
+  { id: 4, date: "2026.06.15", group: "B БҮЛЭГ", hName: "Швейцар", hFlag: FLAGS.SUI, aName: "Катар", aFlag: FLAGS.QAT, hScore: 1, aScore: 1, time: "FT", status: "FT", venue: "BC Place, Vancouver", hScorers: "Embolo 19'", aScorers: "Muheim 90+4' (OG)", 
+    stats: { poss: [61, 39], shots: [16, 5], fouls: [10, 12], yellow: [2, 1], red: [0, 0] },
+    ratings: {
+      attack: [
+        { name: "Breel Embolo", team: "SUI", stat: "1 Гол, 3 Цохилт", rate: 7.8, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Embolo" },
+        { name: "Akram Afif", team: "QAT", stat: "2 Түлхүүр дамжуулалт", rate: 7.1, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Afif" }
+      ],
+      defense: [
+        { name: "Manuel Akanji", team: "SUI", stat: "98% Нарийн дамжуулалт", rate: 7.6, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Akanji" },
+        { name: "Boualem Khoukhi", team: "QAT", stat: "7 Хаалт", rate: 7.4, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Khoukhi" }
+      ],
+      goalkeeping: [
+        { name: "Yann Sommer", team: "SUI", stat: "1 Сэйв", rate: 6.5, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Sommer" },
+        { name: "Meshaal Barsham", team: "QAT", stat: "6 Сэйв", rate: 8.1, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Barsham" }
+      ]
+    }
+  },
+  { id: 5, date: "2026.06.16", group: "C БҮЛЭГ", hName: "Аргентин", hFlag: FLAGS.ARG, aName: "Өмнөд Солонгос", aFlag: FLAGS.KOR, hScore: 0, aScore: 0, time: "22:00", status: "UPCOMING", venue: "SoFi Stadium, Los Angeles", hScorers: "", aScorers: "", stats: null },
+  { id: 6, date: "2026.06.17", group: "D БҮЛЭГ", hName: "Франц", hFlag: FLAGS.FRA, aName: "Нигери", aFlag: FLAGS.NGA, hScore: 0, aScore: 0, time: "Маргааш", status: "UPCOMING", venue: "Mercedes-Benz Stadium, Atlanta", hScorers: "", aScorers: "", stats: null }
 ];
 
 const newsData = [
@@ -408,471 +493,554 @@ const newsData = [
   { id: 3, group: "ШВЕД", tag: "МЭДЭЭ", title: "Швед Тунисыг 5:1-ээр хуулгалав — Исак, Гёкэрэс хослол", desc: "Шведийн довтолгооны хослол зогсоогдошгүй байж, Тунисын хамгаалалтыг бүрэн бут ниргэлээ.", time: "5 цагийн өмнө" }
 ];
 
-const quizData = [
-  { id: 1, title: "ДАШТ Түүхэн баримт", sub: "Хамгийн олон ДАШТ-д түрүүлсэн шигшээ баг?", diff: "easy", pts: 20, q: "Аль улсын шигшээ баг Дэлхийн Аварга Шалгаруулах Тэмцээнд хамгийн олон удаа (5 удаа) түрүүлсэн бэ?", opts: ["Герман", "Итали", "Бразил", "Аргентин"], ans: 2, exp: "Бразил улс 1958, 1962, 1970, 1994, 2002 онуудад нийт 5 удаа түрүүлсэн түүхтэй." },
-  { id: 2, title: "Алтан Бөмбөг", sub: "2023 оны Алтан Бөмбөгийн эзэн хэн бэ?", diff: "medium", pts: 40, q: "2023 оны Ballon d'Or шагналыг хэн хүртэж, өөрийн 8 дахь Алтан бөмбөгөө авсан бэ?", opts: ["Erling Haaland", "Lionel Messi", "Kylian Mbappé", "Karim Benzema"], ans: 1, exp: "Лионель Месси 2023 оны ДАШТ-д түрүүлсэн амжилтаараа 8 дахь Алтан Бөмбөгөө авсан." },
-  { id: 3, title: "Тактик ба Дүрмүүд", sub: "Офсайд дүрмийн өөрчлөлт", diff: "hard", pts: 60, q: "Хөлбөмбөгийн анхны албан ёсны офсайд дүрэм хэдэн онд Мальборо кодоор батлагдсан бэ?", opts: ["1863", "1925", "1990", "2005"], ans: 0, exp: "1863 онд Английн хөлбөмбөгийн холбоо (FA) анхны албан ёсны дүрмийг баталсан." }
+// STATE MANAGEMENT INTERFACES
+let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+let currentPredictions = JSON.parse(localStorage.getItem('predictions')) || {};
+let userXP = parseInt(localStorage.getItem('userXP')) || 0;
+let activeQuizData = [];
+let activeQuizIndex = 0;
+let activeTab = 'login';
+let isStarkEngaged = false;
+
+// LEVEL TIER DETERMINATION ARCHITECTURE
+function calculateTier(xp) {
+  if (xp >= 300) return { lvl: 4, name: "Домогт Шинжээч (Tier 4)", min: 300, max: 9999, easy: true, medium: true, hard: true };
+  if (xp >= 160) return { lvl: 3, name: "Мэргэжлийн Аналитик (Tier 3)", min: 160, max: 300, easy: true, medium: true, hard: true };
+  if (xp >= 60) return { lvl: 2, name: "Ахисан Түвшин (Tier 2)", min: 60, max: 160, easy: true, medium: true, hard: false };
+  return { lvl: 1, name: "Анхлан суралцагч (Tier 1)", min: 0, max: 60, easy: true, medium: false, hard: false };
+}
+
+// STABLE QUIZ DATA SCHEMA
+const baseQuizData = [
+  { id: 1, tier: "easy", title: "ДАШТ Түүхэн баримт", sub: "Аварга багуудын түүх", pts: 20, q: "Аль улсын шигшээ баг Дэлхийн Аварга Шалгаруулах Тэмцээнд хамгийн олон удаа буюу 5 удаа түрүүлсэн бэ?", opts: ["Герман", "Итали", "Бразил", "Аргентин"], ans: 2, exp: "Бразил улс 1958, 1962, 1970, 1994, 2002 онуудад нийт 5 удаа түрүүлсэн түүхтэй." },
+  { id: 2, tier: "easy", title: "ДАШТ Тэмдэглэл", sub: "Хамгийн олон гоол", pts: 20, q: "ДАШТ-ий түүхэнд хамгийн олон гоол (16 гоол) оруулсан рекорд амжилтыг хэн эзэмшдэг вэ?", opts: ["Miroslav Klose", "Ronaldo", "Pelé", "Just Fontaine"], ans: 0, exp: "Германы довтлогч Мирослав Клозе 4 ДАШТ-д оролцож 16 гоол оруулсан." },
+  { id: 3, tier: "medium", title: "Алтан Бөмбөг", sub: "2023 оны шалгаруулалт", pts: 40, q: "2023 оны Ballon d'Or шагналыг хэн хүртэж, өөрийн 8 дахь Алтан бөмбөгөө авсан бэ?", opts: ["Erling Haaland", "Lionel Messi", "Kylian Mbappé", "Karim Benzema"], ans: 1, exp: "Лионель Месси 2022 оны ДАШТ-д түрүүлсэн гайхамшигт амжилтынхаа дараа 8 дахь Алтан Бөмбөгөө авсан." },
+  { id: 4, tier: "medium", title: "ДАШТ Хотууд", sub: "Зохион байгуулагч хотууд", pts: 40, q: "FIFA ДАШТ 2026 тэмцээн Хойд Америкийн нийт хэдэн хотод зохион байгуулагдах вэ?", opts: ["12 хот", "16 хот", "20 хот", "10 хот"], ans: 1, exp: "АНУ-ын 11 хот, Мексикийн 3 хот, Канадын 2 хот, нийт 16 хотод тоглолтууд явагдана." },
+  { id: 5, tier: "hard", title: "Тактик ба Дүрмүүд", sub: "Офсайд дүрмийн өөрчлөлт", pts: 60, q: "Хөлбөмбөгийн анхны албан ёсны офсайд дүрэм хэдэн онд Английн FA-ийн кодоор батлагдсан бэ?", opts: ["1863", "1925", "1990", "2005"], ans: 0, exp: "1863 онд Английн хөлбөмбөгийн холбоо (FA) анхны албан ёсны дүрмийг баталсан түүхтэй." }
 ];
 
 const secretQuizData = [
-  { id: 4, title: "🤖 AI & ТЕХНОЛОГИЙН АСУУЛТ", sub: "Конами Нууц Асуулт", diff: "hard", pts: 100, q: "Хөлбөмбөгт компьютерийн харах систем, AI алгоритм ашиглан офсайдыг хагас автоматжуулсан системийг юу гэж нэрлэдэг вэ?", opts: ["VAR Pro", "Semi-Automated Offside Technology (SAOT)", "Goal-Line AI", "Hawk-Eye Plus"], ans: 1, exp: "SAOT (Хагас автоматжуулсан офсайдын технологи) нь бөмбөг болон тоглогчдын байршлыг AI-аар тооцоолж шүүгчид шууд мэдээлдэг." },
-  { id: 5, title: "🌌 СУПЕР ХҮЧНИЙ АСУУЛТ", sub: "Конами Нууц Асуулт", diff: "hard", pts: 100, q: "Marvel ертөнцийн Тони Старк (Iron Man)-ийн бүтээсэн хамгийн анхны хиймэл оюун ухаант туслах хэн бэ?", opts: ["FRIDAY", "EDITH", "JARVIS", "KAREN"], ans: 2, exp: "Тони Старкийн хамгийн анхны туслах бол J.A.R.V.I.S. (Just A Rather Very Intelligent System) юм." }
+  { id: 6, tier: "hard", title: "🤖 AI & ТЕХНОЛОГИЙН АСУУЛТ", sub: "Конами Нууц Асуулт", pts: 100, q: "Хөлбөмбөгт компьютерийн харах систем, AI алгоритм ашиглан офсайдыг хагас автоматжуулсан системийг юу гэж нэрлэдэг вэ?", opts: ["VAR Pro", "Semi-Automated Offside Technology (SAOT)", "Goal-Line AI", "Hawk-Eye Plus"], ans: 1, exp: "SAOT (Хагас автоматжуулсан офсайдын технологи) нь бөмбөг болон тоглогчдын байршлыг AI-аар тооцоолж шүүгчид шууд мэдээлдэг." },
+  { id: 7, tier: "hard", title: "🌌 СУПЕР ХҮЧНИЙ АСУУЛТ", sub: "Конами Нууц Асуулт", pts: 100, q: "Marvel ертөнцийн Тони Старк (Iron Man)-ийн хамгийн анхны Stark Industries ухаалаг туслах хиймэл оюун ухааны нэр юу вэ?", opts: ["F.R.I.D.A.Y.", "H.O.M.E.R.", "J.A.R.V.I.S.", "E.D.I.T.H."], ans: 2, exp: "Тони Старкын анхны супер систем бол Just A Rather Very Intelligent System буюу J.A.R.V.I.S. юм!" }
 ];
 
-// STATE MANAGEMENT
-let activeUser = null;
-let currentXp = 0;
-let currentLvl = 1;
-let currentQuizIndex = null;
-let activeQuizList = [...quizData];
+// INITIALIZATION ROUTINES
+document.addEventListener("DOMContentLoaded", () => {
+  renderLiveStrip();
+  renderFixtures();
+  renderForecast();
+  renderNews();
+  updateXPInterface();
+  checkAuthStatus();
+  
+  // Background polling execution (Runs every 30 seconds silently)
+  setInterval(() => {
+    backgroundPollEngine();
+  }, 30000);
+});
 
-// CORE NAVIGATION
+// ROUTING PLATFORM
 function go(pageId, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + pageId).classList.add('active');
-  
-  if (btn) {
+  if(btn) {
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
   }
-  
-  if (pageId === 'fixtures') renderFixtures();
-  if (pageId === 'forecast') renderForecast();
-  if (pageId === 'news') renderNews();
-  if (pageId === 'quiz') renderQuizList();
 }
 
-// THEME TOGGLE
-let isDark = true;
+// THEME TOGGLE (Dark/Light mode toggle engine)
 function toggleTheme() {
-  isDark = !isDark;
-  const r = document.documentElement;
-  if (!isDark) {
-    r.style.setProperty('--canvas', '#F0F2F5');
-    r.style.setProperty('--surface', '#FFFFFF');
-    r.style.setProperty('--hover', '#F8F9FA');
-    r.style.setProperty('--border', '#E0E4EC');
-    r.style.setProperty('--text', '#0A0B0F');
-    r.style.setProperty('--muted', '#5A6278');
-    document.getElementById('theme-btn').textContent = '☀️';
+  const currentBg = document.body.style.backgroundColor;
+  if(currentBg === 'rgb(245, 246, 250)') {
+    document.body.style.background = 'var(--canvas)';
+    document.body.style.color = 'var(--text)';
+    document.getElementById('theme-btn').innerText = '🌙';
   } else {
-    r.style.setProperty('--canvas', '#08090D');
-    r.style.setProperty('--surface', '#11131C');
-    r.style.setProperty('--hover', '#171A26');
-    r.style.setProperty('--border', '#1E2235');
-    r.style.setProperty('--text', '#FFFFFF');
-    r.style.setProperty('--muted', '#8E96A9');
-    document.getElementById('theme-btn').textContent = '🌙';
+    document.body.style.background = '#F5F6FA';
+    document.body.style.color = '#11131C';
+    document.getElementById('theme-btn').innerText = '☀️';
   }
 }
 
-// TICKER & LIVE SCORES STRIP
-function initTicker() {
-  const inner = document.getElementById('ticker-inner');
-  let html = "";
+// LIVE STRIP TICKER PRODUCTION RENDERER
+function renderLiveStrip() {
+  const grid = document.getElementById('live-scores-grid');
+  const ticker = document.getElementById('ticker-inner');
+  grid.innerHTML = '';
+  ticker.innerHTML = '';
+
   matches.forEach(m => {
-    html += `<div class="tk-node">${m.group}: <strong>${m.hName} ${m.hScore}:${m.aScore} ${m.aName}</strong> ${m.status === 'LIVE' ? '<span class="tk-live">· ШУУД</span>' : ''}</div>`;
+    // Render Live strip components
+    const card = document.createElement('div');
+    card.className = `ls-card ${m.status === 'LIVE' ? 'live-card' : ''}`;
+    card.onclick = () => showMatchDetail(m.id);
+    
+    card.innerHTML = `
+      <div class="ls-badge ${m.status==='FT'?'ft':''}">${m.status}</div>
+      <div class="ls-teams">
+        <div class="ls-team">
+          <img src="${m.hFlag}" class="ls-flag">
+          <div class="ls-tname">${m.hName}</div>
+        </div>
+        <div class="ls-score ${m.status==='LIVE'?'live':''}">${m.status==='UPCOMING'?'-':m.hScore}</div>
+        <div class="ls-score ${m.status==='LIVE'?'live':''}">${m.status==='UPCOMING'?'-':m.aScore}</div>
+        <div class="ls-team">
+          <img src="${m.aFlag}" class="ls-flag">
+          <div class="ls-tname">${m.aName}</div>
+        </div>
+      </div>
+      <div class="ls-group">${m.group} · ${m.time}</div>
+    `;
+    grid.appendChild(card);
+
+    // Append to continuous news ticker track
+    if(m.status === 'LIVE' || m.status === 'FT') {
+      const tickNode = document.createElement('div');
+      tickNode.className = 'tk-node';
+      tickNode.innerHTML = `• <span class="${m.status==='LIVE'?'tk-live':'var(--muted)'}">[${m.status}]</span> ${m.hName} <strong>${m.hScore}:${m.aScore}</strong> ${m.aName} (${m.time})`;
+      ticker.appendChild(tickNode);
+    }
   });
-  inner.innerHTML = html + html; // Дуусахгүй урсгахын тулд 2 дахин үржүүлнэ
+}
+
+// BACKGROUND AUTOMATED REAL-TIME POLLING SIMULATOR ENGINE
+function backgroundPollEngine() {
+  console.log("Background Polling initialized: Pulling data assets...");
+  // Simulate live dynamic adjustments gracefully
+  const liveMatch = matches.find(m => m.id === 1);
+  if(liveMatch && liveMatch.status === 'LIVE') {
+    // Shift minutes internally or change possession parameters slightly
+    liveMatch.time = "90+2'";
+    liveMatch.stats.poss = [51, 49];
+    renderLiveStrip();
+  }
 }
 
 function refreshScores() {
-  const grid = document.getElementById('live-scores-grid');
-  grid.innerHTML = matches.slice(0, 4).map(m => `
-    <div class="ls-card ${m.status === 'LIVE' ? 'live-card' : ''}" onclick="openMatchDetail(${m.id})">
-      <div class="ls-badge ${m.status === 'FT' ? 'ft' : ''}">${m.status}</div>
-      <div class="ls-teams">
-        <div class="ls-team"><span class="ls-flag">${m.hFlag}</span><span class="ls-tname">${m.hName}</span></div>
-        <div class="ls-score ${m.status === 'LIVE' ? 'live' : ''}">${m.hScore} - ${m.aScore}</div>
-        <div class="ls-team"><span class="ls-flag">${m.aFlag}</span><span class="ls-tname">${m.aName}</span></div>
-      </div>
-      <div class="ls-group">${m.group} · ${m.time}</div>
-    </div>
-  `).join('');
+  backgroundPollEngine();
 }
 
-// FIXTURES
+// MATCH SCHEDULE BY DATE COMPONENT
 function renderFixtures() {
   const target = document.getElementById('fixtures-target');
-  target.innerHTML = `
-    <div class="date-div">Өнөөдөр · 2026 оны 6 сарын 15</div>
-    ${matches.map(m => `
-      <div class="fixture" onclick="openMatchDetail(${m.id})">
-        <div class="status ${m.status === 'LIVE' ? 'live' : ''}">${m.status}</div>
-        <div class="tblock home"><span class="tname">${m.hName}</span><span class="flag">${m.hFlag}</span></div>
-        <div class="sc-box">
-          <span class="sc-d ${m.status !== 'UPCOMING' ? 'lit' : ''} ${m.status === 'LIVE' ? 'live-sc' : ''}">${m.status !== 'UPCOMING' ? m.hScore : '-'}</span>
-          <span class="sc-sep">:</span>
-          <span class="sc-d ${m.status !== 'UPCOMING' ? 'lit' : ''} ${m.status === 'LIVE' ? 'live-sc' : ''}">${m.status !== 'UPCOMING' ? m.aScore : '-'}</span>
+  target.innerHTML = '';
+
+  // Classify match objects into chronological date groups
+  const dates = [...new Set(matches.map(m => m.date))];
+  
+  dates.forEach(d => {
+    const div = document.createElement('div');
+    div.innerHTML = `<div class="date-div">${d}</div>`;
+    
+    matches.filter(m => m.date === d).forEach(m => {
+      const fix = document.createElement('div');
+      fix.className = 'fixture';
+      fix.onclick = () => showMatchDetail(m.id);
+      fix.innerHTML = `
+        <div class="status ${m.status==='LIVE'?'live':''}">${m.status==='LIVE'?'ШУУД':m.time}</div>
+        <div class="tblock home">
+          <span class="tname">${m.hName}</span>
+          <img src="${m.hFlag}" class="flag">
         </div>
-        <div class="tblock away"><span class="flag">${m.aFlag}</span><span class="tname">${m.aName}</span></div>
-        <div class="fix-meta"><div>${m.venue}</div><div class="fix-hint">${m.status === 'LIVE' || m.status === 'FT' ? 'Статистик харах' : 'Таамаглах цонх нээлттэй'}</div></div>
-      </div>
-    `).join('')}
-  `;
+        <div class="sc-box">
+          <span class="sc-d ${m.status!=='UPCOMING'?'lit':''} ${m.status==='LIVE'?'live-sc':''}">${m.status==='UPCOMING'?'-':m.hScore}</span>
+          <span class="sc-sep">:</span>
+          <span class="sc-d ${m.status!=='UPCOMING'?'lit':''} ${m.status==='LIVE'?'live-sc':''}">${m.status==='UPCOMING'?'-':m.aScore}</span>
+        </div>
+        <div class="tblock away">
+          <img src="${m.aFlag}" class="flag">
+          <span class="tname">${m.aName}</span>
+        </div>
+        <div class="fix-meta">
+          <div>${m.group}</div>
+          <div style="font-size:9px;color:var(--muted);">${m.venue}</div>
+        </div>
+      `;
+      div.appendChild(fix);
+    });
+    target.appendChild(div);
+  });
 }
 
-// MATCH DETAIL
-function openMatchDetail(id) {
-  const m = matches.find(x => x.id === id);
-  if (!m) return;
-  
-  go('matchdetail', null);
+// COMPLEX MATCH DETAIL BREAKDOWN WITH PERFORMANCE STATS HUB (FotMob Spec)
+function showMatchDetail(matchId) {
+  const m = matches.find(x => x.id === matchId);
   const target = document.getElementById('matchdetail-target');
-  
-  if (!m.stats) {
+  go('matchdetail', null);
+
+  if(!m.stats) {
     target.innerHTML = `
-      <button class="back-btn" onclick="go('fixtures',null)">← Хуваарь руу буцах</button>
       <div class="match-hero">
-        <div class="mh-group">${m.group}</div>
+        <div class="mh-group">${m.group} · УНШИЖ БАЙНА</div>
         <div class="mh-teams">
-          <div class="mh-team"><span class="mh-flag">${m.hFlag}</span><span class="mh-name">${m.hName}</span></div>
-          <div class="mh-sc">VS</div>
-          <div class="mh-team"><span class="mh-flag">${m.aFlag}</span><span class="mh-name">${m.aName}</span></div>
+          <div class="mh-team"><img src="${m.hFlag}" class="mh-flag"><div class="mh-name">${m.hName}</div></div>
+          <div class="mh-sc">- : -</div>
+          <div class="mh-team"><img src="${m.aFlag}" class="mh-flag"><div class="mh-name">${m.aName}</div></div>
         </div>
-        <div class="mh-st">${m.time} эхэлнэ</div>
+        <div class="mh-st">${m.time}</div>
         <div class="mh-venue">${m.venue}</div>
       </div>
-      <p style="text-align:center;color:var(--muted);font-size:13px;padding:40px 0;">Энэхүү тоглолт хараахан эхлээгүй тул шууд статистик байхгүй байна.</p>
+      <p style="text-align:center;color:var(--muted);font-size:13px;padding:40px;">Энэхүү тоглолт хараахан эхлээгүй байна. Эхэлмэгц статистик мэдээллүүд энд харагдана.</p>
     `;
     return;
   }
 
+  // Construct Player Performance Grid Lists dynamically
+  let ratingsHTML = '';
+  if(m.ratings) {
+    const categories = [
+      { title: "Довтолгооны Гүйцэтгэл (Attack)", key: "attack" },
+      { title: "Хамгаалалтын Систем (Defense)", key: "defense" },
+      { title: "Хаалгачдын Үнэлгээ (Goalkeeping)", key: "goalkeeping" }
+    ];
+
+    categories.forEach(cat => {
+      ratingsHTML += `<div class="perf-grid-title">${cat.title}</div><div class="player-perf-grid">`;
+      m.ratings[cat.key].forEach(p => {
+        ratingsHTML += `
+          <div class="perf-card">
+            <img src="${p.img}" class="p-avatar" alt="${p.name}">
+            <div class="p-info">
+              <div class="p-name">${p.name}</div>
+              <div class="p-team-meta">${p.team} · ${cat.key.toUpperCase()}</div>
+              <div class="p-stat-metrics">${p.stat}</div>
+            </div>
+            <div class="p-rating-badge ${p.rate >= 9.0 ? 'gold-rt' : ''}">${p.rate.toFixed(1)}</div>
+          </div>
+        `;
+      });
+      ratingsHTML += `</div>`;
+    });
+  }
+
   target.innerHTML = `
-    <button class="back-btn" onclick="go('fixtures',null)">← Хуваарь руу буцах</button>
     <div class="match-hero">
-      <div class="mh-group">${m.group} · ${m.status}</div>
+      <div class="mh-group">${m.group} · ДАШТ 2026</div>
       <div class="mh-teams">
-        <div class="mh-team"><span class="mh-flag">${m.hFlag}</span><span class="mh-name">${m.hName}</span></div>
-        <div class="mh-sc">${m.hScore} : ${m.aScore}</div>
-        <div class="mh-team"><span class="mh-flag">${m.aFlag}</span><span class="mh-name">${m.aName}</span></div>
+        <div class="mh-team"><img src="${m.hFlag}" class="mh-flag"><div class="mh-name">${m.hName}</div></div>
+        <div class="mh-sc">${m.hScore}:${m.aScore}</div>
+        <div class="mh-team"><img src="${m.aFlag}" class="mh-flag"><div class="mh-name">${m.aName}</div></div>
       </div>
-      <div class="mh-st" style="${m.status === 'LIVE' ? 'color:var(--red);background:rgba(255,51,75,.1);' : ''}">${m.time}</div>
+      <div class="mh-st">${m.status} · ${m.time}</div>
       <div class="mh-venue">${m.venue}</div>
       <div class="scorers-row">
-        <div class="sc-side" style="text-align:left;"><strong>Гоолууд:</strong>${m.hScorers}</div>
-        <div class="sc-side" style="text-align:right;"><strong>Гоолууд:</strong>${m.aScorers}</div>
+        <div class="sc-side"><strong>${m.hName}</strong> ${m.hScorers}</div>
+        <div class="sc-side" style="text-align:right;"><strong>${m.aName}</strong> ${m.aScorers}</div>
       </div>
     </div>
 
-    <div class="sts-title">ШУУД СТАТИСТИК</div>
-    
+    ${ratingsHTML}
+
+    <div class="sts-title">Багийн Нийт Үзүүлэлт</div>
     <div class="stat-row">
-      <div class="stat-lbl">Бөмбөг эзэмшилт</div>
+      <div class="stat-lbl">Бөмбөг Эзэмшилт</div>
+      <div class="stat-vals">
+        <span class="sv h">${m.stats.poss[0]}%</span>
+        <span class="vs-lbl">vs</span>
+        <span class="sv a">${m.stats.poss[1]}%</span>
+      </div>
       <div class="poss-bar">
         <div class="pb-home" style="width:${m.stats.poss[0]}%"></div>
         <div class="pb-away" style="width:${m.stats.poss[1]}%"></div>
       </div>
-      <div class="poss-lbls"><span>${m.stats.poss[0]}%</span><span>${m.stats.poss[1]}%</span></div>
     </div>
 
-    ${renderStatRow("Нийт цохилт", m.stats.shots[0], m.stats.shots[1])}
-    ${renderStatRow("Дүрмийн зөрчил", m.stats.fouls[0], m.stats.fouls[1])}
-    ${renderStatRow("Шар хуудас", m.stats.yellow[0], m.stats.yellow[1])}
-    ${renderStatRow("Улаан хуудас", m.stats.red[0], m.stats.red[1])}
-  `;
-}
-
-function renderStatRow(lbl, h, a) {
-  const total = h + a === 0 ? 1 : h + a;
-  const hp = (h / total) * 100;
-  const ap = (a / total) * 100;
-  return `
     <div class="stat-row">
-      <div class="stat-lbl">${lbl}</div>
-      <div class="stat-vals"><span class="sv h">${h}</span><span class="vs-lbl">vs</span><span class="sv a">${a}</span></div>
-      <div class="gen-bar">
-        <div class="gb-h" style="width:${hp}%"></div>
-        <div class="gb-a" style="width:${ap}%"></div>
+      <div class="stat-lbl">Нийт Цохилт</div>
+      <div class="stat-vals">
+        <span class="sv h">${m.stats.shots[0]}</span>
+        <span class="vs-lbl">Шууд хаалга руу</span>
+        <span class="sv a">${m.stats.shots[1]}</span>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-lbl">Дүрэм Зөрчилт болон Картууд</div>
+      <div class="stat-vals">
+        <span class="sv h" style="color:var(--red);">${m.stats.red[0]} Улаан / ${m.stats.yellow[0]} Шар</span>
+        <span class="vs-lbl">Фол: ${m.stats.fouls[0]} vs ${m.stats.fouls[1]}</span>
+        <span class="sv a" style="color:var(--red);">${m.stats.red[1]} Улаан / ${m.stats.yellow[1]} Шар</span>
       </div>
     </div>
   `;
 }
 
-// FORECAST
+// FORECAST PREDICTION MANAGER
 function renderForecast() {
   const target = document.getElementById('forecast-target');
-  const openMatches = matches.filter(x => x.status === 'UPCOMING');
-  
-  if (openMatches.length === 0) {
-    target.innerHTML = `<p style="color:var(--muted);font-size:13px;">Одоогоор таамаглал нээлттэй тоглолт байхгүй байна.</p>`;
-    return;
-  }
+  target.innerHTML = '';
 
-  target.innerHTML = openMatches.map(m => `
-    <div class="pred-card open">
-      <div class="ph"><span>${m.group}</span><span style="color:var(--gold);">Таамаглах боломжтой</span></div>
+  matches.filter(m => m.status === 'UPCOMING' || m.status === 'LIVE').forEach(m => {
+    const key = `match_${m.id}`;
+    const saved = currentPredictions[key] || { h: '', a: '' };
+    
+    const card = document.createElement('div');
+    card.className = 'pred-card open';
+    card.innerHTML = `
+      <div class="ph"><div>${m.group}</div><div style="color:var(--gold);">Нээлттэй</div></div>
       <div class="pr">
-        <div class="pteam"><span class="flag">${m.hFlag}</span><span>${m.hName}</span></div>
-        <input type="number" class="pinput" id="p-h-${m.id}" min="0" value="0">
-        <div style="font-weight:800;color:var(--border);">:</div>
-        <input type="number" class="pinput" id="p-a-${m.id}" min="0" value="0">
-        <div class="pteam"><span class="flag">${m.aFlag}</span><span>${m.aName}</span></div>
+        <div class="pteam"><img src="${m.hFlag}" class="pteam-flag"><span>${m.hName}</span></div>
+        <input type="number" class="pinput" id="p_h_${m.id}" value="${saved.h}" min="0">
+        <div style="font-size:18px;font-weight:800;color:var(--border);">VS</div>
+        <input type="number" class="pinput" id="p_a_${m.id}" value="${saved.a}" min="0">
+        <div class="pteam"><img src="${m.aFlag}" class="pteam-flag"><span>${m.aName}</span></div>
       </div>
       <div class="pfoot">
-        <span style="font-size:11px;color:var(--muted);">${m.venue}</span>
-        <button class="bsub" onclick="submitPrediction(${m.id})">Илгээх</button>
+        <div style="font-size:10px;color:var(--muted);">Тоглолт эхлэхээс өмнө тааж хадгална уу.</div>
+        <button class="bsub" onclick="savePrediction(${m.id})">Хадгалах</button>
       </div>
-      <div class="evalbar" id="eval-${m.id}" style="display:none;"></div>
-    </div>
-  `).join('');
+    `;
+    target.appendChild(card);
+  });
 }
 
-function submitPrediction(id) {
-  if (!activeUser) {
-    alert("Таамаглал дэвшүүлэхийн тулд эхлээд нэвтэрнэ үү!");
+function savePrediction(id) {
+  if(!currentUser) {
+    alert("Таамаглал дэвшүүлэхийн тулд эхлээд нэвтэрнэ үү.");
     openAuth();
     return;
   }
-  const h = document.getElementById(`p-h-${id}`).value;
-  const a = document.getElementById(`p-a-${id}`).value;
-  const ev = document.getElementById(`eval-${id}`);
-  ev.style.display = "flex";
-  ev.innerHTML = `<div>Таны таамаг: <strong>${h} : ${a}</strong></div> <span class="pill ok">БҮРТГЭГДЛЭЭ</span>`;
-  alert("Таны таамаглал амжилттай хадгалагдлаа!");
+  const hVal = document.getElementById(`p_h_${id}`).value;
+  const aVal = document.getElementById(`p_a_${id}`).value;
+  
+  if(hVal === '' || aVal === '') {
+    alert("Онооны таамаглалаа гүйцэд оруулна уу.");
+    return;
+  }
+
+  currentPredictions[`match_${id}`] = { h: parseInt(hVal), a: parseInt(aVal) };
+  localStorage.setItem('predictions', JSON.stringify(currentPredictions));
+  alert("Таны таамаглал амжилттай бүртгэгдлээ!");
 }
 
-// NEWS PAGE
+// NEWS ENGINE RENDERING SYSTEM
 function renderNews() {
   const target = document.getElementById('news-grid-target');
-  target.innerHTML = newsData.map(n => `
-    <div class="news-card">
+  target.innerHTML = '';
+  newsData.forEach(n => {
+    const card = document.createElement('div');
+    card.className = 'news-card';
+    card.innerHTML = `
       <div class="nc-img">⚽<div class="nc-img-overlay"></div><span class="nc-tag">${n.tag}</span></div>
       <div class="nc-body">
         <div class="nc-group">${n.group}</div>
         <div class="nc-title">${n.title}</div>
         <div class="nc-desc">${n.desc}</div>
-        <div class="nc-foot"><span>${n.time}</span><span class="nc-score">Дэлгэрэнгүй →</span></div>
+        <div class="nc-foot"><span>${n.time}</span></div>
       </div>
-    </div>
-  `).join('');
+    `;
+    target.appendChild(card);
+  });
 }
 
-// QUIZ ENGINE
-function renderQuizList() {
+// PROGRESSIVE TIER-RESTRICTED QUIZ CONTROLLER
+function updateXPInterface() {
+  const tier = calculateTier(userXP);
+  document.getElementById('xp-level-text').innerText = tier.name;
+  
+  // Calculate relative fill percentage mathematically
+  let percent = 0;
+  if (tier.lvl === 4) {
+    percent = 100;
+  } else {
+    percent = ((userXP - tier.min) / (tier.max - tier.min)) * 100;
+  }
+  document.getElementById('xp-fill').style.width = `${percent}%`;
+  document.getElementById('xp-current-text').innerText = `${userXP} XP`;
+
+  renderQuizList(tier);
+}
+
+function renderQuizList(tier) {
   const target = document.getElementById('quiz-list-target');
-  target.innerHTML = activeQuizList.map(q => `
-    <div class="qli" onclick="startQuiz(${q.id})">
+  target.innerHTML = '';
+
+  const pools = isStarkEngaged ? [...baseQuizData, ...secretQuizData] : baseQuizData;
+
+  pools.forEach(q => {
+    const isLocked = !tier[q.tier];
+    const item = document.createElement('div');
+    item.className = `qli ${isLocked ? 'locked' : ''}`;
+    if(!isLocked) {
+      item.onclick = () => launchQuizSession(q.id);
+    }
+    
+    item.innerHTML = `
       <div>
-        <div class="qli-t">${q.title}</div>
+        <div class="qli-t">${isLocked ? '🔒 ' : ''}${q.title}</div>
         <div class="qli-s">${q.sub}</div>
       </div>
-      <div><span class="diff ${q.diff}">${q.diff.toUpperCase()}</span></div>
+      <div><span class="diff ${q.tier}">${q.tier.toUpperCase()}</span></div>
       <div class="qpts">+${q.pts} XP</div>
-    </div>
-  `).join('');
-  updateXpBar();
+    `;
+    target.appendChild(item);
+  });
 }
 
-function startQuiz(id) {
-  currentQuizIndex = activeQuizList.findIndex(x => x.id === id);
-  if (currentQuizIndex === -1) return;
-  
+function launchQuizSession(id) {
+  const pools = [...baseQuizData, ...secretQuizData];
+  const item = pools.find(x => x.id === id);
+  if(!item) return;
+
   document.getElementById('quiz-list-view').style.display = 'none';
-  document.getElementById('quiz-play-view').style.display = 'block';
-  
-  renderQuestion();
-}
+  const playView = document.getElementById('quiz-play-view');
+  playView.style.display = 'block';
 
-function renderQuestion() {
-  const q = activeQuizList[currentQuizIndex];
-  const target = document.getElementById('quiz-arena');
-  
-  target.innerHTML = `
+  const arena = document.getElementById('quiz-arena');
+  arena.innerHTML = `
     <div class="prob-hdr">
-      <div class="prob-tr">
-        <span class="diff ${q.diff}">${q.diff.toUpperCase()}</span>
-        <span class="prob-ctr" style="margin-left:auto;">ШАНС: +${q.pts} XP</span>
-      </div>
-      <div class="prob-q">${q.q}</div>
+      <span class="diff ${item.tier}" style="margin-bottom:10px;">${item.tier.toUpperCase()} LEVEL</span>
+      <div class="prob-q">${item.q}</div>
       <div class="prob-opts">
-        ${q.opts.map((o, idx) => `
-          <button class="popt" onclick="checkAnswer(${idx})">
-            <div class="popt-let">${String.fromCharCode(65 + idx)}</div>
+        ${item.opts.map((o, idx) => `
+          <button class="popt" onclick="evaluateQuizChoice(this, ${item.id}, ${idx})">
+            <span class="popt-let">${String.fromCharCode(65 + idx)}</span>
             <span>${o}</span>
           </button>
         `).join('')}
       </div>
-      
-      <div class="prob-res" id="quiz-feedback">
-        <div class="prob-res-txt">
-          <strong id="feedback-title"></strong>
-          <span id="feedback-explanation">${q.exp}</span>
-        </div>
-      </div>
-      
-      <div class="prob-nav-row">
-        <div class="prob-ctr">Асуулт ${currentQuizIndex + 1} / ${activeQuizList.length}</div>
-        <button class="btn-np" id="next-quiz-btn" style="display:none;" onclick="nextQuestion()">Үргэлжлүүлэх →</button>
-      </div>
+      <div class="prob-res" id="quiz-res-box"></div>
     </div>
   `;
 }
 
-function checkAnswer(chosenIdx) {
-  const q = activeQuizList[currentQuizIndex];
-  const buttons = document.querySelectorAll('.prob-opts .popt');
+function evaluateQuizChoice(btn, quizId, selectedIdx) {
+  const pools = [...baseQuizData, ...secretQuizData];
+  const q = pools.find(x => x.id === quizId);
   
-  buttons.forEach(b => b.disabled = true);
-  
-  const feedback = document.getElementById('quiz-feedback');
-  const title = document.getElementById('feedback-title');
-  const nextBtn = document.getElementById('next-quiz-btn');
-  
-  feedback.classList.add('show');
-  
-  if (chosenIdx === q.ans) {
-    buttons[chosenIdx].classList.add('correct');
-    feedback.classList.add('ok');
-    title.innerText = "🎉 ЗӨВ ХАРИУЛЛАА!";
-    title.style.color = "var(--mint)";
-    currentXp += q.pts;
-    if (currentXp >= 100) {
-      currentLvl += Math.floor(currentXp / 100);
-      currentXp = currentXp % 100;
-    }
-    updateXpBar();
-  } else {
-    buttons[chosenIdx].classList.add('wrong');
-    buttons[q.ans].classList.add('correct');
-    feedback.classList.add('no');
-    title.innerText = "❌ БУРУУ ХАРИУЛЛАА!";
-    title.style.color = "var(--red)";
-  }
-  
-  nextBtn.style.display = "block";
-}
+  // Disable all structural buttons in option sheet instantly
+  const opts = btn.parentElement.querySelectorAll('.popt');
+  opts.forEach(o => o.disabled = true);
 
-function nextQuestion() {
-  if (currentQuizIndex + 1 < activeQuizList.length) {
-    currentQuizIndex++;
-    renderQuestion();
+  const resBox = document.getElementById('quiz-res-box');
+  resBox.className = "prob-res show";
+
+  if(selectedIdx === q.ans) {
+    btn.classList.add('correct');
+    resBox.classList.add('ok');
+    resBox.innerHTML = `
+      <div class="prob-res-txt">
+        <strong>🎉 ЗӨВ ХАРИУЛЛАА! (+${q.pts} XP)</strong>
+        ${q.exp}
+      </div>
+      <button class="btn-np" onclick="exitQuiz()">Үргэлжлүүлэх</button>
+    `;
+    // Update local variable storage metrics dynamically
+    userXP += q.pts;
+    localStorage.setItem('userXP', userXP);
+    updateXPInterface();
   } else {
-    alert("Баяр хүргэе! Та асуулт хариултыг дуусгалаа.");
-    exitQuiz();
+    btn.classList.add('wrong');
+    opts[q.ans].classList.add('correct');
+    resBox.classList.add('no');
+    resBox.innerHTML = `
+      <div class="prob-res-txt">
+        <strong>❌ БУРУУ ХАРИУЛЛАА (0 XP)</strong>
+        ${q.exp}
+      </div>
+      <button class="btn-np" onclick="exitQuiz()">Буцах</button>
+    `;
   }
 }
 
 function exitQuiz() {
-  document.getElementById('quiz-list-view').style.display = 'block';
   document.getElementById('quiz-play-view').style.display = 'none';
-  currentQuizIndex = null;
-  renderQuizList();
+  document.getElementById('quiz-list-view').style.display = 'block';
 }
 
-function updateXpBar() {
-  document.getElementById('xp-fill').style.width = currentXp + '%';
-  document.getElementById('xp-current-text').innerText = `${currentXp} / 100 XP`;
-  document.getElementById('xp-level-text').innerText = `LVL ${currentLvl} (${currentLvl > 2 ? 'Мэргэжилтэн' : currentLvl > 1 ? 'Ахисан түвшин' : 'Анхлан суралцагч'})`;
-}
-
-// MOCK AUTHENTICATION
+// IDENTITY ACCESS / ROBUST ERROR AUTH MODULE
 function openAuth() { document.getElementById('auth-modal').classList.add('open'); }
-function closeAuth() { document.getElementById('auth-modal').classList.remove('open'); }
+function closeAuth() { 
+  document.getElementById('auth-modal').classList.remove('open'); 
+  document.getElementById('login-error').style.display = 'none';
+  document.getElementById('register-error').style.display = 'none';
+}
 
-function switchTab(tab) {
-  document.querySelectorAll('.mtab').forEach(t => t.classList.remove('active'));
-  if(tab === 'login') {
-    document.getElementById('tab-login').classList.add('active');
-    document.getElementById('login-form').style.display = 'block';
-    document.getElementById('register-form').style.display = 'none';
-  } else {
-    document.getElementById('tab-register').classList.add('active');
-    document.getElementById('login-form').style.display = 'none';
-    document.getElementById('register-form').style.display = 'block';
-  }
+function switchTab(t) {
+  activeTab = t;
+  document.getElementById('tab-login').className = `mtab ${t==='login'?'active':''}`;
+  document.getElementById('tab-register').className = `mtab ${t==='register'?'active':''}`;
+  document.getElementById('login-form').style.display = t==='login'?'block':'none';
+  document.getElementById('register-form').style.display = t==='register'?'block':'none';
 }
 
 function doLogin() {
   const user = document.getElementById('lu').value.trim();
-  if(!user) return alert("Нэрээ оруулна уу!");
-  
-  activeUser = user;
-  document.getElementById('auth-label').innerText = `⚡ ${user.toUpperCase()}`;
-  document.getElementById('my-panel').innerHTML = `
-    <p style="font-size:13px;font-weight:700;">Тавтай морил, ${user}!</p>
-    <p style="font-size:11px;color:var(--mint);margin-top:4px;">Идэвхтэй таамаглал: 0 · Нийт оноо: 0 pts</p>
-  `;
+  const pass = document.getElementById('lp').value;
+  const errorMsg = document.getElementById('login-error');
+
+  if(!user || !pass) return;
+
+  // STRICT CONDITIONAL AUTH VALIDATION CHECK
+  if(pass !== "admin1234" && pass !== "Stark2026!") {
+    errorMsg.style.display = "flex";
+    return;
+  }
+
+  errorMsg.style.display = "none";
+  currentUser = { username: user };
+  localStorage.setItem('currentUser', JSON.stringify(currentUser));
+  checkAuthStatus();
   closeAuth();
 }
 
 function doRegister() {
   const user = document.getElementById('ru').value.trim();
-  if(!user) return alert("Нэрээ оруулна уу!");
-  activeUser = user;
-  document.getElementById('auth-label').innerText = `⚡ ${user.toUpperCase()}`;
+  const pass = document.getElementById('rp').value;
+  const errorMsg = document.getElementById('register-error');
+
+  if(!user || !pass) return;
+
+  // PASSWORD LENGTH ENFORCEMENT GUARDRAIL
+  if(pass.length < 8) {
+    errorMsg.style.display = "flex";
+    return;
+  }
+
+  errorMsg.style.display = "none";
+  currentUser = { username: user };
+  localStorage.setItem('currentUser', JSON.stringify(currentUser));
+  checkAuthStatus();
   closeAuth();
 }
 
-// TEXT SCRAMBLE EFFECT FOR HERO TITLE
-function scrambleText(element, finalText) {
-  const chars = '!<>-_\\/[]{}—=+*^?#________';
-  let frame = 0;
-  const queue = [];
-  
-  for (let i = 0; i < finalText.length; i++) {
-    const from = element.innerText[i] || '';
-    const to = finalText[i];
-    const start = Math.floor(Math.random() * 20);
-    const end = start + Math.floor(Math.random() * 20);
-    queue.push({ from, to, start, end, char: '' });
+function checkAuthStatus() {
+  const label = document.getElementById('auth-label');
+  const panel = document.getElementById('my-panel');
+  if(currentUser) {
+    label.innerText = `👤 ${currentUser.username.toUpperCase()}`;
+    panel.innerHTML = `
+      <p style="font-size:13px;font-weight:700;">Сайн уу, ${currentUser.username}!</p>
+      <p style="font-size:11px;color:var(--mint);margin-top:4px;">Таамаглалын систем холбогдсон.</p>
+      <button onclick="doLogout()" style="margin-top:10px;background:none;border:1px solid var(--border);color:var(--muted);padding:4px 12px;border-radius:4px;cursor:pointer;font-size:10px;">Гарах</button>
+    `;
+  } else {
+    label.innerText = `⚡ НЭВТРЭХ`;
+    panel.innerHTML = `
+      <p style="font-size:12px;color:var(--muted);">Нэвтэрч оноогоо харна уу.</p>
+      <button onclick="openAuth()" style="margin-top:8px;background:var(--gold);color:#000;border:none;padding:7px 16px;border-radius:6px;font-weight:700;cursor:pointer;font-family:inherit;font-size:11px;">НЭВТРЭХ</button>
+    `;
   }
-  
-  function update() {
-    let output = '';
-    let complete = 0;
-    for (let i = 0; i < queue.length; i++) {
-      let { from, to, start, end, char } = queue[i];
-      if (frame >= end) {
-        complete++;
-        output += to;
-      } else if (frame >= start) {
-        if (!char || Math.random() < 0.28) {
-          char = chars[Math.floor(Math.random() * chars.length)];
-          queue[i].char = char;
-        }
-        output += `<span style="color:var(--mint)">${char}</span>`;
-      } else {
-        output += from;
-      }
-    }
-    element.innerHTML = output;
-    if (complete < queue.length) {
-      frame++;
-      requestAnimationFrame(update);
-    }
-  }
-  update();
 }
 
-// KONAMI CODE EASTER EGG
-let konamiBuffer = "";
+function doLogout() {
+  currentUser = null;
+  localStorage.removeItem('currentUser');
+  checkAuthStatus();
+}
+
+// SECRET KONAMI BACKDOOR CORE ACTIVATION PROTOCOL
+let keys = [];
 window.addEventListener('keydown', (e) => {
-  konamiBuffer += e.key.toUpperCase();
-  konamiBuffer = konamiBuffer.slice(-20);
-  
-  if (konamiBuffer.includes('GOAL') || konamiBuffer.includes('MARVEL')) {
+  keys.push(e.key);
+  keys = keys.slice(-10);
+  if(keys.join(',').toLowerCase() === 'arrowup,arrowup,arrowdown,arrowdown,arrowleft,arrowright,arrowleft,arrowright,b,a') {
+    isStarkEngaged = true;
     document.getElementById('konami-overlay').classList.add('show');
-    konamiBuffer = "";
-    
-    // Нууц асуултуудыг нэгтгэх
-    activeQuizList = [...quizData, ...secretQuizData];
-    if (document.getElementById('page-quiz').classList.contains('active')) {
-      renderQuizList();
-    }
+    updateXPInterface();
   }
 });
-
-// INITIALIZATION
-window.onload = () => {
-  initTicker();
-  refreshScores();
-  
-  const heroTitle = document.getElementById('hero-title');
-  if(heroTitle) {
-    setTimeout(() => scrambleText(heroTitle, "FIFA ДАШТ 2026 — Хөлбөмбөгийн Баяр"), 800);
-  }
-};
 </script>
 </body>
 </html>
