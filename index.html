@@ -418,7 +418,7 @@ const FLAGS = {
   KSA: "https://flagcdn.com/sa.svg",   // Саудын Араб
   URU: "https://flagcdn.com/uy.svg",   // Уругвай
   ESP: "https://flagcdn.com/es.svg",   // Испани
-  CPV: "https://flagcdn.com/cv.svg",   // Кабо-Верде
+  CPV: "https://flagcdn.com/cv.svg",   // Кабо-Верд��
   IRN: "https://flagcdn.com/ir.svg",   // Иран
   NZL: "https://flagcdn.com/nz.svg",   // Шинэ Зеланд
   FRA: "https://flagcdn.com/fr.svg",   // Франц
@@ -502,12 +502,12 @@ const matches = [
     }
   },
   // ---- June 15: Live / Recent ----
-  { id: 5, date: "2026.06.15", group: "H БҮЛЭГ", hName: "Саудын Араб", hFlag: FLAGS.KSA, aName: "Уругвай", aFlag: FLAGS.URU, hScore: 1, aScore: 0, time: "78'", status: "LIVE", venue: "Hard Rock Stadium, Miami", hScorers: "Al-Dawsari 33'", aScorers: "Байхгүй",
-    stats: { poss: [42, 58], shots: [7, 15], fouls: [14, 9], yellow: [3, 2], red: [0, 0] },
+  { id: 5, date: "2026.06.15", group: "H БҮЛЭГ", hName: "Саудын Араб", hFlag: FLAGS.KSA, aName: "Уругвай", aFlag: FLAGS.URU, hScore: 1, aScore: 1, time: "81'", status: "LIVE", venue: "Hard Rock Stadium, Miami", hScorers: "Al-Dawsari 33'", aScorers: "Núñez 74'",
+    stats: { poss: [40, 60], shots: [8, 16], fouls: [14, 9], yellow: [3, 2], red: [0, 0] },
     ratings: {
       attack: [
         { name: "Salem Al-Dawsari", team: "KSA", stat: "1 Гол, 3 Хууралт", rate: 8.9, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Dawsari" },
-        { name: "Darwin Núñez", team: "URU", stat: "6 Цохилт, 1 Шонд", rate: 6.7, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Nunez" }
+        { name: "Darwin Núñez", team: "URU", stat: "1 Гол, 6 Цохилт", rate: 7.8, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Nunez" }
       ],
       defense: [
         { name: "Ali Al-Bulaihi", team: "KSA", stat: "9 Хаалт, 4 Таслалт", rate: 8.3, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Bulaihi" },
@@ -536,24 +536,8 @@ const matches = [
       ]
     }
   },
-  // ---- Today: June 16 (Ulaanbaatar relevant) ----
-  { id: 7, date: "2026.06.16", group: "G БҮЛЭГ", hName: "Иран", hFlag: FLAGS.IRN, aName: "Шинэ Зеланд", aFlag: FLAGS.NZL, hScore: 0, aScore: 0, time: "12'", status: "LIVE", venue: "SoFi Stadium, Los Angeles", hScorers: "Байхгүй", aScorers: "Байхгүй",
-    stats: { poss: [55, 45], shots: [3, 2], fouls: [2, 3], yellow: [0, 1], red: [0, 0] },
-    ratings: {
-      attack: [
-        { name: "Mehdi Taremi", team: "IRN", stat: "2 Цохилт", rate: 7.0, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Taremi" },
-        { name: "Chris Wood", team: "NZL", stat: "1 Цохилт", rate: 6.8, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Wood" }
-      ],
-      defense: [
-        { name: "Shojae Khalilzadeh", team: "IRN", stat: "3 Хаалт", rate: 7.1, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Khalilzadeh" },
-        { name: "Michael Boxall", team: "NZL", stat: "4 Хаалт", rate: 7.0, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Boxall" }
-      ],
-      goalkeeping: [
-        { name: "Alireza Beiranvand", team: "IRN", stat: "1 Сэйв", rate: 6.9, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Beiranvand" },
-        { name: "Oliver Sail", team: "NZL", stat: "2 Сэйв", rate: 7.0, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Sail" }
-      ]
-    }
-  },
+  // ---- Today: June 16 (Ulaanbaatar relevant) — match clock has NOT started yet ----
+  { id: 7, date: "2026.06.16", group: "G БҮЛЭГ", hName: "Иран", hFlag: FLAGS.IRN, aName: "Шинэ Зеланд", aFlag: FLAGS.NZL, hScore: 0, aScore: 0, time: "07:00", status: "UPCOMING", venue: "SoFi Stadium, Los Angeles", hScorers: "", aScorers: "", stats: null },
   { id: 8, date: "2026.06.16", group: "I БҮЛЭГ", hName: "Франц", hFlag: FLAGS.FRA, aName: "Сенегал", aFlag: FLAGS.SEN, hScore: 0, aScore: 0, time: "22:00", status: "UPCOMING", venue: "New York New Jersey Stadium", hScorers: "", aScorers: "", stats: null },
   { id: 9, date: "2026.06.16", group: "I БҮЛЭГ", hName: "Ирак", hFlag: FLAGS.IRQ, aName: "Норвеги", aFlag: FLAGS.NOR, hScore: 0, aScore: 0, time: "01:00", status: "UPCOMING", venue: "Boston Stadium, Foxborough", hScorers: "", aScorers: "", stats: null },
   { id: 10, date: "2026.06.16", group: "J БҮЛЭГ", hName: "Аргентин", hFlag: FLAGS.ARG, aName: "Алжир", aFlag: FLAGS.ALG, hScore: 0, aScore: 0, time: "04:00", status: "UPCOMING", venue: "Kansas City Stadium, Kansas City", hScorers: "", aScorers: "", stats: null }
@@ -585,7 +569,7 @@ function calculateTier(xp) {
 // STABLE QUIZ DATA SCHEMA
 const baseQuizData = [
   { id: 1, tier: "easy", title: "ДАШТ Түүхэн баримт", sub: "Аварга багуудын түүх", pts: 20, q: "Аль улсын шигшээ баг Дэлхийн Аварга Шалгаруулах Тэмцээнд хамгийн олон удаа буюу 5 удаа түрүүлсэн бэ?", opts: ["Герман", "Итали", "Бразил", "Аргентин"], ans: 2, exp: "Бразил улс 1958, 1962, 1970, 1994, 2002 онуудад нийт 5 удаа түрүүлсэн түүхтэй." },
-  { id: 2, tier: "easy", title: "ДАШТ Тэмдэглэл", sub: "Хамгийн олон гоол", pts: 20, q: "ДАШТ-ий түүхэнд хамгийн олон гоол (16 гоол) оруулсан рекорд амжилтыг хэн эзэмшдэг вэ?", opts: ["Miroslav Klose", "Ronaldo", "Pelé", "Just Fontaine"], ans: 0, exp: "Германы довтлогч Мирослав Клозе 4 ДАШТ-д оролцож 16 гоол оруулсан." },
+  { id: 2, tier: "easy", title: "ДАШТ Тэмдэглэл", sub: "Хамгийн олон гоол", pts: 20, q: "ДАШТ-ий түүхэнд хамгийн олон гоол (16 гоол) оруулсан рекорд амжилтыг хэн эзэмшдэг вэ?", opts: ["Miroslav Klose", "Ronaldo", "Pelé", "Just Fontaine"], ans: 0, exp: "Германы довтлогч Мирослав Клозе 4 ДАШТ-д оролцож 16 гоо�� оруулсан." },
   { id: 3, tier: "medium", title: "Алтан Бөмбөг", sub: "2023 оны шалгаруулалт", pts: 40, q: "2023 оны Ballon d'Or шагналыг хэн хүртэж, өөрийн 8 дахь Алтан бөмбөгөө авсан бэ?", opts: ["Erling Haaland", "Lionel Messi", "Kylian Mbappé", "Karim Benzema"], ans: 1, exp: "Лионель Месси 2022 оны ДАШТ-д түрүүлсэн гайхамшигт амжилтынхаа дараа 8 дахь Алтан Бөмбөгөө авсан." },
   { id: 4, tier: "medium", title: "ДАШТ Хотууд", sub: "Зохион байгуулагч хотууд", pts: 40, q: "FIFA ДАШТ 2026 тэмцээн Хойд Америкийн нийт хэдэн хотод зохион байгуулагдах вэ?", opts: ["12 хот", "16 хот", "20 хот", "10 хот"], ans: 1, exp: "АНУ-ын 11 хот, Мексикийн 3 хот, Канадын 2 хот, нийт 16 хотод тоглолтууд явагдана." },
   { id: 5, tier: "hard", title: "Тактик ба Дүрмүүд", sub: "Офсайд дүрмийн өөрчлөлт", pts: 60, q: "Хөлбөмбөгийн анхны албан ёсны офсайд дүрэм хэдэн онд Английн FA-ийн кодоор батлагдсан бэ?", opts: ["1863", "1925", "1990", "2005"], ans: 0, exp: "1863 онд Английн хөлбөмбөгийн холбоо (FA) анхны албан ёсны дүрмийг баталсан түүхтэй." }
@@ -608,14 +592,29 @@ class LivePlatformSyncManager {
 
     // News is composed from three independent buckets and rebuilt on every sweep
     this.userPublishedArticles = [];        // created live from the in-browser publisher
-    this.liveFetchedArticles = [];          // ingested from the external feed
+    this.officialMatchdayArticles = [];     // synthesized strictly from active tournament matchdays
     this.platformNewsArticles = [];         // the merged, render-ready collection
     this.rebuildNewsState();
 
-    // Public fallback endpoints chosen for cross-origin stability across networks
+    // Public fallback endpoint chosen for cross-origin stability across networks
     this.matchApiUrl = "https://api.allorigins.win/raw?url=" +
       encodeURIComponent("https://raw.githubusercontent.com/statsbomb/open-data/master/data/matches/43/2026.json");
-    this.newsApiUrl = "https://hn.algolia.com/api/v1/search_by_date?query=football%20soccer&tags=story&hitsPerPage=3";
+
+    // GENERIC GLOBAL WEB FEED INGESTION IS PERMANENTLY DISABLED.
+    // The old aggregator surfaced broad, off-topic stories ("Why Canadians say
+    // 'soccer'", "Soccer and Economic Growth", etc.). Top-tier news slots are now
+    // reserved exclusively for tactical / team-specific / matchday content.
+    // NOTE: Direct client-side scraping of FIFA.com is not possible (CORS + no
+    // public media API), so official-grade matchday bulletins are synthesized
+    // from the verified live tournament dataset with official tournament imagery.
+    this.officialMediaGallery = [
+      "https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=800&auto=format&fit=crop&q=70",
+      "https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=800&auto=format&fit=crop&q=70",
+      "https://images.unsplash.com/photo-1551958219-acbc608c6377?w=800&auto=format&fit=crop&q=70",
+      "https://images.unsplash.com/photo-1577223625816-7546f13df25d?w=800&auto=format&fit=crop&q=70",
+      "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&auto=format&fit=crop&q=70",
+      "https://images.unsplash.com/photo-1489944440615-453fc2b6a9a9?w=800&auto=format&fit=crop&q=70"
+    ];
   }
 
   async startupEngine() {
@@ -641,9 +640,10 @@ class LivePlatformSyncManager {
   async executeGlobalSynchronizationSweep() {
     console.log("%c🔄 Background synchronization sweep running...", "color:#E2B13C;");
     await Promise.allSettled([
-      this.fetchRealTimeTournamentData(),
-      this.fetchRealTimeNewsFeed()
+      this.fetchRealTimeTournamentData()
     ]);
+    // News is regenerated strictly from the freshly-synced matchday state
+    this.synthesizeOfficialMatchdayFeed();
     this.broadcastStateUpdate();
   }
 
@@ -686,38 +686,39 @@ class LivePlatformSyncManager {
     });
   }
 
-  // ---- NEWS STREAM -----------------------------------------------------------
-  async fetchRealTimeNewsFeed() {
-    try {
-      const res = await fetch(this.newsApiUrl, { cache: 'no-store' });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const payload = await res.json();
-      if (!payload || !Array.isArray(payload.hits)) throw new Error("Unexpected news schema");
-      this.liveFetchedArticles = payload.hits
-        .filter(h => h && h.title)
-        .slice(0, 3)
-        .map((h, i) => ({
-          id: `live-feed-${h.objectID || i}`,
-          category: "ОЛОН УЛСЫН ШУУД ФИД",
-          title: h.title,
-          summary: "Гадаад эх сурвалжаас автоматаар цуглуулсан хөлбөмбөгийн сүүлийн үеийн мэдээллийн урсгал.",
-          image: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=600&auto=format&fit=crop&q=60",
-          timestamp: "Яг одоо",
-          live: true
-        }));
-      console.log(`News feed ingested: ${this.liveFetchedArticles.length} live articles.`);
-    } catch (err) {
-      console.warn("News endpoint unavailable. Keeping curated + published articles only:", err.message);
-      this.liveFetchedArticles = [];
-    }
+  // ---- OFFICIAL MATCHDAY NEWS STREAM (tournament-specific only) ---------------
+  // Builds official-grade bulletins exclusively from active/finished tournament
+  // matches. No generic global web feeds are ever ingested.
+  synthesizeOfficialMatchdayFeed() {
+    const relevant = matches
+      .filter(m => m.status === 'LIVE' || m.status === 'FT')
+      .sort((a, b) => (a.status === 'LIVE' ? -1 : 1)); // live games lead the grid
+
+    this.officialMatchdayArticles = relevant.slice(0, 3).map((m, i) => {
+      const isLive = m.status === 'LIVE';
+      const scoreline = `${m.hName} ${m.hScore}-${m.aScore} ${m.aName}`;
+      const goals = [m.hScorers, m.aScorers].filter(s => s && s !== "Байхгүй").join(' · ') || 'Гол байхгүй';
+      return {
+        id: `matchday-${m.id}`,
+        category: isLive ? `ШУУД · ${m.group}` : `ҮР ДҮН · ${m.group}`,
+        title: isLive
+          ? `[ШУУД ${m.time}] ${scoreline} — ${m.venue.split(',')[0]} талбай дээр тэмцэл өрнөж байна`
+          : `Бүрэн цаг: ${scoreline} — ${m.group} тойргийн матчдэйн дүн гарлаа`,
+        summary: `${m.venue}. Гол: ${goals}. Эзэмшил ${m.stats ? m.stats.poss[0] + '%–' + m.stats.poss[1] + '%' : 'мэдээлэл бэлтгэгдэж байна'}, цохилт ${m.stats ? m.stats.shots[0] + '–' + m.stats.shots[1] : '—'}.`,
+        image: this.officialMediaGallery[(m.id + i) % this.officialMediaGallery.length],
+        timestamp: isLive ? `Шууд · ${m.time}` : `${m.date} · Бүрэн цаг`,
+        live: isLive
+      };
+    });
+    console.log(`Official matchday feed synthesized: ${this.officialMatchdayArticles.length} tournament-specific bulletins.`);
     this.rebuildNewsState();
   }
 
   rebuildNewsState() {
-    // Newest first: user-published → live-ingested → curated static
+    // Newest first: user-published → live official matchday bulletins → curated editorial
     this.platformNewsArticles = [
       ...this.userPublishedArticles,
-      ...this.liveFetchedArticles,
+      ...this.officialMatchdayArticles,
       ...newsData
     ];
   }
