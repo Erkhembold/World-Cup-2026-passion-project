@@ -1,357 +1,648 @@
 <!DOCTYPE html>
 <html lang="mn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ШИГШЭЭ 2026 — ДАШТ Удирдлагын Төв</title>
-    <style>
-        :root {
-            --canvas: #08090D;
-            --surface: #11131C;
-            --surface-hover: #171A26;
-            --border: #1E2235;
-            --accent-mint: #00F299;
-            --accent-gold: #E2B13C;
-            --text-primary: #FFFFFF;
-            --text-secondary: #8E96A9;
-            --live-red: #FF334B;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ШИГШЭЭ 2026 — ДАШТ Таамаглал, Мэдээ мэдээлэл</title>
+<style>
+:root{--canvas:#08090D;--surface:#11131C;--hover:#171A26;--border:#1E2235;--mint:#00F299;--gold:#E2B13C;--text:#FFFFFF;--muted:#8E96A9;--red:#FF334B;}
+*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;}
+body{background:var(--canvas);color:var(--text);padding-bottom:60px;transition:background .3s,color .3s;}
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-        body { background-color: var(--canvas); color: var(--text-primary); -webkit-font-smoothing: antialiased; padding-bottom: 60px; }
+/* HEADER */
+.hdr{background:#000;border-bottom:1px solid var(--border);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:100;}
+.brand{font-weight:800;font-size:18px;letter-spacing:-.5px;text-transform:uppercase;cursor:pointer;}
+.brand span{color:var(--mint);font-weight:400;}
+.nav-wrap{display:flex;gap:4px;background:#0F1016;padding:4px;border-radius:8px;border:1px solid var(--border);}
+.nav-btn{background:transparent;border:none;color:var(--muted);font-weight:600;font-size:12px;padding:7px 14px;border-radius:6px;cursor:pointer;transition:all .2s;font-family:inherit;white-space:nowrap;}
+.nav-btn:hover{color:var(--text);}
+.nav-btn.active{background:var(--surface);color:var(--text);border:1px solid rgba(255,255,255,.05);}
+.hdr-right{display:flex;align-items:center;gap:10px;}
+.theme-btn{background:none;border:1px solid var(--border);color:var(--muted);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .3s;}
+.theme-btn:hover{border-color:var(--mint);color:var(--mint);}
+.auth-node{display:flex;align-items:center;gap:8px;font-weight:700;font-size:12px;background:rgba(0,242,153,.08);color:var(--mint);padding:6px 14px;border-radius:20px;border:1px solid rgba(0,242,153,.15);cursor:pointer;white-space:nowrap;}
 
-        /* PREMIUM EDITORIAL HEADER */
-        .app-header { background: #000000; border-bottom: 1px solid var(--border); height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; position: sticky; top: 0; z-index: 100; }
-        .brand-vector { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 18px; letter-spacing: -0.5px; text-transform: uppercase; }
-        .brand-vector span { color: var(--accent-mint); font-weight: 400; }
-        
-        .global-navigation { display: flex; gap: 6px; background: #0F1016; padding: 4px; border-radius: 8px; border: 1px solid var(--border); }
-        .nav-trigger { background: transparent; border: none; color: var(--text-secondary); font-weight: 600; font-size: 13px; padding: 8px 18px; border-radius: 6px; cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
-        .nav-trigger.active-state { background: var(--surface); color: var(--text-primary); box-shadow: 0 4px 12px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.05); }
+/* TICKER */
+.ticker{background:#040507;height:36px;display:flex;align-items:center;border-bottom:1px solid var(--border);overflow:hidden;}
+.tk-badge{background:var(--red);color:#fff;font-size:10px;font-weight:800;padding:0 14px;height:100%;display:flex;align-items:center;letter-spacing:.5px;white-space:nowrap;flex-shrink:0;}
+.tk-scroll{overflow:hidden;flex:1;}
+.tk-inner{display:inline-flex;white-space:nowrap;animation:runTicker 40s linear infinite;gap:36px;}
+@keyframes runTicker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.tk-node{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px;}
+.tk-node strong{color:var(--text);}
+.tk-live{color:var(--red);font-weight:700;font-size:10px;animation:blink 1s infinite;}
 
-        .auth-profile-node { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 12px; letter-spacing: 0.5px; background: rgba(0, 242, 153, 0.08); color: var(--accent-mint); padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(0, 242, 153, 0.15); }
+/* PAGES */
+.page{max-width:1280px;margin:0 auto;padding:28px 24px;display:none;}
+.page.active{display:block;}
+.sec-tag{font-size:10px;color:var(--mint);font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:4px;}
+.sec-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:22px;}
 
-        /* STREAMING LIVE TICKER */
-        .live-ticker-bar { background: #040507; height: 38px; display: flex; align-items: center; border-bottom: 1px solid var(--border); overflow: hidden; }
-        .ticker-badge { background: var(--live-red); color: #fff; font-size: 11px; font-weight: 800; padding: 0 16px; height: 100%; display: flex; align-items: center; letter-spacing: 0.5px; z-index: 5; box-shadow: 4px 0 15px rgba(0,0,0,0.5); }
-        .ticker-scroller { overflow: hidden; flex: 1; display: flex; align-items: center; }
-        .ticker-pipeline { display: inline-flex; white-space: nowrap; animation: runTicker 35s linear infinite; gap: 40px; }
-        @keyframes runTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        .ticker-node { font-size: 12px; color: var(--text-secondary); font-weight: 500; display: flex; align-items: center; gap: 8px; }
-        .ticker-node strong { color: var(--text-primary); font-weight: 700; }
+/* HOME */
+.home-hero-grid{display:grid;grid-template-columns:1.7fr 1fr;gap:20px;margin-bottom:32px;}
+.hero-card{background:linear-gradient(180deg,rgba(8,9,13,0) 10%,rgba(8,9,13,.96) 100%),url('https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1200&q=80');background-size:cover;background-position:center top;border-radius:12px;border:1px solid var(--border);min-height:380px;display:flex;flex-direction:column;justify-content:flex-end;padding:28px;cursor:pointer;transition:transform .2s;}
+.hero-card:hover{transform:scale(1.005);}
+.etag{background:rgba(226,177,60,.15);color:var(--gold);font-size:10px;font-weight:700;padding:3px 9px;border-radius:3px;display:inline-block;margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px;}
+.hero-card h3{font-size:22px;font-weight:800;line-height:1.25;margin-bottom:8px;}
+.hero-card p{color:var(--muted);font-size:13px;line-height:1.6;}
+.news-stack{display:flex;flex-direction:column;gap:10px;}
+.fi{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;transition:all .2s;}
+.fi:hover{border-color:rgba(255,255,255,.15);background:var(--hover);}
+.fi-meta{font-size:10px;color:var(--muted);text-transform:uppercase;margin-bottom:5px;display:flex;align-items:center;gap:6px;}
+.fi-meta span{color:var(--mint);font-weight:700;}
+.fi h4{font-size:13px;font-weight:700;line-height:1.4;}
 
-        /* VIEWPORT CONTAINERS */
-        .viewport-container { max-width: 1240px; margin: 0 auto; padding: 32px 24px; display: none; }
-        .viewport-container.active-viewport { display: block; }
+/* LIVE SCORES STRIP */
+.live-strip{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:24px;}
+.ls-head{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.ls-dot{width:8px;height:8px;border-radius:50%;background:var(--red);animation:blink 1s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.ls-title{font-size:12px;font-weight:700;color:var(--text);letter-spacing:.5px;}
+.ls-time{font-size:10px;color:var(--muted);margin-left:auto;cursor:pointer;color:var(--mint);}
+.ls-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.ls-card{background:#0d0d14;border:1px solid var(--border);border-radius:8px;padding:12px 10px;text-align:center;position:relative;}
+.ls-card.live-card{border-color:rgba(255,51,75,.3);}
+.ls-badge{position:absolute;top:8px;right:8px;font-size:9px;font-weight:800;color:var(--red);letter-spacing:.5px;}
+.ls-badge.ft{color:var(--muted);}
+.ls-teams{display:flex;align-items:center;justify-content:space-between;gap:4px;margin-bottom:6px;}
+.ls-team{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;}
+.ls-flag{font-size:20px;line-height:1;}
+.ls-tname{font-size:10px;font-weight:700;color:var(--muted);}
+.ls-score{font-size:20px;font-weight:900;color:var(--text);padding:0 6px;}
+.ls-score.live{color:var(--red);}
+.ls-group{font-size:9px;color:var(--border);margin-top:4px;}
 
-        /* SECTION HEADER TYPOGRAPHY */
-        .section-header-group { margin-bottom: 24px; }
-        .section-tag { font-size: 11px; color: var(--accent-mint); font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px; }
-        .section-headline { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; }
+/* FIXTURES */
+.date-div{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;background:#141622;padding:7px 14px;border-radius:6px;margin:20px 0 10px;display:inline-block;border:1px solid var(--border);}
+.fixture{display:grid;grid-template-columns:90px 1fr 110px 1fr 160px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:15px 20px;align-items:center;margin-bottom:8px;transition:all .15s;cursor:pointer;}
+.fixture:hover{border-color:rgba(0,242,153,.25);background:var(--hover);transform:translateX(3px);}
+.status{font-size:11px;font-weight:700;color:var(--muted);}
+.status.live{color:var(--red);display:flex;align-items:center;gap:5px;}
+.status.live::before{content:'';width:5px;height:5px;background:var(--red);border-radius:50%;animation:blink 1.2s infinite;}
+.tblock{display:flex;align-items:center;gap:9px;}
+.tblock.home{justify-content:flex-end;}
+.tblock.away{justify-content:flex-start;}
+.flag{font-size:20px;line-height:1;flex-shrink:0;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4));}
+.tname{font-size:14px;font-weight:700;white-space:nowrap;}
+.sc-box{display:flex;align-items:center;justify-content:center;gap:12px;background:rgba(0,0,0,.25);padding:5px 12px;border-radius:6px;border:1px solid rgba(255,255,255,.03);}
+.sc-d{font-size:20px;font-weight:800;color:var(--muted);width:18px;text-align:center;}
+.sc-d.lit{color:var(--text);}
+.sc-d.live-sc{color:var(--red);}
+.sc-sep{color:rgba(255,255,255,.12);font-weight:700;}
+.fix-meta{font-size:10px;color:var(--muted);text-align:right;line-height:1.6;}
+.fix-hint{font-size:9px;color:rgba(0,242,153,.45);margin-top:2px;}
 
-        /* GRID SPECIFICATIONS FOR HOME / FIFA NEWS */
-        .editorial-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 24px; margin-bottom: 40px; }
-        .hero-editorial-card { background: linear-gradient(180deg, rgba(8,9,13,0) 20%, rgba(8,9,13,0.95) 100%), url('https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=1200&q=80'); background-size: cover; background-position: center; border-radius: 12px; border: 1px solid var(--border); min-height: 420px; display: flex; flex-direction: column; justify-content: flex-end; padding: 32px; transition: transform 0.3s ease; }
-        .hero-editorial-card:hover { transform: scale(1.005); }
-        .editorial-meta-tag { background: rgba(226, 177, 60, 0.15); color: var(--accent-gold); font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 4px; display: inline-block; width: max-content; margin-bottom: 12px; text-transform: uppercase; }
-        .hero-editorial-card h3 { font-size: 28px; font-weight: 800; line-height: 1.2; margin-bottom: 12px; letter-spacing: -0.5px; }
-        .hero-editorial-card p { color: var(--text-secondary); font-size: 14px; line-height: 1.6; max-width: 90%; }
+/* MATCH DETAIL */
+.back-btn{display:flex;align-items:center;gap:8px;background:none;border:none;color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;padding:0;margin-bottom:24px;font-family:inherit;transition:color .15s;}
+.back-btn:hover{color:var(--text);}
+.match-hero{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:32px;margin-bottom:24px;text-align:center;}
+.mh-group{font-size:10px;color:var(--mint);font-weight:700;letter-spacing:2px;margin-bottom:18px;}
+.mh-teams{display:flex;align-items:center;justify-content:center;gap:28px;}
+.mh-team{display:flex;flex-direction:column;align-items:center;gap:8px;min-width:110px;}
+.mh-flag{font-size:48px;}
+.mh-name{font-size:17px;font-weight:800;}
+.mh-sc{font-size:48px;font-weight:900;letter-spacing:4px;}
+.mh-st{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1px;background:#1a1a2e;padding:3px 10px;border-radius:4px;margin-top:6px;}
+.mh-venue{font-size:12px;color:var(--muted);margin-top:14px;}
+.scorers-row{display:flex;justify-content:space-between;margin-top:18px;padding-top:16px;border-top:1px solid var(--border);}
+.sc-side{font-size:12px;color:var(--muted);line-height:1.8;}
+.sc-side strong{color:var(--text);display:block;margin-bottom:2px;}
+.sts-title{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin:22px 0 10px;padding-bottom:7px;border-bottom:1px solid var(--border);}
+.stat-row{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:8px;}
+.stat-lbl{font-size:10px;font-weight:700;color:var(--muted);text-align:center;margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px;}
+.stat-vals{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.sv{font-size:18px;font-weight:800;}
+.sv.h{color:var(--mint);}
+.sv.a{color:var(--gold);}
+.vs-lbl{font-size:11px;color:var(--muted);}
+.poss-bar{position:relative;height:10px;background:var(--border);border-radius:5px;overflow:hidden;}
+.pb-home{position:absolute;left:0;top:0;height:100%;background:var(--mint);border-radius:5px 0 0 5px;}
+.pb-away{position:absolute;right:0;top:0;height:100%;background:var(--gold);border-radius:0 5px 5px 0;}
+.poss-lbls{display:flex;justify-content:space-between;margin-top:5px;font-size:10px;}
+.poss-lbls span:first-child{color:var(--mint);}
+.poss-lbls span:last-child{color:var(--gold);}
+.gen-bar{position:relative;height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin-top:6px;}
+.gb-h{position:absolute;left:0;top:0;height:100%;background:rgba(0,242,153,.55);border-radius:3px 0 0 3px;}
+.gb-a{position:absolute;right:0;top:0;height:100%;background:rgba(226,177,60,.55);border-radius:0 3px 3px 0;}
 
-        .news-feed-stack { display: flex; flex-direction: column; gap: 12px; }
-        .feed-item { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; cursor: pointer; transition: all 0.2s ease; }
-        .feed-item:hover { border-color: rgba(255,255,255,0.15); background: var(--surface-hover); }
-        .feed-item .meta { font-size: 11px; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
-        .feed-item .meta span { color: var(--accent-mint); font-weight: bold; }
-        .feed-item h4 { font-size: 15px; font-weight: 700; line-height: 1.4; }
+/* PREDICTIONS */
+.pred-wrap{display:grid;grid-template-columns:1fr 320px;gap:28px;}
+.pred-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:14px;position:relative;overflow:hidden;}
+.pred-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--border);}
+.pred-card.open::before{background:var(--gold);}
+.ph{display:flex;justify-content:space-between;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.05);padding-bottom:10px;margin-bottom:16px;}
+.pr{display:flex;align-items:center;justify-content:space-between;padding:8px 0;}
+.pteam{display:flex;flex-direction:column;align-items:center;gap:6px;width:30%;text-align:center;}
+.pteam .flag{font-size:32px;}
+.pteam span{font-size:13px;font-weight:700;}
+.pinput{width:52px;height:52px;background:#07080C;border:1px solid var(--border);border-radius:8px;text-align:center;font-size:22px;font-weight:800;color:var(--gold);outline:none;font-family:inherit;}
+.pinput:focus{border-color:var(--gold);}
+.pfoot{display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.05);}
+.bsub{background:var(--gold);color:#000;border:none;padding:9px 18px;font-weight:700;font-size:11px;border-radius:6px;cursor:pointer;text-transform:uppercase;font-family:inherit;}
+.evalbar{background:rgba(255,255,255,.02);border:1px dashed var(--border);border-radius:8px;padding:11px 14px;display:flex;align-items:center;justify-content:space-between;margin-top:14px;font-size:12px;}
+.pill{font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;text-transform:uppercase;}
+.pill.ok{background:rgba(0,242,153,.12);color:var(--mint);}
+.pill.no{background:rgba(255,51,75,.12);color:var(--red);}
+.widget-col{display:flex;flex-direction:column;gap:16px;}
+.widget{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;}
+.wh{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;display:flex;justify-content:space-between;}
+.rr{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.02);}
+.rn{font-size:11px;font-weight:800;color:var(--muted);width:20px;}
+.rn.g{color:var(--gold);}
+.rname{font-size:12px;font-weight:600;flex:1;}
+.rpts{font-size:12px;font-weight:700;color:var(--mint);}
 
-        /* CONTEXTUAL FIXTURE LISTS (THE EDITORIAL REFACTOR) */
-        .date-divider { font-size: 12px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; background: #141622; padding: 8px 16px; border-radius: 6px; margin: 24px 0 12px; display: inline-block; border: 1px solid var(--border); }
-        .fixture-strip { display: grid; grid-template-columns: 100px 1fr 110px 1fr 140px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px 24px; align-items: center; margin-bottom: 10px; transition: all 0.15s ease; }
-        .fixture-strip:hover { border-color: rgba(255,255,255,0.12); background: var(--surface-hover); }
-        
-        .status-node { font-size: 12px; font-weight: 700; color: var(--text-secondary); letter-spacing: 0.5px; }
-        .status-node.live-pulse { color: var(--live-red); display: flex; align-items: center; gap: 6px; }
-        .status-node.live-pulse::before { content: ''; width: 6px; height: 6px; background: var(--live-red); border-radius: 50%; animation: blink 1.2s infinite; }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+/* NEWS PAGE */
+.news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px;}
+.news-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;cursor:pointer;transition:all .2s;}
+.news-card:hover{border-color:rgba(255,255,255,.15);transform:translateY(-2px);}
+.nc-img{height:160px;background:linear-gradient(135deg,#1a1a2e,#11131C);display:flex;align-items:center;justify-content:center;font-size:48px;position:relative;}
+.nc-img-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(8,9,13,.8));}
+.nc-tag{position:absolute;top:10px;left:10px;background:rgba(226,177,60,.9);color:#000;font-size:9px;font-weight:800;padding:2px 7px;border-radius:3px;text-transform:uppercase;letter-spacing:.5px;}
+.nc-body{padding:14px;}
+.nc-group{font-size:9px;font-weight:700;color:var(--mint);letter-spacing:1px;text-transform:uppercase;margin-bottom:5px;}
+.nc-title{font-size:13px;font-weight:700;line-height:1.4;margin-bottom:6px;}
+.nc-desc{font-size:11px;color:var(--muted);line-height:1.5;}
+.nc-foot{display:flex;align-items:center;justify-content:space-between;margin-top:10px;font-size:10px;color:var(--muted);}
+.nc-score{font-weight:700;color:var(--text);}
 
-        /* THE CONTEXTUAL FLAG BLOCK ARCHITECTURE */
-        .team-wrapper { display: flex; align-items: center; gap: 14px; width: 100%; }
-        .team-wrapper.home-side { justify-content: flex-end; text-align: right; }
-        .team-wrapper.away-side { justify-content: flex-start; text-align: left; }
-        .team-label { font-size: 15px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.2px; }
-        .flag-frame { font-size: 24px; line-height: 1; display: inline-block; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); }
+/* QUIZ */
+.quiz-list-hdr{display:grid;grid-template-columns:1fr 100px 90px 70px;padding:8px 18px;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);margin-bottom:4px;}
+.qli{display:grid;grid-template-columns:1fr 100px 90px 70px;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:7px;cursor:pointer;transition:all .15s;}
+.qli:hover{border-color:rgba(0,242,153,.25);background:var(--hover);transform:translateX(4px);}
+.qli-t{font-size:13px;font-weight:700;}
+.qli-s{font-size:10px;color:var(--muted);margin-top:2px;}
+.diff{font-size:10px;font-weight:800;padding:2px 9px;border-radius:4px;text-transform:uppercase;display:inline-block;}
+.diff.easy{background:rgba(0,242,153,.1);color:var(--mint);}
+.diff.medium{background:rgba(226,177,60,.1);color:var(--gold);}
+.diff.hard{background:rgba(255,51,75,.1);color:var(--red);}
+.qpts{font-size:12px;font-weight:800;color:var(--mint);text-align:right;}
+.prob-hdr{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:16px;}
+.prob-tr{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+.prob-title{font-size:20px;font-weight:800;}
+.prob-q{font-size:16px;font-weight:700;line-height:1.5;margin-bottom:6px;}
+.prob-q-mn{font-size:12px;color:var(--muted);margin-bottom:24px;line-height:1.5;}
+.prob-opts{display:flex;flex-direction:column;gap:8px;}
+.popt{background:#07080C;border:1.5px solid var(--border);border-radius:8px;padding:13px 16px;font-size:13px;font-weight:600;color:var(--text);cursor:pointer;text-align:left;font-family:inherit;display:flex;align-items:center;gap:10px;transition:all .15s;}
+.popt:hover:not([disabled]){border-color:rgba(255,255,255,.2);background:var(--hover);}
+.popt-let{width:22px;height:22px;border-radius:4px;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:var(--muted);flex-shrink:0;}
+.popt.correct{border-color:var(--mint);background:rgba(0,242,153,.06);}
+.popt.correct .popt-let{background:rgba(0,242,153,.2);color:var(--mint);}
+.popt.wrong{border-color:var(--red);background:rgba(255,51,75,.06);}
+.popt.wrong .popt-let{background:rgba(255,51,75,.2);color:var(--red);}
+.prob-res{display:none;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-top:14px;}
+.prob-res.show{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;}
+.prob-res.ok{border-color:rgba(0,242,153,.2);}
+.prob-res.no{border-color:rgba(255,51,75,.2);}
+.prob-res-txt{font-size:12px;color:var(--muted);line-height:1.6;}
+.prob-res-txt strong{color:var(--text);display:block;margin-bottom:3px;}
+.btn-np{background:var(--gold);color:#000;border:none;padding:9px 20px;font-weight:700;font-size:12px;border-radius:6px;cursor:pointer;white-space:nowrap;font-family:inherit;}
+.prob-nav-row{display:flex;justify-content:space-between;align-items:center;margin-top:16px;}
+.prob-ctr{font-size:11px;color:var(--muted);}
+.btn-gray{background:var(--surface);border:1px solid var(--border);color:var(--muted);padding:7px 14px;border-radius:6px;cursor:pointer;font-size:11px;font-family:inherit;}
+.btn-gray:hover{color:var(--text);}
 
-        .score-centerpiece { display: flex; align-items: center; justify-content: center; gap: 16px; background: rgba(0,0,0,0.2); padding: 6px 16px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.03); }
-        .score-digit { font-size: 22px; font-weight: 800; color: var(--text-secondary); width: 20px; text-align: center; }
-        .score-digit.active-digit { color: var(--text-primary); font-weight: 900; }
-        .score-colon { color: rgba(255,255,255,0.15); font-weight: 700; }
+/* XP BAR */
+.xp-bar-wrap{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin-bottom:20px;}
+.xp-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.xp-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
+.xp-level{font-size:12px;font-weight:800;color:var(--gold);}
+.xp-track{height:8px;background:var(--border);border-radius:4px;overflow:hidden;}
+.xp-fill{height:100%;background:linear-gradient(90deg,var(--mint),var(--gold));border-radius:4px;width:0%;transition:width .6s cubic-bezier(.4,0,.2,1);}
+.xp-sub{font-size:10px;color:var(--muted);margin-top:5px;display:flex;justify-content:space-between;}
 
-        .fixture-metadata { font-size: 11px; color: var(--text-secondary); text-align: right; line-height: 1.5; }
+/* TEXT SCRAMBLE */
+.scramble{display:inline-block;cursor:default;}
 
-        /* PREDICTIONS LAYOUT COMPONENT */
-        .prediction-workspace { display: grid; grid-template-columns: 1fr 340px; gap: 32px; }
-        .predict-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 16px; position: relative; overflow: hidden; }
-        .predict-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--border); }
-        .predict-card.active-predict::before { background: var(--accent-gold); }
-        
-        .predict-header { display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 12px; margin-bottom: 20px; }
-        .predict-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; }
-        .predict-team-box { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 30%; text-align: center; }
-        .predict-team-box .flag-frame { font-size: 40px; }
-        .predict-team-box span { font-size: 14px; font-weight: 700; }
-        .predict-input { width: 56px; height: 56px; background: #07080C; border: 1px solid var(--border); border-radius: 8px; text-align: center; font-size: 24px; font-weight: 800; color: var(--accent-gold); outline: none; transition: border-color 0.2s; }
-        .predict-input:focus { border-color: var(--accent-gold); }
+/* KONAMI OVERLAY */
+.konami-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:999;align-items:center;justify-content:center;flex-direction:column;gap:20px;}
+.konami-overlay.show{display:flex;}
+.konami-title{font-size:48px;font-weight:900;color:var(--mint);text-align:center;animation:glitch 2s infinite;}
+@keyframes glitch{0%,100%{text-shadow:2px 0 var(--red),-2px 0 var(--gold)}50%{text-shadow:-2px 0 var(--mint),2px 0 var(--red)}}
+.konami-sub{font-size:16px;color:var(--muted);text-align:center;}
+.konami-close{background:var(--gold);color:#000;border:none;padding:12px 28px;border-radius:8px;font-weight:800;font-size:14px;cursor:pointer;font-family:inherit;}
 
-        .predict-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.05); }
-        .btn-action-submit { background: var(--accent-gold); color: #000; border: none; padding: 10px 20px; font-weight: 700; font-size: 12px; border-radius: 6px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.3px; transition: opacity 0.15s; }
-        .btn-action-submit:hover { opacity: 0.9; }
-
-        .evaluation-bar { background: rgba(255,255,255,0.02); border: 1px dashed var(--border); border-radius: 8px; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; margin-top: 16px; font-size: 13px; }
-        .eval-status-pill { font-size: 10px; font-weight: 800; padding: 4px 8px; border-radius: 4px; text-transform: uppercase; }
-        .eval-status-pill.match-correct { background: rgba(0, 242, 153, 0.12); color: var(--accent-mint); }
-        .eval-status-pill.match-wrong { background: rgba(255, 51, 75, 0.12); color: var(--live-red); }
-
-        /* WIDGET PANEL SPECIFICATIONS */
-        .widget-column { display: flex; flex-direction: column; gap: 20px; }
-        .panel-widget { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
-        .widget-headline { font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; }
-        
-        .rank-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.02); }
-        .rank-number { font-size: 12px; font-weight: 800; color: var(--text-secondary); width: 24px; }
-        .rank-number.gold-podium { color: var(--accent-gold); }
-        .rank-username { font-size: 13px; font-weight: 600; flex: 1; }
-        .rank-score { font-size: 13px; font-weight: 700; color: var(--accent-mint); }
-
-        @media (max-width: 900px) {
-            .editorial-grid, .prediction-workspace { grid-template-columns: 1fr; }
-            .fixture-strip { grid-template-columns: 1fr 1fr; gap: 16px; }
-            .fixture-strip > :nth-child(3) { grid-column: span 2; order: 3; }
-            .fixture-metadata { text-align: left; }
-        }
-    </style>
+/* AUTH MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:200;align-items:center;justify-content:center;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;width:100%;max-width:400px;position:relative;}
+.modal h2{font-size:20px;font-weight:800;margin-bottom:5px;}
+.modal-tabs{display:flex;margin:18px 0;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.mtab{flex:1;background:transparent;border:none;color:var(--muted);font-size:12px;font-weight:600;padding:9px;cursor:pointer;font-family:inherit;}
+.mtab.active{background:var(--hover);color:var(--text);}
+.field{margin-bottom:13px;}
+.field label{display:block;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;}
+.field input{width:100%;background:#07080C;border:1px solid var(--border);border-radius:8px;padding:11px 13px;font-size:13px;color:var(--text);outline:none;font-family:inherit;}
+.field input:focus{border-color:var(--mint);}
+.btn-auth{width:100%;background:var(--mint);color:#000;border:none;padding:12px;font-weight:800;font-size:13px;border-radius:8px;cursor:pointer;margin-top:6px;text-transform:uppercase;font-family:inherit;}
+.mclose{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;}
+</style>
 </head>
 <body>
 
-<header class="app-header">
-    <div class="brand-vector">ШИГШЭЭ <span>2026</span></div>
-    <nav class="global-navigation">
-        <button class="nav-trigger active-state" onclick="navigateViewport('home', this)">НҮҮР</button>
-        <button class="nav-trigger" onclick="navigateViewport('fixtures', this)">ТОГЛОЛТУУД</button>
-        <button class="nav-trigger" onclick="navigateViewport('forecast', this)">ТААМАГЛАЛ</button>
-    </nav>
-    <div class="auth-profile-node" id="profile-node">ХЭРЭГЛЭГЧ: ЭРХЭМБОЛД</div>
-</header>
-
-<div class="live-ticker-bar">
-    <div class="ticker-badge">ШУУД ОНОО</div>
-    <div class="ticker-scroller">
-        <div class="ticker-pipeline" id="ticker-pipeline-target"></div>
-    </div>
+<div class="konami-overlay" id="konami-overlay">
+  <div class="konami-title">⚽ GOAL! ⚽</div>
+  <div class="konami-sub">Та нууц код оруулсан байна!<br>Хамгийн хэцүү асуултууд нээгдлээ.</div>
+  <button class="konami-close" onclick="document.getElementById('konami-overlay').classList.remove('show')">Хаах</button>
 </div>
 
-<!-- CONTAINER: HOME VIEWPORT -->
-<main id="viewport-home" class="viewport-container active-viewport">
-    <div class="section-header-group">
-        <div class="section-tag">ОНЦЛОХ МЭДЭЭ МЭДЭЭЛЭЛ</div>
-        <h2 class="section-headline">FIFA ДАШТ-ий Эргэн Тойронд</h2>
+<header class="hdr">
+  <div class="brand" onclick="go('home',null)">ШИГШЭЭ <span>2026</span></div>
+  <nav class="nav-wrap">
+    <button class="nav-btn active" onclick="go('home',this)">НҮҮР</button>
+    <button class="nav-btn" onclick="go('fixtures',this)">ТОГЛОЛТУУД</button>
+    <button class="nav-btn" onclick="go('forecast',this)">ТААМАГЛАЛ</button>
+    <button class="nav-btn" onclick="go('news',this)">МЭДЭЭ</button>
+    <button class="nav-btn" onclick="go('quiz',this)">QUIZ</button>
+  </nav>
+  <div class="hdr-right">
+    <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="Dark/Light mode">🌙</button>
+    <div class="auth-node" id="auth-node" onclick="openAuth()"><span id="auth-label">⚡ НЭВТРЭХ</span></div>
+  </div>
+</header>
+
+<div class="ticker">
+  <div class="tk-badge">ШУУД ОНОО</div>
+  <div class="tk-scroll"><div class="tk-inner" id="ticker-inner"></div></div>
+</div>
+
+<div class="modal-overlay" id="auth-modal">
+  <div class="modal">
+    <button class="mclose" onclick="closeAuth()">✕</button>
+    <h2>Тавтай морилно уу</h2>
+    <p style="font-size:12px;color:var(--muted);margin-top:4px;">Таамаглалаа хадгалж найзуудтайгаа өрсөлдөнө үү</p>
+    <div class="modal-tabs">
+      <button class="mtab active" id="tab-login" onclick="switchTab('login')">НЭВТРЭХ</button>
+      <button class="mtab" id="tab-register" onclick="switchTab('register')">БҮРТГҮҮЛЭХ</button>
     </div>
-    
-    <div class="editorial-grid">
-        <div class="hero-editorial-card">
-            <span class="editorial-meta-tag">МЕКСИК · А БҮЛЭГ</span>
-            <h3>Ацтека цэнгэлдэхэд түүхэн нээлт: Мехико хот 3 улаан хуудастай галзуу тоглолтыг үдлээ</h3>
-            <p>2026 оны Дэлхийн Аварга Шалгаруулах Тэмцэнэий нээлтийн тоглолтод талбайн эзэн Мексикийн шигшээ баг Өмнөд Африктай тулж 2:0 харьцаатайгаар чухал ялалт байгуулав. Рауль Хименес ДАШТ-ий түүхэн дэх анхны гоолоо оруулсан бөгөөд тоглолтын явцад шүүгч 3 улаан хуудас гаргасан нь түүхэнд бичигдлээ.</p>
-        </div>
-        <div class="news-feed-stack">
-            <div class="feed-item">
-                <div class="meta">АВСТРАЛИ · <span>ШУУД МЭДЭЭ</span></div>
-                <h4>Соккерүүс тактикийн давамгайллаар Туркийн хамгаалалтыг сэтлэв (2:0)</h4>
-            </div>
-            <div class="feed-item">
-                <div class="meta">КАНАД · <span>ТОГЛОЛТЫН ОНЦЛОХ</span></div>
-                <h4>Кайл Ларины түүхэн гоол Канадын шигшээд ДАШТ-ий анхны оноог авчирлаа</h4>
-            </div>
-            <div class="feed-item">
-                <div class="meta">ЯПОН · <span>ТАВЦАНД ОЙРХОН</span></div>
-                <h4>Такефуса Кубо: "Бид Катарын туршлагаас суралцсан, энэ удаа илүү итгэлтэй байна"</h4>
-            </div>
-        </div>
+    <div id="login-form">
+      <div class="field"><label>Хэрэглэгчийн нэр</label><input type="text" id="lu" placeholder="Таны нэр"></div>
+      <div class="field"><label>Нууц үг</label><input type="password" id="lp" placeholder="••••••••"></div>
+      <button class="btn-auth" onclick="doLogin()">НЭВТРЭХ →</button>
     </div>
+    <div id="register-form" style="display:none;">
+      <div class="field"><label>Хэрэглэгчийн нэр</label><input type="text" id="ru" placeholder="Таны нэр"></div>
+      <div class="field"><label>И-мэйл</label><input type="email" id="re" placeholder="example@mail.mn"></div>
+      <div class="field"><label>Нууц үг</label><input type="password" id="rp" placeholder="••••••••"></div>
+      <button class="btn-auth" onclick="doRegister()">БҮРТГҮҮЛЭХ →</button>
+    </div>
+  </div>
+</div>
+
+<main id="page-home" class="page active">
+  <div class="sec-tag">ШУУД МЭДЭЭЛЭЛ</div>
+  <div class="sec-title scramble" id="hero-title">FIFA ДАШТ 2026 — Эргэн Тойронд</div>
+
+  <div class="live-strip">
+    <div class="ls-head">
+      <div class="ls-dot"></div>
+      <div class="ls-title">ӨНӨӨДРИЙН ТОГЛОЛТУУД · 2026.06.15</div>
+      <div class="ls-time" onclick="refreshScores()">↻ Шинэчлэх</div>
+    </div>
+    <div class="ls-grid" id="live-scores-grid"></div>
+  </div>
+
+  <div class="home-hero-grid">
+    <div class="hero-card" onclick="go('news',null)">
+      <span class="etag">МЕКСИК · А БҮЛЭГ · НЭЭЛТ</span>
+      <h3>Ацтека цэнгэлдэхэд түүхэн нээлт — 3 улаан хуудас, 2:0 ялалт</h3>
+      <p>Жулиан Киньонес 9'-д ДАШТ 2026-ийн анхны голыг оруулав. Рауль Хименес 66'-д баталгааллаа. Нийт 3 улаан хуудас — нээлтийн тоглолтын дэлхийн рекорд.</p>
+    </div>
+    <div class="news-stack">
+      <div class="fi" onclick="go('news',null)"><div class="fi-meta">ГЕРМАН · <span>E БҮЛЭГ</span></div><h4>Герман Кюрасаог 7:1-ээр нураав — Felix Nmecha, Havertz, Musiala голчилсон нь нээлтийн шатны хамгийн том ялалт боллоо</h4></div>
+      <div class="fi" onclick="go('news',null)"><div class="fi-meta">ШВЕД · <span>F БҮЛЭГ</span></div><h4>Швед Тунисыг 5:1-ээр хулгайлав — Исак, Гёкэрэс хосолсон нь дэлхийг гайхшируулав</h4></div>
+      <div class="fi" onclick="go('news',null)"><div class="fi-meta">ШВЕЙЦАР · <span>B БҮЛЭГ</span></div><h4>Мюхаймын 90+4'-ийн өөрийн гол Катарт нэг оноо бэлэглэв — Швейцар гашуун буцаа амсав</h4></div>
+    </div>
+  </div>
 </main>
 
-<!-- CONTAINER: FIXTURES & ARCHIVE VIEWPORT -->
-<main id="viewport-fixtures" class="viewport-container">
-    <div class="section-header-group">
-        <div class="section-tag">ТЭМЦЭЭНИЙ ХУВААРЬ БОЛОН ҮР ДҮН</div>
-        <h2 class="section-headline">Тоглолтууд</h2>
-    </div>
-    <div id="fixtures-render-target"></div>
+<main id="page-fixtures" class="page">
+  <div class="sec-tag">ТЭМЦЭЭНИЙ ХУВААРЬ</div>
+  <div class="sec-title">Тоглолтууд</div>
+  <div id="fixtures-target"></div>
 </main>
 
-<!-- CONTAINER: FORECAST & EVALUATION VIEWPORT -->
-<main id="viewport-forecast" class="viewport-container">
-    <div class="section-header-group">
-        <div class="section-tag">ФАН ТААМАГЛАЛЫН ТЭМЦЭЭН</div>
-        <h2 class="section-headline">Оноо Цуглуулах Цонх</h2>
+<main id="page-matchdetail" class="page">
+  <div id="matchdetail-target"></div>
+</main>
+
+<main id="page-forecast" class="page">
+  <div class="sec-tag">ФАН ТААМАГЛАЛЫН ТЭМЦЭЭН</div>
+  <div class="sec-title">Оноо Цуглуулах Цонх</div>
+  <div class="pred-wrap">
+    <div id="forecast-target"></div>
+    <div class="widget-col">
+      <div class="widget">
+        <div class="wh">ШИЛДГҮҮД <span>ОНОО</span></div>
+        <div class="rr"><span class="rn g">1</span><span class="rname" id="u1n">Бат-Эрдэнэ</span><span class="rpts" id="u1p">340 pts</span></div>
+        <div class="rr"><span class="rn g">2</span><span class="rname">Тэргэлсайхан</span><span class="rpts">315 pts</span></div>
+        <div class="rr"><span class="rn g">3</span><span class="rname">Мөнхбаяр</span><span class="rpts">298 pts</span></div>
+        <div class="rr"><span class="rn">4</span><span class="rname">Эрхэмбилэг</span><span class="rpts">275 pts</span></div>
+        <div class="rr"><span class="rn">5</span><span class="rname">Мөнх-Ирээдүй</span><span class="rpts">260 pts</span></div>
+      </div>
+      <div class="widget">
+        <div class="wh">ОНООНЫ ЖУРАМ</div>
+        <p style="font-size:11px;color:var(--muted);line-height:1.9;">✓ Яг зөв дүн → <strong style="color:#fff;">+15 оноо</strong><br>✓ Зөв хаалт → <strong style="color:#fff;">+10 оноо</strong><br>✓ Зөв ялагч → <strong style="color:#fff;">+5 оноо</strong><br>✗ Буруу → <strong style="color:var(--muted);">0 оноо</strong></p>
+      </div>
+      <div class="widget" id="my-widget">
+        <div class="wh">МИНИЙ ПАНЕЛЬ</div>
+        <div id="my-panel" style="text-align:center;padding:10px 0;">
+          <p style="font-size:12px;color:var(--muted);">Нэвтэрч оноогоо харна уу.</p>
+          <button onclick="openAuth()" style="margin-top:8px;background:var(--gold);color:#000;border:none;padding:7px 16px;border-radius:6px;font-weight:700;cursor:pointer;font-family:inherit;font-size:11px;">НЭВТРЭХ</button> </div>
+      </div>
     </div>
-    
-    <div class="prediction-workspace">
-        <div id="forecast-render-target"></div>
-        
-        <div class="widget-column">
-            <div class="panel-widget">
-                <div class="widget-headline">ЕРӨНХИЙ ЛИДЭРҮҮД <span>ОНОО</span></div>
-                <div class="rank-item"><span class="rank-number gold-podium">1</span><span class="rank-username">Эрхэмболд</span><span class="rank-score">340 pts</span></div>
-                <div class="rank-item"><span class="rank-number gold-podium">2</span><span class="rank-username">Тэргэлсайхан</span><span class="rank-score">315 pts</span></div>
-                <div class="rank-item"><span class="rank-number gold-podium">3</span><span class="rank-username">Мөнхбаяр</span><span class="rank-score">298 pts</span></div>
-                <div class="rank-item"><span class="rank-number">4</span><span class="rank-username">Эрхэмбилэг</span><span class="rank-score">275 pts</span></div>
-                <div class="rank-item"><span class="rank-number">5</span><span class="rank-username">Мөнх-Ирээдүй</span><span class="rank-score">260 pts</span></div>
-            </div>
-            <div class="panel-widget">
-                <div class="widget-headline">ОНООНЫ ЖУРАМ</div>
-                <p style="font-size:12px; color:var(--text-secondary); line-height: 1.6;">Тоглолтын үндсэн ялагчийг зөв таавал: <strong style="color:#fff;">+5 оноо</strong><br>Гоолын зөрүүг зөв таавал: <strong style="color:#fff;">+10 оноо</strong><br>Тоглолтын харьцааг яг таг таавал: <strong style="color:#fff;">+15 оноо</strong></p>
-            </div>
-        </div>
+  </div>
+</main>
+
+<main id="page-news" class="page">
+  <div class="sec-tag">ТЭМЦЭЭНИЙ МЭДЭЭ</div>
+  <div class="sec-title">Мэдээ — FIFA ДАШТ 2026</div>
+  <div class="news-grid" id="news-grid-target"></div>
+</main>
+
+<main id="page-quiz" class="page">
+  <div class="sec-tag">ХӨГЖӨӨНТ АСУУЛТ ХАРИУЛТ</div>
+  <div class="sec-title">Хөлбөмбөгийн IQ Сэргээх Цонх</div>
+  
+  <div class="xp-bar-wrap">
+    <div class="xp-top">
+      <div class="xp-label">Таны XP түвшин</div>
+      <div class="xp-level" id="xp-level-text">LVL 1 (Анхлан суралцагч)</div>
     </div>
+    <div class="xp-track"><div class="xp-fill" id="xp-fill"></div></div>
+    <div class="xp-sub">
+      <span id="xp-current-text">0 / 100 XP</span>
+      <span>Дараагийн түвшинд +100 XP</span>
+    </div>
+  </div>
+
+  <div id="quiz-list-view">
+    <div class="quiz-list-hdr">
+      <div>АСУУДЛЫН НЭР</div>
+      <div>ХҮНДРЭЛ</div>
+      <div style="text-align:right;">ШАНС</div>
+    </div>
+    <div id="quiz-list-target"></div>
+  </div>
+
+  <div id="quiz-play-view" style="display:none;">
+    <button class="back-btn" onclick="exitQuiz()">← Буцах</button>
+    <div id="quiz-arena"></div>
+  </div>
 </main>
 
 <script>
-    // CORE SYSTEM DATA REFACTOR (REAL-TIME CONTEXT FROM FIFA OFFICIALS JUNE 2026)
-    const worldCupDataEngine = {
-        fixtures: [
-            { id: 1, date: "2026.06.11 ПҮРЭВ", group: "А Бүлэг", homeFlag: "🇲🇽", homeName: "Мексик", awayFlag: "🇿🇦", awayName: "Өмнөд Африк", homeScore: 2, awayScore: 0, status: "FT", venue: "Azteca Stadium", userForecast: "2-0", validation: "correct" },
-            { id: 2, date: "2026.06.11 ПҮРЭВ", group: "А Бүлэг", homeFlag: "🇰🇷", homeName: "Өмнөд Солонгос", awayFlag: "🇨🇿", awayName: "Чех", homeScore: 2, awayScore: 1, status: "FT", venue: "Guadalajara Stadium", userForecast: "1-1", validation: "wrong" },
-            { id: 3, date: "2026.06.12 БААСАН", group: "B Бүлэг", homeFlag: "🇨🇦", homeName: "Канад", awayFlag: "🇧🇦", awayName: "Босни Герцеговин", homeScore: 1, awayScore: 1, status: "FT", venue: "Toronto Stadium", userForecast: "1-1", validation: "correct" },
-            { id: 4, date: "2026.06.12 БААСАН", group: "D Бүлэг", homeFlag: "🇺🇸", homeName: "АНУ", awayFlag: "🇵🇾", awayName: "Парагвай", homeScore: 4, awayScore: 1, status: "FT", venue: "Los Angeles Stadium", userForecast: "3-0", validation: "wrong" },
-            { id: 5, date: "2026.06.13 БЯМБА", group: "D Бүлэг", homeFlag: "🇦🇺", homeName: "Австрали", awayFlag: "🇹🇷", awayName: "Турк", homeScore: 2, awayScore: 0, status: "FT", venue: "BC Place Vancouver", userForecast: "2-0", validation: "correct" },
-            { id: 6, date: "2026.06.13 БЯМБА", group: "C Бүлэг", homeFlag: "🇧🇷", homeName: "Бразил", awayFlag: "🇲🇦", awayName: "Марокко", homeScore: 1, awayScore: 1, status: "FT", venue: "New York NJ Stadium", userForecast: "2-1", validation: "wrong" },
-            { id: 7, date: "2026.06.14 НЯМ", group: "E Бүлэг", homeFlag: "🇨🇮", homeName: "Кот-д'Ивуар", awayFlag: "🇪🇨", awayName: "Эквадор", homeScore: null, awayScore: null, status: "LIVE", venue: "Philadelphia Stadium", userForecast: null, validation: null },
-            { id: 8, date: "2026.06.14 НЯМ", group: "E Бүлэг", homeFlag: "🇩🇪", homeName: "Герман", awayFlag: "🇨🇼", awayName: "Кюрасао", homeScore: null, awayScore: null, status: "21:45", venue: "Houston Stadium", userForecast: null, validation: null },
-            { id: 9, date: "2026.06.15 ДАВАА", group: "H Бүлэг", homeFlag: "🇪🇸", homeName: "Испани", awayFlag: "🇨🇻", awayName: "Кабо Верде", homeScore: null, awayScore: null, status: "12:00", venue: "Atlanta Stadium", userForecast: null, validation: null }
-        ]
-    };
+// DATA STRUCTURES
+const matches = [
+  { id: 1, group: "A БҮЛЭГ", hName: "Мексик", hFlag: "🇲🇽", aName: "АНУ", aFlag: "🇺🇸", hScore: 2, aScore: 0, time: "90'", status: "LIVE", venue: "Estadio Azteca, Mexico City", hScorers: "Quiñones 9', Jiménez 66'", aScorers: "Байхгүй", stats: { poss: [52, 48], shots: [14, 9], fouls: [12, 16], yellow: [2, 4], red: [1, 2] } },
+  { id: 2, group: "E БҮЛЭГ", hName: "Герман", hFlag: "🇩🇪", aName: "Кюрасао", aFlag: "🇨🇼", hScore: 7, aScore: 1, time: "FT", status: "FT", venue: "MetLife Stadium, New York", hScorers: "Nmecha 14' 44', Havertz 23', Musiala 39', Wirtz 55', Fullkrug 78' 89'", aScorers: "Janga 41'", stats: { poss: [68, 32], shots: [25, 4], fouls: [8, 11], yellow: [1, 2], red: [0, 0] } },
+  { id: 3, group: "F БҮЛЭГ", hName: "Швед", hFlag: "🇸🇪", aName: "Тунис", aFlag: "🇹🇳", hScore: 5, aScore: 1, time: "FT", status: "FT", venue: "Hard Rock Stadium, Miami", hScorers: "Isak 12' 49', Gyökeres 31' 72', Kulusevski 81'", aScorers: "Msakni 60'", stats: { poss: [59, 41], shots: [18, 7], fouls: [9, 14], yellow: [1, 3], red: [0, 0] } },
+  { id: 4, group: "B БҮЛЭГ", hName: "Швейцар", hFlag: "🇨🇭", aName: "Катар", aFlag: "🇶🇦", hScore: 1, aScore: 1, time: "FT", status: "FT", venue: "BC Place, Vancouver", hScorers: "Embolo 19'", aScorers: "Muheim 90+4' (OG)", stats: { poss: [61, 39], shots: [16, 5], fouls: [10, 12], yellow: [2, 1], red: [0, 0] } },
+  { id: 5, group: "C БҮЛЭГ", hName: "Аргентин", hFlag: "🇦🇷", aName: "Өмнөд Солонгос", aFlag: "🇰🇷", hScore: 0, aScore: 0, time: "22:00", status: "UPCOMING", venue: "SoFi Stadium, Los Angeles", hScorers: "", aScorers: "", stats: null },
+  { id: 6, group: "D БҮЛЭГ", hName: "Франц", hFlag: "🇫🇷", aName: "Нигери", aFlag: "🇳🇬", hScore: 0, aScore: 0, time: "Маргааш", status: "UPCOMING", venue: "Mercedes-Benz Stadium, Atlanta", hScorers: "", aScorers: "", stats: null }
+];
 
-    function navigateViewport(targetId, triggerButton) {
-        document.querySelectorAll('.viewport-container').forEach(view => view.classList.remove('active-viewport'));
-        document.querySelectorAll('.nav-trigger').forEach(btn => btn.classList.remove('active-state'));
-        
-        document.getElementById(`viewport-${targetId}`).classList.add('active-viewport');
-        if(triggerButton) triggerButton.classList.add('active-state');
-    }
+const newsData = [
+  { id: 1, group: "МЕКСИК", tag: "ОНЦЛОХ", title: "Ацтека цэнгэлдэхэд түүхэн нээлт — 3 улаан хуудас, 2:0 ялалт", desc: "Жулиан Киньонес 9'-д ДАШТ 2026-ийн анхны голыг оруулав. Рауль Хименес 66'-д баталгааллаа.", time: "2 цагийн өмнө" },
+  { id: 2, group: "ГЕРМАН", tag: "ШОК", title: "Герман Кюрасаог 7:1-ээр нураав — Felix Nmecha гялалзав", desc: "Хаверц, Мусиала, Виртц нар гоолын баяр хийж, нээлтийн шатны хамгийн том ялалтыг авлаа.", time: "4 цагийн өмнө" },
+  { id: 3, group: "ШВЕД", tag: "МЭДЭЭ", title: "Швед Тунисыг 5:1-ээр хуулгалав — Исак, Гёкэрэс хослол", desc: "Шведийн довтолгооны хослол зогсоогдошгүй байж, Тунисын хамгаалалтыг бүрэн бут ниргэлээ.", time: "5 цагийн өмнө" }
+];
 
-    function renderApplicationLayers() {
-        const fixtureTarget = document.getElementById('fixtures-render-target');
-        const forecastTarget = document.getElementById('forecast-render-target');
-        const tickerTarget = document.getElementById('ticker-pipeline-target');
+const quizData = [
+  { id: 1, title: "ДАШТ Түүхэн баримт", sub: "Хамгийн олон ДАШТ-д түрүүлсэн шигшээ баг?", diff: "easy", pts: 20, q: "Аль улсын шигшээ баг Дэлхийн Аварга Шалгаруулах Тэмцээнд хамгийн олон удаа (5 удаа) түрүүлсэн бэ?", opts: ["Герман", "Итали", "Бразил", "Аргентин"], ans: 2, exp: "Бразил улс 1958, 1962, 1970, 1994, 2002 онуудад нийт 5 удаа түрүүлсэн түүхтэй." },
+  { id: 2, title: "Алтан Бөмбөг", sub: "2023 оны Алтан Бөмбөгийн эзэн хэн бэ?", diff: "medium", pts: 40, q: "2023 оны Ballon d'Or шагналыг хэн хүртэж, өөрийн 8 дахь Алтан бөмбөгөө авсан бэ?", opts: ["Erling Haaland", "Lionel Messi", "Kylian Mbappé", "Karim Benzema"], ans: 1, exp: "Лионель Месси 2023 оны ДАШТ-д түрүүлсэн амжилтаараа 8 дахь Алтан Бөмбөгөө авсан." },
+  { id: 3, title: "Тактик ба Дүрмүүд", sub: "Офсайд дүрмийн өөрчлөлт", diff: "hard", pts: 60, q: "Хөлбөмбөгийн анхны албан ёсны офсайд дүрэм хэдэн онд Мальборо кодоор батлагдсан бэ?", opts: ["1863", "1925", "1990", "2005"], ans: 0, exp: "1863 онд Английн хөлбөмбөгийн холбоо (FA) анхны албан ёсны дүрмийг баталсан." }
+];
 
-        fixtureTarget.innerHTML = '';
-        forecastTarget.innerHTML = '';
-        tickerTarget.innerHTML = '';
+const secretQuizData = [
+  { id: 4, title: "🤖 AI & ТЕХНОЛОГИЙН АСУУЛТ", sub: "Конами Нууц Асуулт", diff: "hard", pts: 100, q: "Хөлбөмбөгт компьютерийн харах систем, AI алгоритм ашиглан офсайдыг хагас автоматжуулсан системийг юу гэж нэрлэдэг вэ?", opts: ["VAR Pro", "Semi-Automated Offside Technology (SAOT)", "Goal-Line AI", "Hawk-Eye Plus"], ans: 1, exp: "SAOT (Хагас автоматжуулсан офсайдын технологи) нь бөмбөг болон тоглогчдын байршлыг AI-аар тооцоолж шүүгчид шууд мэдээлдэг." },
+  { id: 5, title: "🌌 СУПЕР ХҮЧНИЙ АСУУЛТ", sub: "Конами Нууц Асуулт", diff: "hard", pts: 100, q: "Marvel ертөнцийн Тони Старк (Iron Man)-ийн бүтээсэн хамгийн анхны хиймэл оюун ухаант туслах хэн бэ?", opts: ["FRIDAY", "EDITH", "JARVIS", "KAREN"], ans: 2, exp: "Тони Старкийн хамгийн анхны туслах бол J.A.R.V.I.S. (Just A Rather Very Intelligent System) юм." }
+];
 
-        // Sort dynamically into timeline blocks
-        const dateGroups = {};
-        worldCupDataEngine.fixtures.forEach(item => {
-            if (!dateGroups[item.date]) dateGroups[item.date] = [];
-            dateGroups[item.date].push(item);
-        });
+// STATE MANAGEMENT
+let activeUser = null;
+let currentXp = 0;
+let currentLvl = 1;
+let currentQuizIndex = null;
+let activeQuizList = [...quizData];
 
-        // Loop 1: Populate Structural Fixtures with Contextual Flags Block
-        for (const date in dateGroups) {
-            const block = document.createElement('div');
-            block.innerHTML = `<div class="date-divider">${date}</div>`;
-            
-            dateGroups[date].forEach(m => {
-                const liveClass = m.status === 'LIVE' ? 'live-pulse' : '';
-                const homeScoreText = m.homeScore !== null ? m.homeScore : '–';
-                const awayScoreText = m.awayScore !== null ? m.awayScore : '–';
-                const homeActive = m.homeScore !== null ? 'active-digit' : '';
-                const awayActive = m.awayScore !== null ? 'active-digit' : '';
+// CORE NAVIGATION
+function go(pageId, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + pageId).classList.add('active');
+  
+  if (btn) {
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  
+  if (pageId === 'fixtures') renderFixtures();
+  if (pageId === 'forecast') renderForecast();
+  if (pageId === 'news') renderNews();
+  if (pageId === 'quiz') renderQuizList();
+}
 
-                block.innerHTML += `
-                    <div class="fixture-strip">
-                        <div class="status-node ${liveClass}">${m.status}</div>
-                        <div class="team-wrapper home-side">
-                            <span class="team-label">${m.homeName}</span>
-                            <span class="flag-frame">${m.homeFlag}</span>
-                        </div>
-                        <div class="score-centerpiece">
-                            <span class="score-digit ${homeActive}">${homeScoreText}</span>
-                            <span class="score-colon">:</span>
-                            <span class="score-digit ${awayActive}">${awayScoreText}</span>
-                        </div>
-                        <div class="team-wrapper away-side">
-                            <span class="flag-frame">${m.awayFlag}</span>
-                            <span class="team-label">${m.awayName}</span>
-                        </div>
-                        <div class="fixture-metadata">${m.group}<br/><span style="opacity:0.5;">${m.venue}</span></div>
-                    </div>
-                `;
-            });
-            fixtureTarget.appendChild(block);
-        }
+// THEME TOGGLE
+let isDark = true;
+function toggleTheme() {
+  isDark = !isDark;
+  const r = document.documentElement;
+  if (!isDark) {
+    r.style.setProperty('--canvas', '#F0F2F5');
+    r.style.setProperty('--surface', '#FFFFFF');
+    r.style.setProperty('--hover', '#F8F9FA');
+    r.style.setProperty('--border', '#E0E4EC');
+    r.style.setProperty('--text', '#0A0B0F');
+    r.style.setProperty('--muted', '#5A6278');
+    document.getElementById('theme-btn').textContent = '☀️';
+  } else {
+    r.style.setProperty('--canvas', '#08090D');
+    r.style.setProperty('--surface', '#11131C');
+    r.style.setProperty('--hover', '#171A26');
+    r.style.setProperty('--border', '#1E2235');
+    r.style.setProperty('--text', '#FFFFFF');
+    r.style.setProperty('--muted', '#8E96A9');
+    document.getElementById('theme-btn').textContent = '🌙';
+  }
+}
 
-        // Loop 2: Populate Forecast Canvas Panels
-        worldCupDataEngine.fixtures.forEach(m => {
-            const card = document.createElement('div');
-            card.className = `predict-card ${m.homeScore === null ? 'active-predict' : ''}`;
+// TICKER & LIVE SCORES STRIP
+function initTicker() {
+  const inner = document.getElementById('ticker-inner');
+  let html = "";
+  matches.forEach(m => {
+    html += `<div class="tk-node">${m.group}: <strong>${m.hName} ${m.hScore}:${m.aScore} ${m.aName}</strong> ${m.status === 'LIVE' ? '<span class="tk-live">· ШУУД</span>' : ''}</div>`;
+  });
+  inner.innerHTML = html + html; // Дуусахгүй урсгахын тулд 2 дахин үржүүлнэ
+}
 
-            if (m.homeScore !== null) {
-                const evalLabel = m.validation === 'correct' ? '✓ ТААМАГЛАЛ ЗӨВ' : '✗ ТААМАГЛАЛ БУРУУ';
-                const evalClass = m.validation === 'correct' ? 'match-correct' : 'match-wrong';
-                
-                card.innerHTML = `
-                    <div class="predict-header"><div>${m.group} · ХААГДСАН</div><div>${m.venue}</div></div>
-                    <div class="predict-row">
-                        <div class="predict-team-box"><span class="flag-frame">${m.homeFlag}</span><span>${m.homeName}</span></div>
-                        <div style="font-size: 24px; font-weight: 900; letter-spacing: 2px;">${m.homeScore} : ${m.awayScore}</div>
-                        <div class="predict-team-box"><span class="flag-frame">${m.awayFlag}</span><span>${m.awayName}</span></div>
-                    </div>
-                    <div class="evaluation-bar">
-                        <div>Таны оруулсан таамаглал: <strong style="color:var(--accent-gold);">${m.userForecast}</strong></div>
-                        <span class="eval-status-pill ${evalClass}">${evalLabel}</span>
-                    </div>
-                `;
-            } else {
-                card.innerHTML = `
-                    <div class="predict-header"><div>${m.group} · ТААМАГЛАЛ НЭЭЛТТЭЙ</div><div>Эхлэх: ${m.status}</div></div>
-                    <div class="predict-row">
-                        <div class="predict-team-box"><span class="flag-frame">${m.homeFlag}</span><span>${m.homeName}</span></div>
-                        <input type="number" class="predict-input" id="f-h-${m.id}" value="0" min="0">
-                        <span style="font-weight:700; color:var(--text-secondary); font-size:12px;">ХАРЬЦАА</span>
-                        <input type="number" class="predict-input" id="f-a-${m.id}" value="0" min="0">
-                        <div class="predict-team-box"><span class="flag-frame">${m.awayFlag}</span><span>${m.awayName}</span></div>
-                    </div>
-                    <div class="predict-footer">
-                        <span style="font-size:11px; color:var(--text-secondary);">Одоогоор 3,420 хэрэглэгч таамаглал оруулсан байна</span>
-                        <button class="btn-action-submit" onclick="submitForecast(${m.id})">ИЛГЭЭХ</button>
-                    </div>
-                `;
-            }
-            forecastTarget.appendChild(card);
+function refreshScores() {
+  const grid = document.getElementById('live-scores-grid');
+  grid.innerHTML = matches.slice(0, 4).map(m => `
+    <div class="ls-card ${m.status === 'LIVE' ? 'live-card' : ''}" onclick="openMatchDetail(${m.id})">
+      <div class="ls-badge ${m.status === 'FT' ? 'ft' : ''}">${m.status}</div>
+      <div class="ls-teams">
+        <div class="ls-team"><span class="ls-flag">${m.hFlag}</span><span class="ls-tname">${m.hName}</span></div>
+        <div class="ls-score ${m.status === 'LIVE' ? 'live' : ''}">${m.hScore} - ${m.aScore}</div>
+        <div class="ls-team"><span class="ls-flag">${m.aFlag}</span><span class="ls-tname">${m.aName}</span></div>
+      </div>
+      <div class="ls-group">${m.group} · ${m.time}</div>
+    </div>
+  `).join('');
+}
 
-            // Loop 3: Populate Dynamic Live Ticker Stream Components
-            if (m.homeScore !== null) {
-                tickerTarget.innerHTML += `
-                    <div class="ticker-node">
-                        ${m.homeFlag} ${m.homeName} <strong>${m.homeScore}:${m.awayScore}</strong> ${m.awayName} ${m.awayFlag} 
-                        <span style="color:var(--border); margin-left:20px;">|</span>
-                    </div>
-                `;
-            }
-        });
-        
-        // Loop ticker track back for visual infinity wrap padding
-        tickerTarget.innerHTML += tickerTarget.innerHTML;
-    }
+// FIXTURES
+function renderFixtures() {
+  const target = document.getElementById('fixtures-target');
+  target.innerHTML = `
+    <div class="date-div">Өнөөдөр · 2026 оны 6 сарын 15</div>
+    ${matches.map(m => `
+      <div class="fixture" onclick="openMatchDetail(${m.id})">
+        <div class="status ${m.status === 'LIVE' ? 'live' : ''}">${m.status}</div>
+        <div class="tblock home"><span class="tname">${m.hName}</span><span class="flag">${m.hFlag}</span></div>
+        <div class="sc-box">
+          <span class="sc-d ${m.status !== 'UPCOMING' ? 'lit' : ''} ${m.status === 'LIVE' ? 'live-sc' : ''}">${m.status !== 'UPCOMING' ? m.hScore : '-'}</span>
+          <span class="sc-sep">:</span>
+          <span class="sc-d ${m.status !== 'UPCOMING' ? 'lit' : ''} ${m.status === 'LIVE' ? 'live-sc' : ''}">${m.status !== 'UPCOMING' ? m.aScore : '-'}</span>
+        </div>
+        <div class="tblock away"><span class="flag">${m.aFlag}</span><span class="tname">${m.aName}</span></div>
+        <div class="fix-meta"><div>${m.venue}</div><div class="fix-hint">${m.status === 'LIVE' || m.status === 'FT' ? 'Статистик харах' : 'Таамаглах цонх нээлттэй'}</div></div>
+      </div>
+    `).join('')}
+  `;
+}
 
-    function submitForecast(matchId) {
-        const home = document.getElementById(`f-h-${matchId}`).value;
-        const away = document.getElementById(`f-a-${matchId}`).value;
-        alert(`Таамаглал амжилттай баталгаажлаа: ${home}:${away}`);
-    }
+// MATCH DETAIL
+function openMatchDetail(id) {
+  const m = matches.find(x => x.id === id);
+  if (!m) return;
+  
+  go('matchdetail', null);
+  const target = document.getElementById('matchdetail-target');
+  
+  if (!m.stats) {
+    target.innerHTML = `
+      <button class="back-btn" onclick="go('fixtures',null)">← Хуваарь руу буцах</button>
+      <div class="match-hero">
+        <div class="mh-group">${m.group}</div>
+        <div class="mh-teams">
+          <div class="mh-team"><span class="mh-flag">${m.hFlag}</span><span class="mh-name">${m.hName}</span></div>
+          <div class="mh-sc">VS</div>
+          <div class="mh-team"><span class="mh-flag">${m.aFlag}</span><span class="mh-name">${m.aName}</span></div>
+        </div>
+        <div class="mh-st">${m.time} эхэлнэ</div>
+        <div class="mh-venue">${m.venue}</div>
+      </div>
+      <p style="text-align:center;color:var(--muted);font-size:13px;padding:40px 0;">Энэхүү тоглолт хараахан эхлээгүй тул шууд статистик байхгүй байна.</p>
+    `;
+    return;
+  }
 
-    // Trigger operational loop execution on render
-    window.onload = renderApplicationLayers;
-</script>
-</body>
-</html>
+  target.innerHTML = `
+    <button class="back-btn" onclick="go('fixtures',null)">← Хуваарь руу буцах</button>
+    <div class="match-hero">
+      <div class="mh-group">${m.group} · ${m.status}</div>
+      <div class="mh-teams">
+        <div class="mh-team"><span class="mh-flag">${m.hFlag}</span><span class="mh-name">${m.hName}</span></div>
+        <div class="mh-sc">${m.hScore} : ${m.aScore}</div>
+        <div class="mh-team"><span class="mh-flag">${m.aFlag}</span><span class="mh-name">${m.aName}</span></div>
+      </div>
+      <div class="mh-st" style="${m.status === 'LIVE' ? 'color:var(--red);background:rgba(255,51,75,.1);' : ''}">${m.time}</div>
+      <div class="mh-venue">${m.venue}</div>
+      <div class="scorers-row">
+        <div class="sc-side" style="text-align:left;"><strong>Гоолууд:</strong>${m.hScorers}</div>
+        <div class="sc-side" style="text-align:right;"><strong>Гоолууд:</strong>${m.aScorers}</div>
+      </div>
+    </div>
+
+    <div class="sts-title">ШУУД СТАТИСТИК</div>
+    
+    <div class="stat-row">
+      <div class="stat-lbl">Бөмбөг эзэмшилт</div>
+      <div class="poss-bar">
+        <div class="pb-home" style="width:${m.stats.poss[0]}%"></div>
+        <div class="pb-away" style="width:${m.stats.poss[1]}%"></div>
+      </div>
+      <div class="poss-lbls"><span>${m.stats.poss[0]}%</span><span>${m.stats.poss[1]}%</span></div>
+    </div>
+
+    ${renderStatRow("Нийт цохилт", m.stats.shots[0], m.stats.shots[1])}
+    ${renderStatRow("Дүрмийн зөрчил", m.stats.fouls[0], m.stats.fouls[1])}
+    ${renderStatRow("Шар хуудас", m.stats.yellow[0], m.stats.yellow[1])}
+    ${renderStatRow("Улаан хуудас", m.stats.red[0], m.stats.red[1])}
+  `;
+}
+
+function renderStatRow(lbl, h, a) {
+  const total = h + a === 0 ? 1 : h + a;
+  const hp = (h / total) * 100;
+  const ap = (a / total) * 100;
+  return `
+    <div class="stat-row">
+      <div class="stat-lbl">${lbl}</div>
+      <div class="stat-vals"><span class="sv h">${h}</span><span class="vs-lbl">vs</span><span class="sv a">${a}</span></div>
+      <div class="gen-bar">
+        <div class="gb-h" style="width:${hp}%"></div>
+        <div class="gb-a" style="width:${ap}%"></div>
+      </div>
+    </div>
+  `;
+}
+
+// FORECAST
+function renderForecast() {
+  const target = document.getElementById('forecast-target');
+  const openMatches = matches.filter(x => x.status === 'UPCOMING');
+  
+  if (openMatches.length === 0) {
+    target.innerHTML = `<p style="color:var(--muted);font-size:13px;">Одоогоор таамаглал нээлттэй тоглолт байхгүй байна.</p>`;
+    return;
+  }
+
+  target.innerHTML = openMatches.map(m => `
+    <div class="pred-card open">
+      <div class="ph"><span>${m.group}</span><span style="color:var(--gold);">Таамаглах боломжтой</span></div>
+      <div class="pr">
+        <div class="pteam"><span class="flag">${m.hFlag}</span><span>${m.hName}</span></div>
+        <input type="number" class="pinput" id="p-h-${m.id}" min="0" value="0">
+        <div style="font-weight:800;color:var(--border);">:</div>
+        <input type="number" class="pinput" id="p-a-${m.id}" min="0" value="0">
+        <div class="pteam"><span class="flag">${m.aFlag}</span><span>${m.aName}</span></div>
+      </div>
+      <div class="pfoot">
+        <span style="font-size:11px;color:var(--muted);">${m.venue}</span>
+        <button class="bsub" onclick="submitPrediction(${m.id})">Илгээх</button>
+      </div>
+      <div class="evalbar" id="eval-${m.id}" style="display:none;"></div>
+    </div>
+  `).join('');
+}
+
+function submitPrediction(id) {
+  if (!activeUser) {
+    alert("Таамаглал дэвшүүлэхийн тулд эхлээд нэвтэрнэ үү!");
+    openAuth();
+    return;
+  }
+  const h = document.getElementById(`p-h-${id}`).value;
+  const a = document.getElementById(`p-a-${id}`).value;
+  const ev = document.getElementById(`eval-${id}`);
+  ev.style.display = "flex";
+  ev.innerHTML = `<div>Таны таамаг: <strong>${h} : ${a}</strong></div> <span class="pill ok">БҮРТГЭГДЛЭЭ</span>`;
+  alert("Таны таамаглал амжилттай хадгалагдлаа!");
+}
+
+// NEWS PAGE
+function renderNews() {
+  const target = document.getElementById('news-grid-target');
+  target.innerHTML = newsData.map(n => `
+    <div class="news-card">
+      <div class="nc-img">⚽<div class="nc-img-overlay"></div><span class="nc-tag">${n.tag}</span></div>
+      <div class="nc-body">
+        <div class="nc-group">${n.group}</div>
+        <div class="nc-title">${n.title}</div>
+        <div class="nc-desc">${n.desc}</div>
+        <div class="nc-foot"><span>${n.time}</span><span class="nc-score">Дэлгэрэнгүй →</span></div>
+      </div>
+    </div>
+  `).join
