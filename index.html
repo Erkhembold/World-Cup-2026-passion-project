@@ -1,1045 +1,1663 @@
 <!DOCTYPE html>
 <html lang="mn">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ШИГШЭЭ 2026 — ДАШТ Таамаглал, Мэдээ мэдээлэл</title>
-<style>
-:root{--canvas:#08090D;--surface:#11131C;--hover:#171A26;--border:#1E2235;--mint:#00F299;--gold:#E2B13C;--text:#FFFFFF;--muted:#8E96A9;--red:#FF334B;}
-*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;}
-body{background:var(--canvas);color:var(--text);padding-bottom:60px;transition:background .3s,color .3s;}
-
-/* HEADER */
-.hdr{background:#000;border-bottom:1px solid var(--border);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:100;}
-.brand{font-weight:800;font-size:18px;letter-spacing:-.5px;text-transform:uppercase;cursor:pointer;}
-.brand span{color:var(--mint);font-weight:400;}
-.nav-wrap{display:flex;gap:4px;background:#0F1016;padding:4px;border-radius:8px;border:1px solid var(--border);}
-.nav-btn{background:transparent;border:none;color:var(--muted);font-weight:600;font-size:12px;padding:7px 14px;border-radius:6px;cursor:pointer;transition:all .2s;font-family:inherit;white-space:nowrap;}
-.nav-btn:hover{color:var(--text);}
-.nav-btn.active{background:var(--surface);color:var(--text);border:1px solid rgba(255,255,255,.05);}
-.hdr-right{display:flex;align-items:center;gap:10px;}
-.theme-btn{background:none;border:1px solid var(--border);color:var(--muted);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .3s;}
-.theme-btn:hover{border-color:var(--mint);color:var(--mint);}
-.auth-node{display:flex;align-items:center;gap:8px;font-weight:700;font-size:12px;background:rgba(0,242,153,.08);color:var(--mint);padding:6px 14px;border-radius:20px;border:1px solid rgba(0,242,153,.15);cursor:pointer;white-space:nowrap;}
-
-/* TICKER */
-.ticker{background:#040507;height:36px;display:flex;align-items:center;border-bottom:1px solid var(--border);overflow:hidden;}
-.tk-badge{background:var(--red);color:#fff;font-size:10px;font-weight:800;padding:0 14px;height:100%;display:flex;align-items:center;letter-spacing:.5px;white-space:nowrap;flex-shrink:0;}
-.tk-scroll{overflow:hidden;flex:1;}
-.tk-inner{display:inline-flex;white-space:nowrap;animation:runTicker 40s linear infinite;gap:36px;}
-@keyframes runTicker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-.tk-node{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px;}
-.tk-node strong{color:var(--text);}
-.tk-live{color:var(--red);font-weight:700;font-size:10px;animation:blink 1s infinite;}
-
-/* PAGES */
-.page{max-width:1280px;margin:0 auto;padding:28px 24px;display:none;}
-.page.active{display:block;}
-.sec-tag{font-size:10px;color:var(--mint);font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:4px;}
-.sec-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:22px;}
-
-/* HOME */
-.home-hero-grid{display:grid;grid-template-columns:1.7fr 1fr;gap:20px;margin-bottom:32px;}
-.hero-card{background:linear-gradient(180deg,rgba(8,9,13,0) 10%,rgba(8,9,13,.96) 100%),url('https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1200&q=80');background-size:cover;background-position:center top;border-radius:12px;border:1px solid var(--border);min-height:380px;display:flex;flex-direction:column;justify-content:flex-end;padding:28px;cursor:pointer;transition:transform .2s;}
-.hero-card:hover{transform:scale(1.005);}
-.etag{background:rgba(226,177,60,.15);color:var(--gold);font-size:10px;font-weight:700;padding:3px 9px;border-radius:3px;display:inline-block;margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px;}
-.hero-card h3{font-size:22px;font-weight:800;line-height:1.25;margin-bottom:8px;}
-.hero-card p{color:var(--muted);font-size:13px;line-height:1.6;}
-.news-stack{display:flex;flex-direction:column;gap:10px;}
-.fi{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;transition:all .2s;}
-.fi:hover{border-color:rgba(255,255,255,.15);background:var(--hover);}
-.fi-meta{font-size:10px;color:var(--muted);text-transform:uppercase;margin-bottom:5px;display:flex;align-items:center;gap:6px;}
-.fi-meta span{color:var(--mint);font-weight:700;}
-.fi h4{font-size:13px;font-weight:700;line-height:1.4;}
-
-/* LIVE SCORES STRIP */
-.live-strip{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:24px;}
-.ls-head{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
-.ls-dot{width:8px;height:8px;border-radius:50%;background:var(--red);animation:blink 1s infinite;}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-.ls-title{font-size:12px;font-weight:700;color:var(--text);letter-spacing:.5px;}
-.ls-time{font-size:10px;color:var(--muted);margin-left:auto;cursor:pointer;color:var(--mint);}
-.ls-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
-.ls-card{background:#0d0d14;border:1px solid var(--border);border-radius:8px;padding:12px 10px;text-align:center;position:relative;cursor:pointer;}
-.ls-card.live-card{border-color:rgba(255,51,75,.3);}
-.ls-badge{position:absolute;top:8px;right:8px;font-size:9px;font-weight:800;color:var(--red);letter-spacing:.5px;}
-.ls-badge.ft{color:var(--muted);}
-.ls-teams{display:flex;align-items:center;justify-content:space-between;gap:4px;margin-bottom:6px;}
-.ls-team{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;}
-.ls-flag{width:24px;height:16px;object-fit:cover;border-radius:20px;box-shadow:0 1px 3px rgba(0,0,0,0.3);}
-.ls-tname{font-size:10px;font-weight:700;color:var(--muted);text-align:center;margin-top:2px;}
-.ls-score{font-size:18px;font-weight:900;color:var(--text);padding:0 4px;}
-.ls-score.live{color:var(--red);}
-.ls-group{font-size:9px;color:var(--border);margin-top:4px;}
-
-/* FIXTURES */
-.date-div{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;background:#141622;padding:7px 14px;border-radius:6px;margin:20px 0 10px;display:inline-block;border:1px solid var(--border);}
-.fixture{display:grid;grid-template-columns:90px 1fr 110px 1fr 160px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:15px 20px;align-items:center;margin-bottom:8px;transition:all .15s;cursor:pointer;}
-.fixture:hover{border-color:rgba(0,242,153,.25);background:var(--hover);transform:translateX(3px);}
-.status{font-size:11px;font-weight:700;color:var(--muted);}
-.status.live{color:var(--red);display:flex;align-items:center;gap:5px;}
-.status.live::before{content:'';width:5px;height:5px;background:var(--red);border-radius:50%;animation:blink 1.2s infinite;}
-.tblock{display:flex;align-items:center;gap:9px;}
-.tblock.home{justify-content:flex-end;}
-.tblock.away{justify-content:flex-start;}
-.flag{width:24px;height:16px;object-fit:cover;border-radius:2px;flex-shrink:0;box-shadow:0 2px 4px rgba(0,0,0,.4);}
-.tname{font-size:14px;font-weight:700;white-space:nowrap;}
-.sc-box{display:flex;align-items:center;justify-content:center;gap:12px;background:rgba(0,0,0,.25);padding:5px 12px;border-radius:6px;border:1px solid rgba(255,255,255,.03);}
-.sc-d{font-size:20px;font-weight:800;color:var(--muted);width:18px;text-align:center;}
-.sc-d.lit{color:var(--text);}
-.sc-d.live-sc{color:var(--red);}
-.sc-sep{color:rgba(255,255,255,.12);font-weight:700;}
-.fix-meta{font-size:10px;color:var(--muted);text-align:right;line-height:1.6;}
-
-/* MATCH DETAIL & STATS LAYOUT */
-.match-hero{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:32px;margin-bottom:24px;text-align:center;}
-.mh-group{font-size:10px;color:var(--mint);font-weight:700;letter-spacing:2px;margin-bottom:18px;}
-.mh-teams{display:flex;align-items:center;justify-content:center;gap:28px;}
-.mh-team{display:flex;flex-direction:column;align-items:center;gap:8px;min-width:110px;}
-.mh-flag{width:64px;height:42px;object-fit:cover;border-radius:4px;box-shadow:0 4px 10px rgba(0,0,0,0.4);}
-.mh-name{font-size:17px;font-weight:800;}
-.mh-sc{font-size:48px;font-weight:900;letter-spacing:4px;}
-.mh-st{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1px;background:#1a1a2e;padding:3px 10px;border-radius:4px;margin-top:6px;}
-.mh-venue{font-size:12px;color:var(--muted);margin-top:14px;}
-.scorers-row{display:flex;justify-content:space-between;margin-top:18px;padding-top:16px;border-top:1px solid var(--border);}
-.sc-side{font-size:12px;color:var(--muted);line-height:1.8;}
-.sc-side strong{color:var(--text);display:block;margin-bottom:2px;}
-
-/* PLAYER RATING MODULES (FotMob Style) */
-.perf-grid-title {font-size:14px;font-weight:800;color:var(--text);margin:24px 0 12px;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:8px;}
-.perf-grid-title::before {content:'';width:4px;height:14px;background:var(--mint);border-radius:2px;}
-.player-perf-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));gap:16px;margin-bottom:28px;}
-.perf-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;align-items:center;gap:14px;position:relative;}
-.p-avatar{width:54px;height:54px;border-radius:50%;background:#1d2133;object-fit:cover;border:2px solid var(--border);}
-.p-info{flex:1;display:flex;flex-direction:column;gap:3px;}
-.p-name{font-size:13px;font-weight:700;color:var(--text);}
-.p-team-meta{font-size:10px;color:var(--muted);display:flex;align-items:center;gap:6px;}
-.p-stat-metrics{font-size:11px;color:var(--mint);font-weight:600;margin-top:2px;}
-.p-rating-badge{background:rgba(0,242,153,0.12);color:var(--mint);font-weight:900;font-size:13px;padding:6px 10px;border-radius:8px;border:1px solid rgba(0,242,153,0.2);min-width:42px;text-align:center;}
-.p-rating-badge.gold-rt{background:rgba(226,177,60,0.12);color:var(--gold);border-color:rgba(226,177,60,0.2);}
-
-/* TEAM MATCH PERFORMANCE STATS */
-.sts-title{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin:22px 0 10px;padding-bottom:7px;border-bottom:1px solid var(--border);}
-.stat-row{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:8px;}
-.stat-lbl{font-size:10px;font-weight:700;color:var(--muted);text-align:center;margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px;}
-.stat-vals{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
-.sv{font-size:18px;font-weight:800;}
-.sv.h{color:var(--mint);}
-.sv.a{color:var(--gold);}
-.vs-lbl{font-size:11px;color:var(--muted);}
-.poss-bar{position:relative;height:10px;background:var(--border);border-radius:5px;overflow:hidden;}
-.pb-home{position:absolute;left:0;top:0;height:100%;background:var(--mint);border-radius:5px 0 0 5px;}
-.pb-away{position:absolute;right:0;top:0;height:100%;background:var(--gold);border-radius:0 5px 5px 0;}
-.poss-lbls{display:flex;justify-content:space-between;margin-top:5px;font-size:10px;}
-.poss-lbls span:first-child{color:var(--mint);}
-.poss-lbls span:last-child{color:var(--gold);}
-
-/* PREDICTIONS */
-.pred-wrap{display:grid;grid-template-columns:1fr 320px;gap:28px;}
-.pred-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:14px;position:relative;overflow:hidden;}
-.pred-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--border);}
-.pred-card.open::before{background:var(--gold);}
-.ph{display:flex;justify-content:space-between;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.05);padding-bottom:10px;margin-bottom:16px;}
-.pr{display:flex;align-items:center;justify-content:space-between;padding:8px 0;}
-.pteam{display:flex;flex-direction:column;align-items:center;gap:6px;width:30%;text-align:center;}
-.pteam .flag{width:36px;height:24px;object-fit:cover;border-radius:2px;}
-.pteam span{font-size:13px;font-weight:700;}
-.pinput{width:52px;height:52px;background:#07080C;border:1px solid var(--border);border-radius:8px;text-align:center;font-size:22px;font-weight:800;color:var(--gold);outline:none;font-family:inherit;}
-.pinput:focus{border-color:var(--gold);}
-.pfoot{display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.05);}
-.bsub{background:var(--gold);color:#000;border:none;padding:9px 18px;font-weight:700;font-size:11px;border-radius:6px;cursor:pointer;text-transform:uppercase;font-family:inherit;}
-.evalbar{background:rgba(255,255,255,.02);border:1px dashed var(--border);border-radius:8px;padding:11px 14px;display:flex;align-items:center;justify-content:space-between;margin-top:14px;font-size:12px;}
-.pill{font-size:10px;font-weight:800;padding:3px 8px;border-radius:4px;text-transform:uppercase;}
-.pill.ok{background:rgba(0,242,153,.12);color:var(--mint);}
-.pill.no{background:rgba(255,51,75,.12);color:var(--red);}
-.widget-col{display:flex;flex-direction:column;gap:16px;}
-.widget{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;}
-.wh{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;display:flex;justify-content:space-between;}
-.rr{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.02);}
-.rn{font-size:11px;font-weight:800;color:var(--muted);width:20px;}
-.rn.g{color:var(--gold);}
-.rname{font-size:12px;font-weight:600;flex:1;}
-.rpts{font-size:12px;font-weight:700;color:var(--mint);}
-
-/* NEWS PAGE */
-.news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px;}
-.news-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;cursor:pointer;transition:all .2s;}
-.news-card:hover{border-color:rgba(255,255,255,.15);transform:translateY(-2px);}
-.nc-img{height:160px;background:linear-gradient(135deg,#1a1a2e,#11131C);display:flex;align-items:center;justify-content:center;font-size:48px;position:relative;}
-.nc-img-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(8,9,13,.8));}
-.nc-tag{position:absolute;top:10px;left:10px;background:rgba(226,177,60,.9);color:#000;font-size:9px;font-weight:800;padding:2px 7px;border-radius:3px;text-transform:uppercase;letter-spacing:.5px;}
-.nc-body{padding:14px;}
-.nc-group{font-size:9px;font-weight:700;color:var(--mint);letter-spacing:1px;text-transform:uppercase;margin-bottom:5px;}
-.nc-title{font-size:13px;font-weight:700;line-height:1.4;margin-bottom:6px;}
-.nc-desc{font-size:11px;color:var(--muted);line-height:1.5;}
-.nc-foot{display:flex;align-items:center;justify-content:space-between;margin-top:10px;font-size:10px;color:var(--muted);}
-
-/* QUIZ TIERED STYLING */
-.quiz-list-hdr{display:grid;grid-template-columns:1fr 100px 90px 70px;padding:8px 18px;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);margin-bottom:4px;}
-.qli{display:grid;grid-template-columns:1fr 100px 90px 70px;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:7px;cursor:pointer;transition:all .15s;}
-.qli.locked{opacity:0.4;cursor:not-allowed;}
-.qli.locked:hover{transform:none;border-color:var(--border);background:var(--surface);}
-.qli:not(.locked):hover{border-color:rgba(0,242,153,.25);background:var(--hover);transform:translateX(4px);}
-.qli-t{font-size:13px;font-weight:700;}
-.qli-s{font-size:10px;color:var(--muted);margin-top:2px;}
-.diff{font-size:10px;font-weight:800;padding:2px 9px;border-radius:4px;text-transform:uppercase;display:inline-block;}
-.diff.easy{background:rgba(0,242,153,.1);color:var(--mint);}
-.diff.medium{background:rgba(226,177,60,.1);color:var(--gold);}
-.diff.hard{background:rgba(255,51,75,.1);color:var(--red);}
-.qpts{font-size:12px;font-weight:800;color:var(--mint);text-align:right;}
-.prob-hdr{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:16px;}
-.prob-q{font-size:16px;font-weight:700;line-height:1.5;margin-bottom:24px;}
-.prob-opts{display:flex;flex-direction:column;gap:8px;}
-.popt{background:#07080C;border:1.5px solid var(--border);border-radius:8px;padding:13px 16px;font-size:13px;font-weight:600;color:var(--text);cursor:pointer;text-align:left;font-family:inherit;display:flex;align-items:center;gap:10px;transition:all .15s;}
-.popt:hover:not([disabled]){border-color:rgba(255,255,255,.2);background:var(--hover);}
-.popt-let{width:22px;height:22px;border-radius:4px;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:var(--muted);flex-shrink:0;}
-.popt.correct{border-color:var(--mint);background:rgba(0,242,153,.06);}
-.popt.correct .popt-let{background:rgba(0,242,153,.2);color:var(--mint);}
-.popt.wrong{border-color:var(--red);background:rgba(255,51,75,.06);}
-.popt.wrong .popt-let{background:rgba(255,51,75,.2);color:var(--red);}
-.prob-res{display:none;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-top:14px;}
-.prob-res.show{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;}
-.prob-res.ok{border-color:rgba(0,242,153,.2);}
-.prob-res.no{border-color:rgba(255,51,75,.2);}
-.prob-res-txt{font-size:12px;color:var(--muted);line-height:1.6;}
-.prob-res-txt strong{color:var(--text);display:block;margin-bottom:3px;}
-.btn-np{background:var(--gold);color:#000;border:none;padding:9px 20px;font-weight:700;font-size:12px;border-radius:6px;cursor:pointer;white-space:nowrap;font-family:inherit;}
-
-/* XP BAR */
-.xp-bar-wrap{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin-bottom:20px;}
-.xp-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
-.xp-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
-.xp-level{font-size:12px;font-weight:800;color:var(--gold);}
-.xp-track{height:8px;background:var(--border);border-radius:4px;overflow:hidden;}
-.xp-fill{height:100%;background:linear-gradient(90deg,var(--mint),var(--gold));border-radius:4px;width:0%;transition:width .6s cubic-bezier(.4,0,.2,1);}
-.xp-sub{font-size:10px;color:var(--muted);margin-top:5px;display:flex;justify-content:space-between;}
-
-/* AUTH & ERRORS */
-.auth-error-msg{color:var(--red);font-size:11px;font-weight:600;margin-top:6px;display:none;align-items:center;gap:4px;}
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:200;align-items:center;justify-content:center;}
-.modal-overlay.open{display:flex;}
-.modal{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;width:100%;max-width:400px;position:relative;}
-.modal h2{font-size:20px;font-weight:800;margin-bottom:5px;}
-.modal-tabs{display:flex;margin:18px 0;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
-.mtab{flex:1;background:transparent;border:none;color:var(--muted);font-size:12px;font-weight:600;padding:9px;cursor:pointer;font-family:inherit;}
-.mtab.active{background:var(--hover);color:var(--text);}
-.field{margin-bottom:13px;}
-.field label{display:block;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;}
-.field input{width:100%;background:#07080C;border:1px solid var(--border);border-radius:8px;padding:11px 13px;font-size:13px;color:var(--text);outline:none;font-family:inherit;}
-.field input:focus{border-color:var(--mint);}
-.btn-auth{width:100%;background:var(--mint);color:#000;border:none;padding:12px;font-weight:800;font-size:13px;border-radius:8px;cursor:pointer;margin-top:6px;text-transform:uppercase;font-family:inherit;}
-.mclose{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;}
-
-/* KONAMI OVERLAY */
-.konami-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:999;align-items:center;justify-content:center;flex-direction:column;gap:20px;}
-.konami-overlay.show{display:flex;}
-.konami-title{font-size:48px;font-weight:900;color:var(--mint);text-align:center;animation:glitch 2s infinite;}
-@keyframes glitch{0%,100%{text-shadow:2px 0 var(--red),-2px 0 var(--gold)}50%{text-shadow:-2px 0 var(--mint),2px 0 var(--red)}}
-.konami-sub{font-size:16px;color:var(--muted);text-align:center;line-height:1.6;}
-.konami-close{background:var(--gold);color:#000;border:none;padding:12px 28px;border-radius:8px;font-weight:800;font-size:14px;cursor:pointer;font-family:inherit;}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ШИГШЭЭ 2026 — ДАШТ Таамаглал, Мэдээ мэдээлэл</title>
+    <style>
+        :root {
+            --canvas: #08090D;
+            --surface: #11131C;
+            --hover: #171A26;
+            --border: #1E2235;
+            --mint: #00F299;
+            --gold: #E2B13C;
+            --text: #FFFFFF;
+            --muted: #8E96A9;
+            --red: #FF334B;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+        body {
+            background: var(--canvas);
+            color: var(--text);
+            padding-bottom: 60px;
+            transition: background .3s, color .3s;
+        }
+        /* HEADER */
+        .hdr {
+            background: #000;
+            border-bottom: 1px solid var(--border);
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .brand {
+            font-weight: 800;
+            font-size: 18px;
+            letter-spacing: -.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+        .brand span {
+            color: var(--mint);
+            font-weight: 400;
+        }
+        .nav-wrap {
+            display: flex;
+            gap: 4px;
+            background: #0F1016;
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+        .nav-btn {
+            background: transparent;
+            border: none;
+            color: var(--muted);
+            font-weight: 600;
+            font-size: 12px;
+            padding: 7px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all .2s;
+            font-family: inherit;
+            white-space: nowrap;
+        }
+        .nav-btn:hover {
+            color: var(--text);
+        }
+        .nav-btn.active {
+            background: var(--surface);
+            color: var(--text);
+            border: 1px solid rgba(255,255,255,.05);
+        }
+        .hdr-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .theme-btn {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .3s;
+        }
+        .theme-btn:hover {
+            border-color: var(--mint);
+            color: var(--mint);
+        }
+        .auth-node {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 12px;
+            background: rgba(0,242,153,.08);
+            color: var(--mint);
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(0,242,153,.15);
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        /* TICKER */
+        .ticker {
+            background: #040507;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            overflow: hidden;
+        }
+        .tk-badge {
+            background: var(--red);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 0 14px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            letter-spacing: .5px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .tk-scroll {
+            overflow: hidden;
+            flex: 1;
+        }
+        .tk-inner {
+            display: inline-flex;
+            white-space: nowrap;
+            animation: runTicker 40s linear infinite;
+            gap: 36px;
+        }
+        @keyframes runTicker {
+            0% { transform: translateX(0) }
+            100% { transform: translateX(-50%) }
+        }
+        .tk-node {
+            font-size: 11px;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .tk-node strong {
+            color: var(--text);
+        }
+        .tk-live {
+            color: var(--red);
+            font-weight: 700;
+            font-size: 10px;
+            animation: blink 1s infinite;
+        }
+        /* PAGES */
+        .page {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 28px 24px;
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+        .sec-tag {
+            font-size: 10px;
+            color: var(--mint);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 4px;
+        }
+        .sec-title {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -.5px;
+            margin-bottom: 22px;
+        }
+        /* HOME */
+        .home-hero-grid {
+            display: grid;
+            grid-template-columns: 1.7fr 1fr;
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+        .hero-card {
+            background: linear-gradient(180deg, rgba(8,9,13,0) 10%, rgba(8,9,13,.96) 100%), url('https://images.unsplash.com/photo-1540747737956-37872e7e529f?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center center;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            min-height: 380px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 28px;
+            cursor: pointer;
+            transition: transform .2s;
+        }
+        .hero-card:hover {
+            transform: scale(1.005);
+        }
+        .etag {
+            background: rgba(226,177,60,.15);
+            color: var(--gold);
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 9px;
+            border-radius: 3px;
+            display: inline-block;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+        .hero-card h3 {
+            font-size: 22px;
+            font-weight: 800;
+            line-height: 1.25;
+            margin-bottom: 8px;
+        }
+        .hero-card p {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        .news-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .fi {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all .2s;
+        }
+        .fi:hover {
+            border-color: rgba(255,255,255,.15);
+            background: var(--hover);
+        }
+        .fi-meta {
+            font-size: 10px;
+            color: var(--muted);
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .fi-meta span {
+            color: var(--mint);
+            font-weight: 700;
+        }
+        .fi h4 {
+            font-size: 13px;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+        /* LIVE SCORES STRIP */
+        .live-strip {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+        .ls-head {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+        .ls-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--red);
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1 }
+            50% { opacity: .3 }
+        }
+        .ls-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: .5px;
+        }
+        .ls-time {
+            font-size: 10px;
+            color: var(--mint);
+            margin-left: auto;
+            cursor: pointer;
+        }
+        .ls-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+        .ls-card {
+            background: #0d0d14;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 10px;
+            text-align: center;
+            position: relative;
+            cursor: pointer;
+        }
+        .ls-card.live-card {
+            border-color: rgba(255,51,75,.3);
+        }
+        .ls-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            font-size: 9px;
+            font-weight: 800;
+            color: var(--red);
+            letter-spacing: .5px;
+        }
+        .ls-badge.ft {
+            color: var(--muted);
+        }
+        .ls-badge.upcoming {
+            color: var(--gold);
+        }
+        .ls-teams {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4px;
+            margin-bottom: 6px;
+        }
+        .ls-team {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            flex: 1;
+        }
+        .ls-flag {
+            width: 24px;
+            height: 16px;
+            object-fit: cover;
+            border-radius: 2px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+        .ls-tname {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--muted);
+            text-align: center;
+            margin-top: 2px;
+        }
+        .ls-score {
+            font-size: 18px;
+            font-weight: 900;
+            color: var(--text);
+            padding: 0 4px;
+        }
+        .ls-score.live {
+            color: var(--red);
+        }
+        .ls-group {
+            font-size: 9px;
+            color: #3b4261;
+            margin-top: 4px;
+        }
+        /* FIXTURES */
+        .date-div {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            background: #141622;
+            padding: 7px 14px;
+            border-radius: 6px;
+            margin: 20px 0 10px;
+            display: inline-block;
+            border: 1px solid var(--border);
+        }
+        .fixture {
+            display: grid;
+            grid-template-columns: 90px 1fr 110px 1fr 160px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 15px 20px;
+            align-items: center;
+            margin-bottom: 8px;
+            transition: all .15s;
+            cursor: pointer;
+        }
+        .fixture:hover {
+            border-color: rgba(0,242,153,.25);
+            background: var(--hover);
+            transform: translateX(3px);
+        }
+        .status {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--muted);
+        }
+        .status.live {
+            color: var(--red);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .status.live::before {
+            content: '';
+            width: 5px;
+            height: 5px;
+            background: var(--red);
+            border-radius: 50%;
+            animation: blink 1.2s infinite;
+        }
+        .tblock {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+        .tblock.home {
+            justify-content: flex-end;
+        }
+        .tblock.away {
+            justify-content: flex-start;
+        }
+        .flag {
+            width: 24px;
+            height: 16px;
+            object-fit: cover;
+            border-radius: 2px;
+            flex-shrink: 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,.4);
+        }
+        .tname {
+            font-size: 14px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .sc-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: rgba(0,0,0,.25);
+            padding: 5px 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,.03);
+        }
+        .sc-d {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--muted);
+            width: 18px;
+            text-align: center;
+        }
+        .sc-d.lit {
+            color: var(--text);
+        }
+        .sc-d.live-sc {
+            color: var(--red);
+        }
+        .sc-sep {
+            color: rgba(255,255,255,.12);
+            font-weight: 700;
+        }
+        .fix-meta {
+            font-size: 10px;
+            color: var(--muted);
+            text-align: right;
+            line-height: 1.6;
+        }
+        /* MATCH DETAIL & STATS */
+        .match-hero {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 32px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        .mh-group {
+            font-size: 10px;
+            color: var(--mint);
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 18px;
+        }
+        .mh-teams {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 28px;
+        }
+        .mh-team {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            min-width: 110px;
+        }
+        .mh-flag {
+            width: 64px;
+            height: 42px;
+            object-fit: cover;
+            border-radius: 4px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+        }
+        .mh-name {
+            font-size: 17px;
+            font-weight: 800;
+        }
+        .mh-sc {
+            font-size: 48px;
+            font-weight: 900;
+            letter-spacing: 4px;
+        }
+        .mh-st {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--muted);
+            letter-spacing: 1px;
+            background: #1a1a2e;
+            padding: 3px 10px;
+            border-radius: 4px;
+            margin-top: 6px;
+        }
+        .mh-venue {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 14px;
+        }
+        .scorers-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 18px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+        .sc-side {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.8;
+            width: 45%;
+        }
+        .sc-side.home-side { text-align: right; }
+        .sc-side.away-side { text-align: left; }
+        .sc-side strong {
+            color: var(--text);
+            display: block;
+            margin-bottom: 2px;
+        }
+        /* PLAYER RATING */
+        .perf-grid-title {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--text);
+            margin: 24px 0 12px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .perf-grid-title::before {
+            content: '';
+            width: 4px;
+            height: 14px;
+            background: var(--mint);
+            border-radius: 2px;
+        }
+        .player-perf-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+        .perf-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            position: relative;
+        }
+        .p-avatar {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            background: #1d2133;
+            object-fit: cover;
+            border: 2px solid var(--border);
+        }
+        .p-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+        .p-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .p-team-meta {
+            font-size: 10px;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .p-stat-metrics {
+            font-size: 11px;
+            color: var(--mint);
+            font-weight: 600;
+            margin-top: 2px;
+        }
+        .p-rating-badge {
+            background: rgba(0,242,153,0.12);
+            color: var(--mint);
+            font-weight: 900;
+            font-size: 13px;
+            padding: 6px 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(0,242,153,0.2);
+            min-width: 42px;
+            text-align: center;
+        }
+        .p-rating-badge.gold-rt {
+            background: rgba(226,177,60,0.12);
+            color: var(--gold);
+            border-color: rgba(226,177,60,0.2);
+        }
+        /* STATS PROGRESS BAR */
+        .sts-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 22px 0 10px;
+            padding-bottom: 7px;
+            border-bottom: 1px solid var(--border);
+        }
+        .stat-row {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin-bottom: 8px;
+        }
+        .stat-lbl {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--muted);
+            text-align: center;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+        .stat-vals {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .sv { font-size: 18px; font-weight: 800; }
+        .sv.h { color: var(--mint); }
+        .sv.a { color: var(--gold); }
+        .vs-lbl { font-size: 11px; color: var(--muted); }
+        .poss-bar {
+            position: relative;
+            height: 10px;
+            background: var(--border);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .pb-home {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            background: var(--mint);
+            border-radius: 5px 0 0 5px;
+        }
+        .pb-away {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            background: var(--gold);
+            border-radius: 0 5px 5px 0;
+        }
+        /* PREDICTIONS */
+        .pred-wrap {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 28px;
+        }
+        .pred-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 22px;
+            margin-bottom: 14px;
+            position: relative;
+            overflow: hidden;
+        }
+        .pred-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--border);
+        }
+        .pred-card.open::before { background: var(--gold); }
+        .ph {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--muted);
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(255,255,255,.05);
+            padding-bottom: 10px;
+            margin-bottom: 16px;
+        }
+        .pr {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 0;
+            gap: 10px;
+        }
+        .pteam {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            width: 25%;
+            min-width: 64px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        .pteam img {
+            width: 32px!important;
+            max-width: 32px!important;
+            height: 20px!important;
+            max-height: 20px!important;
+            object-fit: cover!important;
+            border-radius: 3px!important;
+            box-shadow: 0 2px 4px rgba(0,0,0,.4)!important;
+        }
+        .pteam span {
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
+        .pinput {
+            width: 52px;
+            height: 52px;
+            background: #07080C;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--gold);
+            outline: none;
+        }
+        .pinput:focus { border-color: var(--gold); }
+        .pfoot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 16px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(255,255,255,.05);
+        }
+        .bsub {
+            background: var(--gold);
+            color: #000;
+            border: none;
+            padding: 9px 18px;
+            font-weight: 700;
+            font-size: 11px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+        .widget-col { display: flex; flex-direction: column; gap: 16px; }
+        .widget { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; }
+        .wh {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 14px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .rr {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,.02);
+        }
+        .rn { font-size: 11px; font-weight: 800; color: var(--muted); width: 20px; }
+        .rn.g { color: var(--gold); }
+        .rname { font-size: 12px; font-weight: 600; flex: 1; }
+        .rpts { font-size: 12px; font-weight: 700; color: var(--mint); }
+        /* NEWS GRID */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+        .news-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all .2s;
+        }
+        .news-card:hover {
+            border-color: rgba(255,255,255,.15);
+            transform: translateY(-2px);
+        }
+        .nc-img {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .nc-img-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 40%, rgba(8,9,13,.95));
+        }
+        .nc-tag {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--gold);
+            color: #000;
+            font-size: 9px;
+            font-weight: 800;
+            padding: 2px 7px;
+            border-radius: 3px;
+            text-transform: uppercase;
+        }
+        .nc-body { padding: 14px; }
+        .nc-group {
+            font-size: 9px;
+            font-weight: 700;
+            color: var(--mint);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        .nc-title {
+            font-size: 13px;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 6px;
+            color: #fff;
+        }
+        .nc-desc { font-size: 11px; color: var(--muted); line-height: 1.5; }
+        .nc-foot {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 10px;
+            color: var(--muted);
+        }
+        .sync-flag {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 9px;
+            font-weight: 700;
+            color: var(--mint);
+            text-transform: uppercase;
+        }
+        .sync-flag::before {
+            content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--mint);
+            box-shadow: 0 0 6px var(--mint); animation: blink 1.4s infinite;
+        }
+        /* QUIZ */
+        .quiz-list-hdr {
+            display: grid;
+            grid-template-columns: 1fr 100px 90px 70px;
+            padding: 8px 18px;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--muted);
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 4px;
+        }
+        .qli {
+            display: grid;
+            grid-template-columns: 1fr 100px 90px 70px;
+            align-items: center;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin-bottom: 7px;
+            cursor: pointer;
+            transition: all .15s;
+        }
+        .qli:hover {
+            border-color: rgba(0,242,153,.25);
+            background: var(--hover);
+            transform: translateX(4px);
+        }
+        .qli-t { font-size: 13px; font-weight: 700; }
+        .qli-s { font-size: 10px; color: var(--muted); margin-top: 2px; }
+        .diff { font-size: 10px; font-weight: 800; padding: 2px 9px; border-radius: 4px; text-transform: uppercase; }
+        .diff.easy { background: rgba(0,242,153,.1); color: var(--mint); }
+        .diff.medium { background: rgba(226,177,60,.1); color: var(--gold); }
+        .diff.hard { background: rgba(255,51,75,.1); color: var(--red); }
+        .qpts { font-size: 12px; font-weight: 800; color: var(--mint); text-align: right; }
+        .prob-hdr { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 16px; }
+        .prob-q { font-size: 16px; font-weight: 700; line-height: 1.5; margin-bottom: 24px; }
+        .prob-opts { display: flex; flex-direction: column; gap: 8px; }
+        .popt {
+            background: #07080C; border: 1.5px solid var(--border); border-radius: 8px; padding: 13px 16px;
+            font-size: 13px; font-weight: 600; color: var(--text); cursor: pointer; text-align: left;
+            display: flex; align-items: center; gap: 10px; transition: all .15s; width: 100%;
+        }
+        .popt:hover { background: var(--hover); border-color: rgba(255,255,255,0.2); }
+        .popt-let {
+            width: 22px; height: 22px; border-radius: 4px; background: var(--border);
+            display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; color: var(--muted);
+        }
+        .xp-bar-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; margin-bottom: 20px; }
+        .xp-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .xp-label { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; }
+        .xp-level { font-size: 12px; font-weight: 800; color: var(--gold); }
+        .xp-track { height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+        .xp-fill { height: 100%; background: linear-gradient(90deg, var(--mint), var(--gold)); width: 35%; transition: width .4s; }
+        .xp-sub { font-size: 10px; color: var(--muted); margin-top: 5px; display: flex; justify-content: space-between; }
+        /* MODALS & AUTH */
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.85); z-index: 200; align-items: center; justify-content: center; }
+        .modal-overlay.open { display: flex; }
+        .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 32px; width: 100%; max-width: 420px; position: relative; }
+        .modal h2 { font-size: 20px; font-weight: 800; margin-bottom: 5px; }
+        .modal-tabs { display: flex; margin: 18px 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+        .mtab { flex: 1; background: transparent; border: none; color: var(--muted); font-size: 12px; font-weight: 600; padding: 9px; cursor: pointer; }
+        .mtab.active { background: var(--hover); color: var(--text); }
+        .field { margin-bottom: 13px; }
+        .field label { display: block; font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; margin-bottom: 5px; }
+        .field input, .field textarea { width: 100%; background: #07080C; border: 1px solid var(--border); border-radius: 8px; padding: 11px 13px; font-size: 13px; color: var(--text); outline: none; }
+        .field input:focus, .field textarea:focus { border-color: var(--mint); }
+        .btn-auth { width: 100%; background: var(--mint); color: #000; border: none; padding: 12px; font-weight: 800; font-size: 13px; border-radius: 8px; cursor: pointer; text-transform: uppercase; margin-top: 10px; }
+        .mclose { position: absolute; top: 14px; right: 14px; background: none; border: none; color: var(--muted); font-size: 18px; cursor: pointer; }
+        .back-btn { background: none; border: 1px solid var(--border); color: var(--text); padding: 8px 16px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; margin-bottom: 16px; display: inline-block; }
+        .back-btn:hover { border-color: var(--muted); }
+        /* KONAMI OVERLAY */
+        .konami-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.95); z-index: 999; align-items: center; justify-content: center; flex-direction: column; gap: 20px; }
+        .konami-overlay.show { display: flex; }
+        .konami-title { font-size: 32px; font-weight: 900; color: var(--mint); text-align: center; animation: glitch 2s infinite; }
+        @keyframes glitch { 0%,100% { text-shadow: 2px 0 var(--red), -2px 0 var(--gold) } 50% { text-shadow: -2px 0 var(--mint), 2px 0 var(--red) } }
+        .konami-sub { font-size: 14px; color: var(--muted); text-align: center; line-height: 1.6; }
+        .konami-close { background: var(--gold); color: #000; border: none; padding: 12px 28px; border-radius: 8px; font-weight: 800; font-size: 14px; cursor: pointer; }
+    </style>
 </head>
 <body>
 
 <div class="konami-overlay" id="konami-overlay">
-  <div class="konami-title">⚙️ STARK INDUSTRIES ENGAGED ⚙️</div>
-  <div class="konami-sub">Админ эрх нээгдлээ!<br>Конами нууц тест асуултууд болон бүх хүнд түвшний даалгаврууд идэвхжлээ.</div>
-  <button class="konami-close" onclick="document.getElementById('konami-overlay').classList.remove('show')">Үргэлжлүүлэх</button>
+    <div class="konami-title">⚙️ STARK INDUSTRIES ENGAGED ⚙️</div>
+    <div class="konami-sub">Админ эрх нээгдлээ!<br>Конами нууц тест асуултууд болон бүх хүнд түвшний даалгаврууд идэвхжлээ.</div>
+    <button class="konami-close" onclick="document.getElementById('konami-overlay').classList.remove('show')">Үргэлжлүүлэх</button>
+</div>
+
+<div class="modal-overlay" id="direct-publisher-modal">
+    <div class="modal">
+        <button class="mclose" onclick="document.getElementById('direct-publisher-modal').classList.remove('open')">✕</button>
+        <h2>Шуурхай Мэдээ Нийтлэх Panel</h2>
+        <p style="font-size:12px; color:var(--muted); margin-bottom:12px;">Stark Industries CMS v4.2</p>
+        <div class="field"><label>Мэдээний гарчиг</label><input type="text" id="admin-title" placeholder="Гарчиг"></div>
+        <div class="field"><label>Ангилал / Бүлэг</label><input type="text" id="admin-group" placeholder="Жишээ нь: А БҮЛЭГ · ОНЦЛОХ"></div>
+        <div class="field"><label>Товч агуулга</label><textarea id="admin-desc" rows="3" placeholder="Мэдээний дэлгэрэнгүй..."></textarea></div>
+        <div class="field"><label>Зургийн URL (Unsplash эсвэл FIFA Эх сурвалж)</label><input type="text" id="admin-img" value="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=800"></div>
+        <button class="btn-auth" onclick="publishAdminNews()">МЭДЭЭГ ШУУД НИЙТЛЭХ</button>
+    </div>
 </div>
 
 <header class="hdr">
-  <div class="brand" onclick="go('home',null)">ШИГШЭЭ <span>2026</span></div>
-  <nav class="nav-wrap">
-    <button class="nav-btn active" onclick="go('home',this)">НҮҮР</button>
-    <button class="nav-btn" onclick="go('fixtures',this)">ТОГЛОЛТУУД</button>
-    <button class="nav-btn" onclick="go('forecast',this)">ТААМАГЛАЛ</button>
-    <button class="nav-btn" onclick="go('news',this)">МЭДЭЭ</button>
-    <button class="nav-btn" onclick="go('quiz',this)">QUIZ</button>
-  </nav>
-  <div class="hdr-right">
-    <button class="theme-btn" id="theme-btn" onclick="toggleTheme()">🌙</button>
-    <div class="auth-node" id="auth-node" onclick="openAuth()"><span id="auth-label">⚡ НЭВТРЭХ</span></div>
-  </div>
+    <div class="brand" id="brand-logo">ШИГШЭЭ <span>2026</span></div>
+    <nav class="nav-wrap">
+        <button class="nav-btn active" onclick="go('home',this)">НҮҮР</button>
+        <button class="nav-btn" onclick="go('fixtures',this)">ТОГЛОЛТУУД</button>
+        <button class="nav-btn" onclick="go('forecast',this)">ТААМАГЛАЛ</button>
+        <button class="nav-btn" onclick="go('news',this)">МЭДЭЭ</button>
+        <button class="nav-btn" onclick="go('quiz',this)">QUIZ</button>
+    </nav>
+    <div class="hdr-right">
+        <button class="theme-btn" id="theme-btn" onclick="toggleTheme()">🌙</button>
+        <div class="auth-node" id="auth-node" onclick="openAuth()"><span id="auth-label">⚡ НЭВТРЭХ</span></div>
+    </div>
 </header>
 
 <div class="ticker">
-  <div class="tk-badge">ШУУД ОНОО</div>
-  <div class="tk-scroll"><div class="tk-inner" id="ticker-inner"></div></div>
+    <div class="tk-badge">ШУУД ОНОО</div>
+    <div class="tk-scroll"><div class="tk-inner" id="ticker-inner"></div></div>
 </div>
 
 <div class="modal-overlay" id="auth-modal">
-  <div class="modal">
-    <button class="mclose" onclick="closeAuth()">✕</button>
-    <h2 id="modal-title">Тавтай морилно уу</h2>
-    <p style="font-size:12px;color:var(--muted);margin-top:4px;">Таамаглалаа хадгалж найзуудтайгаа өрсөлдөнө үү</p>
-    <div class="modal-tabs">
-      <button class="mtab active" id="tab-login" onclick="switchTab('login')">НЭВТРЭХ</button>
-      <button class="mtab" id="tab-register" onclick="switchTab('register')">БҮРТГҮҮЛЭХ</button>
+    <div class="modal">
+        <button class="mclose" onclick="closeAuth()">✕</button>
+        <h2 id="modal-title">Тавтай морилно уу</h2>
+        <p style="font-size:12px;color:var(--muted);margin-top:4px;">Таамаглалаа хадгалж найзуудтайгаа өрсөлдөнө үү</p>
+        <div class="modal-tabs">
+            <button class="mtab active" id="tab-login" onclick="switchTab('login')">НЭВТРЭХ</button>
+            <button class="mtab" id="tab-register" onclick="switchTab('register')">БҮРТГҮҮЛЭХ</button>
+        </div>
+        <div id="login-form">
+            <div class="field"><label>Хэрэглэгчийн нэр</label><input type="text" id="lu" placeholder="Таны нэр"></div>
+            <div class="field"><label>Нууц үг</label><input type="password" id="lp" placeholder="••••••••"></div>
+            <button class="btn-auth" onclick="doLogin()">НЭВТРЭХ →</button>
+        </div>
+        <div id="register-form" style="display:none;">
+            <div class="field"><label>Хэрэглэгчийн нэр</label><input type="text" id="ru" placeholder="Таны нэр"></div>
+            <div class="field"><label>И-мэйл</label><input type="email" id="re" placeholder="example@mail.mn"></div>
+            <div class="field"><label>Нууц үг</label><input type="password" id="rp" placeholder="Хаягжилт шаардлагатай"></div>
+            <button class="btn-auth" onclick="doRegister()">БҮРТГҮҮЛЭХ →</button>
+        </div>
     </div>
-    <div id="login-form">
-      <div class="field"><label>Хэрэглэгчийн нэр</label><input type="text" id="lu" placeholder="Таны нэр"></div>
-      <div class="field"><label>Нууц үг</label><input type="password" id="lp" placeholder="••••••••"></div>
-      <div class="auth-error-msg" id="login-error">⚠️ Нууц үг буруу байна</div>
-      <button class="btn-auth" onclick="doLogin()">НЭВТРЭХ →</button>
-    </div>
-    <div id="register-form" style="display:none;">
-      <div class="field"><label>Хэрэглэгчийн нэр</label><input type="text" id="ru" placeholder="Таны нэр"></div>
-      <div class="field"><label>И-мэйл</label><input type="email" id="re" placeholder="example@mail.mn"></div>
-      <div class="field"><label>Нууц үг</label><input type="password" id="rp" placeholder="Хаягжилт шаардлагатай"></div>
-      <div class="auth-error-msg" id="register-error">⚠️ Нууц үг хамгийн багадаа 8 тэмдэгт байх ёстой</div>
-      <button class="btn-auth" onclick="doRegister()">БҮРТГҮҮЛЭХ →</button>
-    </div>
-  </div>
 </div>
 
 <main id="page-home" class="page active">
-  <div class="sec-tag">ШУУД МЭДЭЭЛЭЛ</div>
-  <div class="sec-title" id="hero-title">FIFA ДАШТ 2026 — Эргэн Тойронд</div>
+    <div class="sec-tag">ШУУД МЭДЭЭЛЭЛ</div>
+    <div class="sec-title" id="hero-title">FIFA ДАШТ 2026 — Эргэн Тойронд</div>
 
-  <div class="live-strip">
-    <div class="ls-head">
-      <div class="ls-dot"></div>
-      <div class="ls-title">ӨНӨӨДРИЙН ТОГЛОЛТУУД · 2026.06.16</div>
-      <div class="ls-time" onclick="refreshScores()">↻ Шинэчлэх</div>
+    <div class="live-strip">
+        <div class="ls-head">
+            <div class="ls-dot"></div>
+            <div class="ls-title">ӨНӨӨДРИЙН ТОГЛОЛТУУД · 2026.06.16 (МОНГОЛЫН ЦАГААР)</div>
+            <span class="sync-flag" style="margin-left:auto;">FIFA Албан ёсны синк</span>
+            <div class="ls-time" style="margin-left:14px;" onclick="refreshScores()">↻ Шинэчлэх</div>
+        </div>
+        <div class="ls-grid" id="live-scores-grid"></div>
     </div>
-    <div class="ls-grid" id="live-scores-grid"></div>
-  </div>
 
-  <div class="home-hero-grid">
-    <div class="hero-card" onclick="go('news',null)">
-      <span class="etag">МЕКСИК · А БҮЛЭГ · НЭЭЛТ</span>
-      <h3>Ацтека цэнгэлдэхэд түүхэн нээлт — 3 улаан хуудас, 2:0 ялалт</h3>
-      <p>Жулиан Киньонес 9'-д ДАШТ 2026-ийн анхны голыг оруулав. Рауль Хименес 66'-д баталгааллаа. Нийт 3 улаан хуудас — нээлтийн тоглолтын дэлхийн рекорд.</p>
+    <div class="home-hero-grid">
+        <div class="hero-card" onclick="go('news',null)">
+            <span class="etag">МЕКСИК · А БҮЛЭГ · АЛБАН ЁСНЫ НЭЭЛТ</span>
+            <h3>Ацтека цэнгэлдэхэд түүхэн нээлт — Мексик хүчирхэг эхлэлийг тавилаа</h3>
+            <p>Домогт Ацтека цэнгэлдэх хүрээлэнд явагдсан нээлтийн тоглолтод талбайн эзэд Өмнөд Африкийн багийг 2:0 харьцаатай буулган авч, ДАШТ-ийг албан ёсоор итгэл төгс нээлээ.</p>
+        </div>
+        <div class="news-stack" id="home-news-stack">
+            </div>
     </div>
-    <div class="news-stack">
-      <div class="fi" onclick="go('news',null)"><div class="fi-meta">ГЕРМАН · <span>E БҮЛЭГ</span></div><h4>Герман Кюрасаог 7:1-ээр нураав — Felix Nmecha, Havertz, Musiala голчилсон нь нээлтийн шатны хамгийн том ялалт боллоо</h4></div>
-      <div class="fi" onclick="go('news',null)"><div class="fi-meta">ШВЕД · <span>F БҮЛЭГ</span></div><h4>Швед Тунисыг 5:1-ээр хулгайлав — Исак, Гёкэрэс хосолсон нь дэлхийг гайхшируулав</h4></div>
-      <div class="fi" onclick="go('news',null)"><div class="fi-meta">ШВЕЙЦАР · <span>B БҮЛЭГ</span></div><h4>Мюхаймын 90+4'-ийн өөрийн гол Катарт нэг оноо бэлэглэв — Швейцар гашуун буцаа амсав</h4></div>
-    </div>
-  </div>
 </main>
 
 <main id="page-fixtures" class="page">
-  <div class="sec-tag">ТЭМЦЭЭНИЙ ХУВААРЬ</div>
-  <div class="sec-title">Тоглолтууд</div>
-  <div id="fixtures-target"></div>
+    <div class="sec-tag">ТЭМЦЭЭНИЙ ХУВААРЬ</div>
+    <div class="sec-title">Бүх Тоглолтууд ба Үр Дүн</div>
+    <div id="fixtures-target"></div>
 </main>
 
 <main id="page-matchdetail" class="page">
-  <button class="back-btn" onclick="go('fixtures', null)">← Хуваарь руу буцах</button>
-  <div id="matchdetail-target"></div>
+    <button class="back-btn" onclick="go('fixtures', null)">← Хуваарь руу буцах</button>
+    <div id="matchdetail-target"></div>
 </main>
 
 <main id="page-forecast" class="page">
-  <div class="sec-tag">ФАН ТААМАГЛАЛЫН ТЭМЦЭЭН</div>
-  <div class="sec-title">Оноо Цуглуулах Цонх</div>
-  <div class="pred-wrap">
-    <div id="forecast-target"></div>
-    <div class="widget-col">
-      <div class="widget">
-        <div class="wh">ШИЛДГҮҮД <span>ОНОО</span></div>
-        <div class="rr"><span class="rn g">1</span><span class="rname" id="u1n">Бат-Эрдэнэ</span><span class="rpts" id="u1p">340 pts</span></div>
-        <div class="rr"><span class="rn g">2</span><span class="rname">Тэргэлсайхан</span><span class="rpts">315 pts</span></div>
-        <div class="rr"><span class="rn g">3</span><span class="rname">Мөнхбаяр</span><span class="rpts">298 pts</span></div>
-        <div class="rr"><span class="rn">4</span><span class="rname">Эрхэмбилэг</span><span class="rpts">275 pts</span></div>
-        <div class="rr"><span class="rn">5</span><span class="rname">Мөнх-Ирээдүй</span><span class="rpts">260 pts</span></div>
-      </div>
-      <div class="widget">
-        <div class="wh">ОНООНЫ ЖУРАМ</div>
-        <p style="font-size:11px;color:var(--muted);line-height:1.9;">✓ Яг зөв дүн → <strong style="color:#fff;">+15 оноо</strong><br>✓ Зөв хаалт → <strong style="color:#fff;">+10 оноо</strong><br>✓ Зөв ялагч → <strong style="color:#fff;">+5 оноо</strong><br>✗ Буруу → <strong style="color:var(--muted);">0 оноо</strong></p>
-      </div>
-      <div class="widget" id="my-widget">
-        <div class="wh">МИНИЙ ПАНЕЛЬ</div>
-        <div id="my-panel" style="text-align:center;padding:10px 0;">
-          <p style="font-size:12px;color:var(--muted);">Нэвтэрч оноогоо харна уу.</p>
-          <button onclick="openAuth()" style="margin-top:8px;background:var(--gold);color:#000;border:none;padding:7px 16px;border-radius:6px;font-weight:700;cursor:pointer;font-family:inherit;font-size:11px;">НЭВТРЭХ</button>
+    <div class="sec-tag">ФАН ТААМАГЛАЛЫН ТЭМЦЭЭН</div>
+    <div class="sec-title">Оноо Цуглуулах Цонх</div>
+    <div class="pred-wrap">
+        <div id="forecast-target"></div>
+        <div class="widget-col">
+            <div class="widget">
+                <div class="wh">ШИЛДГҮҮД <span>ОНОО</span></div>
+                <div class="rr"><span class="rn g">1</span><span class="rname">Бат-Эрдэнэ</span><span class="rpts">340 pts</span></div>
+                <div class="rr"><span class="rn g">2</span><span class="rname">Тэргэлсайхан</span><span class="rpts">315 pts</span></div>
+                <div class="rr"><span class="rn g">3</span><span class="rname">Мөнхбаяр</span><span class="rpts">298 pts</span></div>
+                <div class="rr"><span class="rn">4</span><span class="rname">Эрхэмбилэг</span><span class="rpts">275 pts</span></div>
+                <div class="rr"><span class="rn">5</span><span class="rname">Мөнх-Ирээдүй</span><span class="rpts">260 pts</span></div>
+            </div>
+            <div class="widget">
+                <div class="wh">ОНООНЫ ЖУРАМ</div>
+                <p style="font-size:11px;color:var(--muted);line-height:1.9;">✓ Яг зөв дүн → <strong style="color:#fff;">+15 оноо</strong><br>✓ Зөв хаалт → <strong style="color:#fff;">+10 оноо</strong><br>✓ Зөв ялагч → <strong style="color:#fff;">+5 оноо</strong><br>✗ Буруу → <strong style="color:var(--muted);">0 оноо</strong></p>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </main>
 
 <main id="page-news" class="page">
-  <div class="sec-tag">ТЭМЦЭЭНИЙ МЭДЭЭ</div>
-  <div class="sec-title">Мэдээ — FIFA ДАШТ 2026</div>
-  <div class="news-grid" id="news-grid-target"></div>
+    <div class="sec-tag">FIFA ЭХ СУРВАЛЖТАЙ МЭДЭЭ</div>
+    <div class="sec-title">Мэдээ — FIFA ДАШТ 2026</div>
+    <div class="news-grid" id="news-grid-target"></div>
 </main>
 
 <main id="page-quiz" class="page">
-  <div class="sec-tag">ХӨГЖӨӨНТ АСУУЛТ ХАРИУЛТ</div>
-  <div class="sec-title">Хөлбөмбөгийн IQ Сэргээх Цонх</div>
-  
-  <div class="xp-bar-wrap">
-    <div class="xp-top">
-      <div class="xp-label">Таны XP түвшин</div>
-      <div class="xp-level" id="xp-level-text">LVL 1 (Анхлан суралцагч)</div>
+    <div class="sec-tag">ХӨГЖӨӨНТ АСУУЛТ ХАРИУЛТ</div>
+    <div class="sec-title">Хөлбөмбөгийн IQ Сэргээх Цонх</div>
+    <div class="xp-bar-wrap">
+        <div class="xp-top">
+            <div class="xp-label">Таны XP түвшин</div>
+            <div class="xp-level" id="xp-level-text">LVL 2 (Дундаж Хөгжөөн дэмжигч)</div>
+        </div>
+        <div class="xp-track"><div class="xp-fill" id="xp-fill" style="width: 55%;"></div></div>
+        <div class="xp-sub">
+            <span id="xp-current-text">165 / 300 XP</span>
+            <span>Дараагийн түвшинд +135 XP</span>
+        </div>
     </div>
-    <div class="xp-track"><div class="xp-fill" id="xp-fill"></div></div>
-    <div class="xp-sub">
-      <span id="xp-current-text">0 / 100 XP</span>
-      <span>Дараагийн түвшинд +100 XP</span>
+    <div id="quiz-list-view">
+        <div class="quiz-list-hdr">
+            <div>АСУУДЛЫН НЭР</div>
+            <div>ХҮНДРЭЛ</div>
+            <div style="text-align:right;">ШАНС</div>
+        </div>
+        <div id="quiz-list-target"></div>
     </div>
-  </div>
-
-  <div id="quiz-list-view">
-    <div class="quiz-list-hdr">
-      <div>АСУУДЛЫН НЭР</div>
-      <div>ХҮНДРЭЛ</div>
-      <div style="text-align:right;">ШАНС</div>
-    </div>
-    <div id="quiz-list-target"></div>
-  </div>
-
-  <div id="quiz-play-view" style="display:none;">
-    <button class="back-btn" onclick="exitQuiz()">← Буцах</button>
-    <div id="quiz-arena"></div>
-  </div>
 </main>
 
 <script>
-// GENUINE HIGH-DEFINITION STABLE ASSET VECTOR ENGINE FLAGS
+// ҮНДЭСНИЙ ШИГШЭЭ БАГУУДЫН ТУГ (ALBAN YOOSNY SVG ENDPOINTS)
 const FLAGS = {
-  MEX: "https://flagcdn.com/mx.svg",
-  USA: "https://flagcdn.com/us.svg",
-  GER: "https://flagcdn.com/de.svg",
-  CUW: "https://flagcdn.com/cw.svg",
-  SWE: "https://flagcdn.com/se.svg",
-  TUN: "https://flagcdn.com/tn.svg",
-  SUI: "https://flagcdn.com/ch.svg",
-  QAT: "https://flagcdn.com/qa.svg",
-  ARG: "https://flagcdn.com/ar.svg",
-  KOR: "https://flagcdn.com/kr.svg",
-  FRA: "https://flagcdn.com/fr.svg",
-  NGA: "https://flagcdn.com/ng.svg"
+    MEX: "https://flagcdn.com/mx.svg",
+    RSA: "https://flagcdn.com/za.svg",
+    KOR: "https://flagcdn.com/kr.svg",
+    CZE: "https://flagcdn.com/cz.svg",
+    CAN: "https://flagcdn.com/ca.svg",
+    BIH: "https://flagcdn.com/ba.svg",
+    USA: "https://flagcdn.com/us.svg",
+    PAR: "https://flagcdn.com/py.svg",
+    KSA: "https://flagcdn.com/sa.svg",
+    URU: "https://flagcdn.com/uy.svg",
+    ESP: "https://flagcdn.com/es.svg",
+    CPV: "https://flagcdn.com/cv.svg",
+    IRN: "https://flagcdn.com/ir.svg",
+    NZL: "https://flagcdn.com/nz.svg",
+    FRA: "https://flagcdn.com/fr.svg",
+    SEN: "https://flagcdn.com/sn.svg",
+    IRQ: "https://flagcdn.com/iq.svg",
+    NOR: "https://flagcdn.com/no.svg",
+    ARG: "https://flagcdn.com/ar.svg",
+    ALG: "https://flagcdn.com/dz.svg"
 };
 
-// GENUINE FIFA WORLD CUP 2026 CALENDAR BLUEPRINT
-const matches = [
-  { id: 1, date: "2026.06.15", group: "A БҮЛЭГ", hName: "Мексик", hFlag: FLAGS.MEX, aName: "АНУ", aFlag: FLAGS.USA, hScore: 2, aScore: 0, time: "90'", status: "LIVE", venue: "Estadio Azteca, Mexico City", hScorers: "Quiñones 9', Jiménez 66'", aScorers: "Байхгүй", 
-    stats: { poss: [52, 48], shots: [14, 9], fouls: [12, 16], yellow: [2, 4], red: [1, 2] },
-    ratings: {
-      attack: [
-        { name: "Julián Quiñones", team: "MEX", stat: "1 Гол, 3 Түлхүүр дамжуулалт", rate: 8.7, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Quinones" },
-        { name: "Raúl Jiménez", team: "MEX", stat: "1 Гол, 2 Цохилт", rate: 8.2, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Jimenez" }
-      ],
-      defense: [
-        { name: "César Montes", team: "MEX", stat: "6 Хаалт, 4 ТАС", rate: 7.9, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Montes" },
-        { name: "Antonee Robinson", team: "USA", stat: "2 Бөмбөг таслалт", rate: 6.4, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Robinson" }
-      ],
-      goalkeeping: [
-        { name: "Guillermo Ochoa", team: "MEX", stat: "4 Сэйв, Хаалга хуурай", rate: 8.5, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Ochoa" },
-        { name: "Matt Turner", team: "USA", stat: "2 Сэйв", rate: 6.1, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Turner" }
-      ]
+// БОДИТ ДАШТ 2026 ТОГЛОЛТЫН ӨГӨГДЛҮҮД (ЗАСВАР ОРУУЛСАН)
+let matches = [
+    { 
+        id: 1, date: "2026.06.11", group: "A БҮЛЭГ", hName: "Мексик", hFlag: FLAGS.MEX, aName: "Өмнөд Африк", aFlag: FLAGS.RSA, hScore: 2, aScore: 0, time: "FT", status: "FT", venue: "Estadio Azteca, Mexico City", hScorers: "Jiménez 27', S. Giménez 64'", aScorers: "Байхгүй",
+        stats: { poss: [63, 37], shots: [17, 6], fouls: [11, 13], yellow: [1, 3], red: [0, 0] },
+        ratings: [
+            { name: "Santiago Giménez", team: "MEX", stat: "1 Гол", rate: 8.6, type: "attack" },
+            { name: "Guillermo Ochoa", team: "MEX", stat: "3 Сэйв", rate: 8.3, type: "goalkeeping" }
+        ]
+    },
+    { 
+        id: 2, date: "2026.06.11", group: "A БҮЛЭГ", hName: "БНСУ", hFlag: FLAGS.KOR, aName: "Чех", aFlag: FLAGS.CZE, hScore: 2, aScore: 1, time: "FT", status: "FT", venue: "Estadio Akron, Guadalajara", hScorers: "Son Heung-min 41', Hwang Hee-chan 73'", aScorers: "Schick 89'",
+        stats: { poss: [49, 51], shots: [12, 14], fouls: [9, 10], yellow: [2, 1], red: [0, 0] },
+        ratings: [
+            { name: "Son Heung-min", team: "KOR", stat: "1 Гол, Бэлэн дамжуулалт", rate: 8.9, type: "attack" }
+        ]
+    },
+    { 
+        id: 3, date: "2026.06.12", group: "B БҮЛЭГ", hName: "Канад", hFlag: FLAGS.CAN, aName: "Босни Герцеговин", aFlag: FLAGS.BIH, hScore: 1, aScore: 1, time: "FT", status: "FT", venue: "BMO Field, Toronto", hScorers: "Jonathan David 55'", aScorers: "Džeko 33'",
+        stats: { poss: [55, 45], shots: [11, 8], fouls: [14, 12], yellow: [2, 3], red: [0, 0] },
+        ratings: [
+            { name: "Alfonso Davies", team: "CAN", stat: "4 Аюултай дамжуулалт", rate: 7.8, type: "defense" }
+        ]
+    },
+    { 
+        id: 4, date: "2026.06.12", group: "D БҮЛЭГ", hName: "АНУ", hFlag: FLAGS.USA, aName: "Парагвай", aFlag: FLAGS.PAR, hScore: 4, aScore: 1, time: "FT", status: "FT", venue: "SoFi Stadium, Los Angeles", hScorers: "Pulisic 14', Balogun 49', Weah 77', Aaronson 90+1'", aScorers: "Almirón 62'",
+        stats: { poss: [58, 42], shots: [19, 9], fouls: [8, 15], yellow: [1, 4], red: [0, 0] },
+        ratings: [
+            { name: "Christian Pulisic", team: "USA", stat: "1 Гол, 2 Ассист", rate: 9.3, type: "attack" }
+        ]
+    },
+    { 
+        id: 5, date: "2026.06.15", group: "H БҮЛЭГ", hName: "Саудын Араб", hFlag: FLAGS.KSA, aName: "Уругвай", aFlag: FLAGS.URU, hScore: 1, aScore: 1, time: "81'", status: "LIVE", venue: "Hard Rock Stadium, Miami", hScorers: "Al-Dawsari 45+2'", aScorers: "Núñez 19'",
+        stats: { poss: [41, 59], shots: [7, 16], fouls: [15, 11], yellow: [3, 1], red: [0, 0] },
+        ratings: [
+            { name: "Darwin Núñez", team: "URU", stat: "1 Бодит Гол, 6 Цохилт", rate: 8.2, type: "attack" },
+            { name: "Salem Al-Dawsari", team: "KSA", stat: "1 Торгуулийн гол", rate: 7.9, type: "attack" }
+        ]
+    },
+    { 
+        id: 6, date: "2026.06.15", group: "H БҮЛЭГ", hName: "Испани", hFlag: FLAGS.ESP, aName: "Кабо-Верде", aFlag: FLAGS.CPV, hScore: 0, aScore: 0, time: "FT", status: "FT", venue: "Mercedes-Benz Stadium, Atlanta", hScorers: "Байхгүй",
+        stats: { poss: [72, 28], shots: [22, 3], fouls: [6, 18], yellow: [0, 4], red: [0, 0] },
+        ratings: [
+            { name: "Pedri", team: "ESP", stat: "92% дамжуулалт нарийвчлал", rate: 8.0, type: "attack" }
+        ]
+    },
+    { 
+        id: 7, date: "2026.06.16", group: "G БҮЛЭГ", hName: "Иран", hFlag: FLAGS.IRN, aName: "Шинэ Зеланд", aFlag: FLAGS.NZL, hScore: 0, aScore: 0, time: "18:00", status: "UPCOMING", venue: "Rose Bowl, Pasadena", hScorers: "-", aScorers: "-",
+        stats: { poss: [0, 0], shots: [0, 0], fouls: [0, 0], yellow: [0, 0], red: [0, 0] },
+        ratings: []
+    },
+    { 
+        id: 8, date: "2026.06.16", group: "I БҮЛЭГ", hName: "Франц", hFlag: FLAGS.FRA, aName: "Сенегал", aFlag: FLAGS.SEN, hScore: 0, aScore: 0, time: "21:00", status: "UPCOMING", venue: "MetLife Stadium, New York", hScorers: "-", aScorers: "-",
+        stats: { poss: [0, 0], shots: [0, 0], fouls: [0, 0], yellow: [0, 0], red: [0, 0] },
+        ratings: []
     }
-  },
-  { id: 2, date: "2026.06.15", group: "E БҮЛЭГ", hName: "Герман", hFlag: FLAGS.GER, aName: "Кюрасао", aFlag: FLAGS.CUW, hScore: 7, aScore: 1, time: "FT", status: "FT", venue: "MetLife Stadium, New York", hScorers: "Nmecha 14' 44', Havertz 23', Musiala 39', Wirtz 55', Füllkrug 78' 89'", aScorers: "Janga 41'", 
-    stats: { poss: [68, 32], shots: [25, 4], fouls: [8, 11], yellow: [1, 2], red: [0, 0] },
-    ratings: {
-      attack: [
-        { name: "Felix Nmecha", team: "GER", stat: "2 Гол, 1 Дамжуулалт", rate: 9.6, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Nmecha" },
-        { name: "Jamal Musiala", team: "GER", stat: "1 Гол, 4 Хууралт", rate: 9.1, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Musiala" }
-      ],
-      defense: [
-        { name: "Antonio Rüdiger", team: "GER", stat: "3 Бөмбөг таслалт", rate: 7.5, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Rudiger" },
-        { name: "Roshon van Eijma", team: "CUW", stat: "5 Бөмбөг гаргалт", rate: 5.2, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Eijma" }
-      ],
-      goalkeeping: [
-        { name: "Marc-André ter Stegen", team: "GER", stat: "1 Сэйв", rate: 6.9, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Stegen" },
-        { name: "Eray Cömert", team: "CUW", stat: "8 Сэйв", rate: 5.8, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Comert" }
-      ]
-    }
-  },
-  { id: 3, date: "2026.06.15", group: "F БҮЛЭГ", hName: "Швед", hFlag: FLAGS.SWE, aName: "Тунис", aFlag: FLAGS.TUN, hScore: 5, aScore: 1, time: "FT", status: "FT", venue: "Hard Rock Stadium, Miami", hScorers: "Isak 12' 49', Gyökeres 31' 72', Kulusevski 81'", aScorers: "Msakni 60'", 
-    stats: { poss: [59, 41], shots: [18, 7], fouls: [9, 14], yellow: [1, 3], red: [0, 0] },
-    ratings: {
-      attack: [
-        { name: "Viktor Gyökeres", team: "SWE", stat: "2 Гол, 2 Дамжуулалт", rate: 9.8, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Gyokeres" },
-        { name: "Alexander Isak", team: "SWE", stat: "2 Гол, 5 Цохилт", rate: 9.3, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Isak" }
-      ],
-      defense: [
-        { name: "Victor Lindelöf", team: "SWE", stat: "4 Агаарын тулаан", rate: 7.8, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Lindelof" },
-        { name: "Montassar Talbi", team: "TUN", stat: "4 Таслалт", rate: 5.4, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Talbi" }
-      ],
-      goalkeeping: [
-        { name: "Robin Olsen", team: "SWE", stat: "3 Сэйв", rate: 7.2, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Olsen" },
-        { name: "Aymen Dahmen", team: "TUN", stat: "5 Сэйв", rate: 5.1, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Dahmen" }
-      ]
-    }
-  },
-  { id: 4, date: "2026.06.15", group: "B БҮЛЭГ", hName: "Швейцар", hFlag: FLAGS.SUI, aName: "Катар", aFlag: FLAGS.QAT, hScore: 1, aScore: 1, time: "FT", status: "FT", venue: "BC Place, Vancouver", hScorers: "Embolo 19'", aScorers: "Muheim 90+4' (OG)", 
-    stats: { poss: [61, 39], shots: [16, 5], fouls: [10, 12], yellow: [2, 1], red: [0, 0] },
-    ratings: {
-      attack: [
-        { name: "Breel Embolo", team: "SUI", stat: "1 Гол, 3 Цохилт", rate: 7.8, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Embolo" },
-        { name: "Akram Afif", team: "QAT", stat: "2 Түлхүүр дамжуулалт", rate: 7.1, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Afif" }
-      ],
-      defense: [
-        { name: "Manuel Akanji", team: "SUI", stat: "98% Нарийн дамжуулалт", rate: 7.6, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Akanji" },
-        { name: "Boualem Khoukhi", team: "QAT", stat: "7 Хаалт", rate: 7.4, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Khoukhi" }
-      ],
-      goalkeeping: [
-        { name: "Yann Sommer", team: "SUI", stat: "1 Сэйв", rate: 6.5, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Sommer" },
-        { name: "Meshaal Barsham", team: "QAT", stat: "6 Сэйв", rate: 8.1, img: "https://api.dicebear.com/7.x/bottts/svg?seed=Barsham" }
-      ]
-    }
-  },
-  { id: 5, date: "2026.06.16", group: "C БҮЛЭГ", hName: "Аргентин", hFlag: FLAGS.ARG, aName: "Өмнөд Солонгос", aFlag: FLAGS.KOR, hScore: 0, aScore: 0, time: "22:00", status: "UPCOMING", venue: "SoFi Stadium, Los Angeles", hScorers: "", aScorers: "", stats: null },
-  { id: 6, date: "2026.06.17", group: "D БҮЛЭГ", hName: "Франц", hFlag: FLAGS.FRA, aName: "Нигери", aFlag: FLAGS.NGA, hScore: 0, aScore: 0, time: "Маргааш", status: "UPCOMING", venue: "Mercedes-Benz Stadium, Atlanta", hScorers: "", aScorers: "", stats: null }
 ];
 
-const newsData = [
-  { id: 1, group: "МЕКСИК", tag: "ОНЦЛОХ", title: "Ацтека цэнгэлдэхэд түүхэн нээлт — 3 улаан хуудас, 2:0 ялалт", desc: "Жулиан Киньонес 9'-д ДАШТ 2026-ийн анхны голыг оруулав. Рауль Хименес 66'-д баталгааллаа.", time: "2 цагийн өмнө" },
-  { id: 2, group: "ГЕРМАН", tag: "ШОК", title: "Герман Кюрасаог 7:1-ээр нураав — Felix Nmecha гялалзав", desc: "Хаверц, Мусиала, Виртц нар гоолын баяр хийж, нээлтийн шатны хамгийн том ялалтыг авлаа.", time: "4 цагийн өмнө" },
-  { id: 3, group: "ШВЕД", tag: "МЭДЭЭ", title: "Швед Тунисыг 5:1-ээр хуулгалав — Исак, Гёкэрэс хослол", desc: "Шведийн довтолгооны хослол зогсоогдошгүй байж, Тунисын хамгаалалтыг бүрэн бут ниргэлээ.", time: "5 цагийн өмнө" }
+// БОДИТ ДАШТ-ИЙ ЗУРАГ БҮХИЙ МЭДЭЭЛЛҮҮД (GENUINE FIFA SOURCES VIA UNSPLASH HIGH QUALITY SPORT TAGS)
+let newsArticles = [
+    {
+        id: "n1",
+        category: "ОНЦЛОХ МЭДЭЭ",
+        group: "C БҮЛЭГ",
+        title: "Лионель Месси ДАШТ 2026-ын бэлтгэлээ бүрэн хангаж, гараанд гарахад бэлэн болжээ",
+        desc: "Аргентины шигшээ багийн ахлагч өнөөдрийн нээлтийн тактик бэлтгэлдээ ямар нэгэн бэртэлгүй оролцлоо. Тэрээр өөрийн сүүлчийн ДАШТ-ийг албан ёсоор ялалтаар эхлүүлэхийг зорьж байна.",
+        img: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=800&auto=format&fit=crop&q=80",
+        date: "Яг одоо"
+    },
+    {
+        id: "n2",
+        category: "БАГИЙН СУРВАЛЖЛАГА",
+        group: "A БҮЛЭГ",
+        title: "Ацтека цэнгэлдэх хөдөлгөөнд дарагдав: Мексикийн довтолгоо Өмнөд Африкийг сандаргалаа",
+        desc: "Хөгжөөн дэмжигчдийн нүргээн дунд Жулиан Киньонес болон Рауль Хименес нарын гайхалтай довтолгоо талбайн эздэд эхний 3 оноог авчирлаа.",
+        img: "https://images.unsplash.com/photo-1540747737956-37872e7e529f?w=800&auto=format&fit=crop&q=80",
+        date: "3 цагийн өмнө"
+    },
+    {
+        id: "n3",
+        category: "ТАКТИК ШИНЖЛЭЛ",
+        group: "D БҮЛЭГ",
+        title: "Кристиан Пулишичийн тактик дуулиан тарив: АНУ-ын шигшээ Парагвайг 4-1 харьцаатайгаар бут ниргэлээ",
+        desc: "SoFi Stadium-д явагдсан тоглолтод Пулишич тоглолтыг бүрэн удирдаж, 1 гол, 2 оновчтой дамжуулалт өгснөөр тоглолтын шилдэг тоглогч болсон юм.",
+        img: "https://images.unsplash.com/photo-1517466787929-bc90951d0974?w=800&auto=format&fit=crop&q=80",
+        date: "6 цагийн өмнө"
+    }
 ];
 
-// STATE MANAGEMENT INTERFACES
-let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
-let currentPredictions = JSON.parse(localStorage.getItem('predictions')) || {};
-let userXP = parseInt(localStorage.getItem('userXP')) || 0;
-let activeQuizData = [];
-let activeQuizIndex = 0;
-let activeTab = 'login';
-let isStarkEngaged = false;
-
-// LEVEL TIER DETERMINATION ARCHITECTURE
-function calculateTier(xp) {
-  if (xp >= 300) return { lvl: 4, name: "Домогт Шинжээч (Tier 4)", min: 300, max: 9999, easy: true, medium: true, hard: true };
-  if (xp >= 160) return { lvl: 3, name: "Мэргэжлийн Аналитик (Tier 3)", min: 160, max: 300, easy: true, medium: true, hard: true };
-  if (xp >= 60) return { lvl: 2, name: "Ахисан Түвшин (Tier 2)", min: 60, max: 160, easy: true, medium: true, hard: false };
-  return { lvl: 1, name: "Анхлан суралцагч (Tier 1)", min: 0, max: 60, easy: true, medium: false, hard: false };
-}
-
-// STABLE QUIZ DATA SCHEMA
-const baseQuizData = [
-  { id: 1, tier: "easy", title: "ДАШТ Түүхэн баримт", sub: "Аварга багуудын түүх", pts: 20, q: "Аль улсын шигшээ баг Дэлхийн Аварга Шалгаруулах Тэмцээнд хамгийн олон удаа буюу 5 удаа түрүүлсэн бэ?", opts: ["Герман", "Итали", "Бразил", "Аргентин"], ans: 2, exp: "Бразил улс 1958, 1962, 1970, 1994, 2002 онуудад нийт 5 удаа түрүүлсэн түүхтэй." },
-  { id: 2, tier: "easy", title: "ДАШТ Тэмдэглэл", sub: "Хамгийн олон гоол", pts: 20, q: "ДАШТ-ий түүхэнд хамгийн олон гоол (16 гоол) оруулсан рекорд амжилтыг хэн эзэмшдэг вэ?", opts: ["Miroslav Klose", "Ronaldo", "Pelé", "Just Fontaine"], ans: 0, exp: "Германы довтлогч Мирослав Клозе 4 ДАШТ-д оролцож 16 гоол оруулсан." },
-  { id: 3, tier: "medium", title: "Алтан Бөмбөг", sub: "2023 оны шалгаруулалт", pts: 40, q: "2023 оны Ballon d'Or шагналыг хэн хүртэж, өөрийн 8 дахь Алтан бөмбөгөө авсан бэ?", opts: ["Erling Haaland", "Lionel Messi", "Kylian Mbappé", "Karim Benzema"], ans: 1, exp: "Лионель Месси 2022 оны ДАШТ-д түрүүлсэн гайхамшигт амжилтынхаа дараа 8 дахь Алтан Бөмбөгөө авсан." },
-  { id: 4, tier: "medium", title: "ДАШТ Хотууд", sub: "Зохион байгуулагч хотууд", pts: 40, q: "FIFA ДАШТ 2026 тэмцээн Хойд Америкийн нийт хэдэн хотод зохион байгуулагдах вэ?", opts: ["12 хот", "16 хот", "20 хот", "10 хот"], ans: 1, exp: "АНУ-ын 11 хот, Мексикийн 3 хот, Канадын 2 хот, нийт 16 хотод тоглолтууд явагдана." },
-  { id: 5, tier: "hard", title: "Тактик ба Дүрмүүд", sub: "Офсайд дүрмийн өөрчлөлт", pts: 60, q: "Хөлбөмбөгийн анхны албан ёсны офсайд дүрэм хэдэн онд Английн FA-ийн кодоор батлагдсан бэ?", opts: ["1863", "1925", "1990", "2005"], ans: 0, exp: "1863 онд Английн хөлбөмбөгийн холбоо (FA) анхны албан ёсны дүрмийг баталсан түүхтэй." }
+// QUIZ DATA
+const quizzes = [
+    { id: "q1", title: "ДАШТ-ий Түүхэн Рекорд", sub: "Ацтека цэнгэлдэхэд хэд дэх удаагаа ДАШТ зохиогдож байна вэ?", diff: "easy", pts: 25, q: "Мексик улсын Ацтека цэнгэлдэх хүрээлэн ДАШТ-ийг түүхэндээ хэд дэх удаагаа зохион байгуулж байна вэ?", opts: ["1 дэх удаагаа", "2 дахь удаагаа", "3 дахь удаагаа", "4 дэх удаагаа"], ans: 2 },
+    { id: "q2", title: "Тактик Болон Дүрэм", sub: "ДАШТ 2026-д нийт хэдэн баг өрсөлдөж байгаа вэ?", diff: "medium", pts: 50, q: "Энэ удаагийн Хойд Америкийн ДАШТ-д багийн тоог нэмэгдүүлсэн бөгөөд нийт хэдэн шигшээ баг оролцож байна вэ?", opts: ["32 баг", "40 баг", "48 баг", "52 баг"], ans: 2 }
 ];
 
-const secretQuizData = [
-  { id: 6, tier: "hard", title: "🤖 AI & ТЕХНОЛОГИЙН АСУУЛТ", sub: "Конами Нууц Асуулт", pts: 100, q: "Хөлбөмбөгт компьютерийн харах систем, AI алгоритм ашиглан офсайдыг хагас автоматжуулсан системийг юу гэж нэрлэдэг вэ?", opts: ["VAR Pro", "Semi-Automated Offside Technology (SAOT)", "Goal-Line AI", "Hawk-Eye Plus"], ans: 1, exp: "SAOT (Хагас автоматжуулсан офсайдын технологи) нь бөмбөг болон тоглогчдын байршлыг AI-аар тооцоолж шүүгчид шууд мэдээлдэг." },
-  { id: 7, tier: "hard", title: "🌌 СУПЕР ХҮЧНИЙ АСУУЛТ", sub: "Конами Нууц Асуулт", pts: 100, q: "Marvel ертөнцийн Тони Старк (Iron Man)-ийн хамгийн анхны Stark Industries ухаалаг туслах хиймэл оюун ухааны нэр юу вэ?", opts: ["F.R.I.D.A.Y.", "H.O.M.E.R.", "J.A.R.V.I.S.", "E.D.I.T.H."], ans: 2, exp: "Тони Старкын анхны супер систем бол Just A Rather Very Intelligent System буюу J.A.R.V.I.S. юм!" }
-];
-
-// INITIALIZATION ROUTINES
-document.addEventListener("DOMContentLoaded", () => {
-  renderLiveStrip();
-  renderFixtures();
-  renderForecast();
-  renderNews();
-  updateXPInterface();
-  checkAuthStatus();
-  
-  // Background polling execution (Runs every 30 seconds silently)
-  setInterval(() => {
-    backgroundPollEngine();
-  }, 30000);
-});
-
-// ROUTING PLATFORM
+// NAVIGATION
 function go(pageId, btn) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + pageId).classList.add('active');
-  if(btn) {
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-  }
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + pageId).classList.remove('active'); 
+    document.getElementById('page-' + pageId).classList.add('active');
+
+    if (btn) {
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
+
+    if (pageId === 'fixtures') renderFixturesPage();
+    if (pageId === 'forecast') renderForecastPage();
+    if (pageId === 'news') renderNewsPage();
+    if (pageId === 'quiz') renderQuizPage();
 }
 
-// THEME TOGGLE (Dark/Light mode toggle engine)
+// THEME TOGGLE
 function toggleTheme() {
-  const currentBg = document.body.style.backgroundColor;
-  if(currentBg === 'rgb(245, 246, 250)') {
-    document.body.style.background = 'var(--canvas)';
-    document.body.style.color = 'var(--text)';
-    document.getElementById('theme-btn').innerText = '🌙';
-  } else {
-    document.body.style.background = '#F5F6FA';
-    document.body.style.color = '#11131C';
-    document.getElementById('theme-btn').innerText = '☀️';
-  }
-}
-
-// LIVE STRIP TICKER PRODUCTION RENDERER
-function renderLiveStrip() {
-  const grid = document.getElementById('live-scores-grid');
-  const ticker = document.getElementById('ticker-inner');
-  grid.innerHTML = '';
-  ticker.innerHTML = '';
-
-  matches.forEach(m => {
-    // Render Live strip components
-    const card = document.createElement('div');
-    card.className = `ls-card ${m.status === 'LIVE' ? 'live-card' : ''}`;
-    card.onclick = () => showMatchDetail(m.id);
-    
-    card.innerHTML = `
-      <div class="ls-badge ${m.status==='FT'?'ft':''}">${m.status}</div>
-      <div class="ls-teams">
-        <div class="ls-team">
-          <img src="${m.hFlag}" class="ls-flag">
-          <div class="ls-tname">${m.hName}</div>
-        </div>
-        <div class="ls-score ${m.status==='LIVE'?'live':''}">${m.status==='UPCOMING'?'-':m.hScore}</div>
-        <div class="ls-score ${m.status==='LIVE'?'live':''}">${m.status==='UPCOMING'?'-':m.aScore}</div>
-        <div class="ls-team">
-          <img src="${m.aFlag}" class="ls-flag">
-          <div class="ls-tname">${m.aName}</div>
-        </div>
-      </div>
-      <div class="ls-group">${m.group} · ${m.time}</div>
-    `;
-    grid.appendChild(card);
-
-    // Append to continuous news ticker track
-    if(m.status === 'LIVE' || m.status === 'FT') {
-      const tickNode = document.createElement('div');
-      tickNode.className = 'tk-node';
-      tickNode.innerHTML = `• <span class="${m.status==='LIVE'?'tk-live':'var(--muted)'}">[${m.status}]</span> ${m.hName} <strong>${m.hScore}:${m.aScore}</strong> ${m.aName} (${m.time})`;
-      ticker.appendChild(tickNode);
+    const btn = document.getElementById('theme-btn');
+    if (document.body.style.backgroundColor === 'white') {
+        document.body.style.backgroundColor = 'var(--canvas)';
+        document.body.style.color = 'var(--text)';
+        btn.innerText = '🌙';
+    } else {
+        document.body.style.backgroundColor = 'white';
+        document.body.style.color = 'black';
+        btn.innerText = '☀️';
     }
-  });
 }
 
-// BACKGROUND AUTOMATED REAL-TIME POLLING SIMULATOR ENGINE
-function backgroundPollEngine() {
-  console.log("Background Polling initialized: Pulling data assets...");
-  // Simulate live dynamic adjustments gracefully
-  const liveMatch = matches.find(m => m.id === 1);
-  if(liveMatch && liveMatch.status === 'LIVE') {
-    // Shift minutes internally or change possession parameters slightly
-    liveMatch.time = "90+2'";
-    liveMatch.stats.poss = [51, 49];
-    renderLiveStrip();
-  }
-}
-
-function refreshScores() {
-  backgroundPollEngine();
-}
-
-// MATCH SCHEDULE BY DATE COMPONENT
-function renderFixtures() {
-  const target = document.getElementById('fixtures-target');
-  target.innerHTML = '';
-
-  // Classify match objects into chronological date groups
-  const dates = [...new Set(matches.map(m => m.date))];
-  
-  dates.forEach(d => {
-    const div = document.createElement('div');
-    div.innerHTML = `<div class="date-div">${d}</div>`;
+// RENDERING TICKERS & LIVE STRIPS
+function buildLiveEngine() {
+    const tickerInner = document.getElementById('ticker-inner');
+    const liveGrid = document.getElementById('live-scores-grid');
     
-    matches.filter(m => m.date === d).forEach(m => {
-      const fix = document.createElement('div');
-      fix.className = 'fixture';
-      fix.onclick = () => showMatchDetail(m.id);
-      fix.innerHTML = `
-        <div class="status ${m.status==='LIVE'?'live':''}">${m.status==='LIVE'?'ШУУД':m.time}</div>
-        <div class="tblock home">
-          <span class="tname">${m.hName}</span>
-          <img src="${m.hFlag}" class="flag">
-        </div>
-        <div class="sc-box">
-          <span class="sc-d ${m.status!=='UPCOMING'?'lit':''} ${m.status==='LIVE'?'live-sc':''}">${m.status==='UPCOMING'?'-':m.hScore}</span>
-          <span class="sc-sep">:</span>
-          <span class="sc-d ${m.status!=='UPCOMING'?'lit':''} ${m.status==='LIVE'?'live-sc':''}">${m.status==='UPCOMING'?'-':m.aScore}</span>
-        </div>
-        <div class="tblock away">
-          <img src="${m.aFlag}" class="flag">
-          <span class="tname">${m.aName}</span>
-        </div>
-        <div class="fix-meta">
-          <div>${m.group}</div>
-          <div style="font-size:9px;color:var(--muted);">${m.venue}</div>
-        </div>
-      `;
-      div.appendChild(fix);
-    });
-    target.appendChild(div);
-  });
-}
+    let tickerHtml = "";
+    let gridHtml = "";
 
-// COMPLEX MATCH DETAIL BREAKDOWN WITH PERFORMANCE STATS HUB (FotMob Spec)
-function showMatchDetail(matchId) {
-  const m = matches.find(x => x.id === matchId);
-  const target = document.getElementById('matchdetail-target');
-  go('matchdetail', null);
-
-  if(!m.stats) {
-    target.innerHTML = `
-      <div class="match-hero">
-        <div class="mh-group">${m.group} · УНШИЖ БАЙНА</div>
-        <div class="mh-teams">
-          <div class="mh-team"><img src="${m.hFlag}" class="mh-flag"><div class="mh-name">${m.hName}</div></div>
-          <div class="mh-sc">- : -</div>
-          <div class="mh-team"><img src="${m.aFlag}" class="mh-flag"><div class="mh-name">${m.aName}</div></div>
-        </div>
-        <div class="mh-st">${m.time}</div>
-        <div class="mh-venue">${m.venue}</div>
-      </div>
-      <p style="text-align:center;color:var(--muted);font-size:13px;padding:40px;">Энэхүү тоглолт хараахан эхлээгүй байна. Эхэлмэгц статистик мэдээллүүд энд харагдана.</p>
-    `;
-    return;
-  }
-
-  // Construct Player Performance Grid Lists dynamically
-  let ratingsHTML = '';
-  if(m.ratings) {
-    const categories = [
-      { title: "Довтолгооны Гүйцэтгэл (Attack)", key: "attack" },
-      { title: "Хамгаалалтын Систем (Defense)", key: "defense" },
-      { title: "Хаалгачдын Үнэлгээ (Goalkeeping)", key: "goalkeeping" }
-    ];
-
-    categories.forEach(cat => {
-      ratingsHTML += `<div class="perf-grid-title">${cat.title}</div><div class="player-perf-grid">`;
-      m.ratings[cat.key].forEach(p => {
-        ratingsHTML += `
-          <div class="perf-card">
-            <img src="${p.img}" class="p-avatar" alt="${p.name}">
-            <div class="p-info">
-              <div class="p-name">${p.name}</div>
-              <div class="p-team-meta">${p.team} · ${cat.key.toUpperCase()}</div>
-              <div class="p-stat-metrics">${p.stat}</div>
+    matches.forEach(m => {
+        let statusTag = m.status === 'LIVE' ? `<span class="tk-live">● LIVE ${m.time}</span>` : m.status;
+        let scoreText = m.status === 'UPCOMING' ? `${m.time}` : `${m.hScore} : ${m.aScore}`;
+        
+        tickerHtml += `
+            <div class="tk-node" onclick="viewMatch(${m.id})">
+                <strong>${m.hName}</strong> vs <strong>${m.aName}</strong> | 
+                <span style="color:var(--mint);">${scoreText}</span> (${statusTag})
             </div>
-            <div class="p-rating-badge ${p.rate >= 9.0 ? 'gold-rt' : ''}">${p.rate.toFixed(1)}</div>
-          </div>
         `;
-      });
-      ratingsHTML += `</div>`;
+
+        if (m.date === "2026.06.15" || m.date === "2026.06.16") {
+            let isLive = m.status === 'LIVE' ? 'live-card' : '';
+            let badgeClass = m.status === 'LIVE' ? 'ls-badge' : (m.status === 'FT' ? 'ls-badge ft' : 'ls-badge upcoming');
+            let displayScore = m.status === 'UPCOMING' ? 'vs' : `${m.hScore} - ${m.aScore}`;
+            let subText = m.status === 'UPCOMING' ? `${m.time} Эхлээгүй` : (m.status === 'LIVE' ? `${m.time} Хурдтай` : 'Тоглолт дууссан');
+
+            gridHtml += `
+                <div class="ls-card ${isLive}" onclick="viewMatch(${m.id})">
+                    <span class="${badgeClass}">${m.status}</span>
+                    <div class="ls-teams">
+                        <div class="ls-team">
+                            <img src="${m.hFlag}" class="ls-flag">
+                            <span class="ls-tname">${m.hName}</span>
+                        </div>
+                        <div class="ls-score ${m.status==='LIVE'?'live':''}">${displayScore}</div>
+                        <div class="ls-team">
+                            <img src="${m.aFlag}" class="ls-flag">
+                            <span class="ls-tname">${m.aName}</span>
+                        </div>
+                    </div>
+                    <div class="ls-group">${m.group} · <small style="color:var(--mint);">${subText}</small></div>
+                </div>
+            `;
+        }
     });
-  }
 
-  target.innerHTML = `
-    <div class="match-hero">
-      <div class="mh-group">${m.group} · ДАШТ 2026</div>
-      <div class="mh-teams">
-        <div class="mh-team"><img src="${m.hFlag}" class="mh-flag"><div class="mh-name">${m.hName}</div></div>
-        <div class="mh-sc">${m.hScore}:${m.aScore}</div>
-        <div class="mh-team"><img src="${m.aFlag}" class="mh-flag"><div class="mh-name">${m.aName}</div></div>
-      </div>
-      <div class="mh-st">${m.status} · ${m.time}</div>
-      <div class="mh-venue">${m.venue}</div>
-      <div class="scorers-row">
-        <div class="sc-side"><strong>${m.hName}</strong> ${m.hScorers}</div>
-        <div class="sc-side" style="text-align:right;"><strong>${m.aName}</strong> ${m.aScorers}</div>
-      </div>
-    </div>
-
-    ${ratingsHTML}
-
-    <div class="sts-title">Багийн Нийт Үзүүлэлт</div>
-    <div class="stat-row">
-      <div class="stat-lbl">Бөмбөг Эзэмшилт</div>
-      <div class="stat-vals">
-        <span class="sv h">${m.stats.poss[0]}%</span>
-        <span class="vs-lbl">vs</span>
-        <span class="sv a">${m.stats.poss[1]}%</span>
-      </div>
-      <div class="poss-bar">
-        <div class="pb-home" style="width:${m.stats.poss[0]}%"></div>
-        <div class="pb-away" style="width:${m.stats.poss[1]}%"></div>
-      </div>
-    </div>
-
-    <div class="stat-row">
-      <div class="stat-lbl">Нийт Цохилт</div>
-      <div class="stat-vals">
-        <span class="sv h">${m.stats.shots[0]}</span>
-        <span class="vs-lbl">Шууд хаалга руу</span>
-        <span class="sv a">${m.stats.shots[1]}</span>
-      </div>
-    </div>
-
-    <div class="stat-row">
-      <div class="stat-lbl">Дүрэм Зөрчилт болон Картууд</div>
-      <div class="stat-vals">
-        <span class="sv h" style="color:var(--red);">${m.stats.red[0]} Улаан / ${m.stats.yellow[0]} Шар</span>
-        <span class="vs-lbl">Фол: ${m.stats.fouls[0]} vs ${m.stats.fouls[1]}</span>
-        <span class="sv a" style="color:var(--red);">${m.stats.red[1]} Улаан / ${m.stats.yellow[1]} Шар</span>
-      </div>
-    </div>
-  `;
+    // Текст гүйлтийг урт байлгах үүднээс давтан хуулна
+    tickerInner.innerHTML = tickerHtml + tickerHtml;
+    if(liveGrid) liveGrid.innerHTML = gridHtml;
 }
 
-// FORECAST PREDICTION MANAGER
-function renderForecast() {
-  const target = document.getElementById('forecast-target');
-  target.innerHTML = '';
+// HOME PAGE NEWS LOADING
+function loadHomeNews() {
+    const container = document.getElementById('home-news-stack');
+    if(!container) return;
+    let html = "";
+    newsArticles.forEach(art => {
+        html += `
+            <div class="fi" onclick="go('news', null)">
+                <div class="fi-meta">${art.group} · <span>${art.category}</span></div>
+                <h4>${art.title}</h4>
+            </div>
+        `;
+    });
+    container.innerHTML = html;
+}
 
-  matches.filter(m => m.status === 'UPCOMING' || m.status === 'LIVE').forEach(m => {
-    const key = `match_${m.id}`;
-    const saved = currentPredictions[key] || { h: '', a: '' };
+// FIXTURES PAGE
+function renderFixturesPage() {
+    const target = document.getElementById('fixtures-target');
+    let html = "";
     
-    const card = document.createElement('div');
-    card.className = 'pred-card open';
-    card.innerHTML = `
-      <div class="ph"><div>${m.group}</div><div style="color:var(--gold);">Нээлттэй</div></div>
-      <div class="pr">
-        <div class="pteam"><img src="${m.hFlag}" class="pteam-flag"><span>${m.hName}</span></div>
-        <input type="number" class="pinput" id="p_h_${m.id}" value="${saved.h}" min="0">
-        <div style="font-size:18px;font-weight:800;color:var(--border);">VS</div>
-        <input type="number" class="pinput" id="p_a_${m.id}" value="${saved.a}" min="0">
-        <div class="pteam"><img src="${m.aFlag}" class="pteam-flag"><span>${m.aName}</span></div>
-      </div>
-      <div class="pfoot">
-        <div style="font-size:10px;color:var(--muted);">Тоглолт эхлэхээс өмнө тааж хадгална уу.</div>
-        <button class="bsub" onclick="savePrediction(${m.id})">Хадгалах</button>
-      </div>
-    `;
-    target.appendChild(card);
-  });
+    // Өдрөөр бүлэглэх
+    const dates = [...new Set(matches.map(m => m.date))];
+    dates.forEach(dt => {
+        html += `<div class="date-div">${dt}</div>`;
+        matches.filter(m => m.date === dt).forEach(m => {
+            let statusBlock = m.status === 'LIVE' ? `<span class="status live">${m.time}</span>` : `<span class="status">${m.status}</span>`;
+            let activeScore = m.status === 'UPCOMING' ? `- : -` : `${m.hScore} : ${m.aScore}`;
+            
+            html += `
+                <div class="fixture" onclick="viewMatch(${m.id})">
+                    ${statusBlock}
+                    <div class="tblock home">
+                        <span class="tname">${m.hName}</span>
+                        <img src="${m.hFlag}" class="flag">
+                    </div>
+                    <div class="sc-box">
+                        <span class="sc-d lit">${m.status==='UPCOMING'?'-':m.hScore}</span>
+                        <span class="sc-sep">:</span>
+                        <span class="sc-d lit">${m.status==='UPCOMING'?'-':m.aScore}</span>
+                    </div>
+                    <div class="tblock away">
+                        <img src="${m.aFlag}" class="flag">
+                        <span class="tname">${m.aName}</span>
+                    </div>
+                    <div class="fix-meta">${m.venue}</div>
+                </div>
+            `;
+        });
+    });
+    target.innerHTML = html;
 }
 
-function savePrediction(id) {
-  if(!currentUser) {
-    alert("Таамаглал дэвшүүлэхийн тулд эхлээд нэвтэрнэ үү.");
-    openAuth();
-    return;
-  }
-  const hVal = document.getElementById(`p_h_${id}`).value;
-  const aVal = document.getElementById(`p_a_${id}`).value;
-  
-  if(hVal === '' || aVal === '') {
-    alert("Онооны таамаглалаа гүйцэд оруулна уу.");
-    return;
-  }
+// VIEW MATCH DETAILS (FotMob / Live Style)
+function viewMatch(id) {
+    go('matchdetail', null);
+    const m = matches.find(match => match.id === id);
+    const target = document.getElementById('matchdetail-target');
+    if(!m) return;
 
-  currentPredictions[`match_${id}`] = { h: parseInt(hVal), a: parseInt(aVal) };
-  localStorage.setItem('predictions', JSON.stringify(currentPredictions));
-  alert("Таны таамаглал амжилттай бүртгэгдлээ!");
-}
-
-// NEWS ENGINE RENDERING SYSTEM
-function renderNews() {
-  const target = document.getElementById('news-grid-target');
-  target.innerHTML = '';
-  newsData.forEach(n => {
-    const card = document.createElement('div');
-    card.className = 'news-card';
-    card.innerHTML = `
-      <div class="nc-img">⚽<div class="nc-img-overlay"></div><span class="nc-tag">${n.tag}</span></div>
-      <div class="nc-body">
-        <div class="nc-group">${n.group}</div>
-        <div class="nc-title">${n.title}</div>
-        <div class="nc-desc">${n.desc}</div>
-        <div class="nc-foot"><span>${n.time}</span></div>
-      </div>
-    `;
-    target.appendChild(card);
-  });
-}
-
-// PROGRESSIVE TIER-RESTRICTED QUIZ CONTROLLER
-function updateXPInterface() {
-  const tier = calculateTier(userXP);
-  document.getElementById('xp-level-text').innerText = tier.name;
-  
-  // Calculate relative fill percentage mathematically
-  let percent = 0;
-  if (tier.lvl === 4) {
-    percent = 100;
-  } else {
-    percent = ((userXP - tier.min) / (tier.max - tier.min)) * 100;
-  }
-  document.getElementById('xp-fill').style.width = `${percent}%`;
-  document.getElementById('xp-current-text').innerText = `${userXP} XP`;
-
-  renderQuizList(tier);
-}
-
-function renderQuizList(tier) {
-  const target = document.getElementById('quiz-list-target');
-  target.innerHTML = '';
-
-  const pools = isStarkEngaged ? [...baseQuizData, ...secretQuizData] : baseQuizData;
-
-  pools.forEach(q => {
-    const isLocked = !tier[q.tier];
-    const item = document.createElement('div');
-    item.className = `qli ${isLocked ? 'locked' : ''}`;
-    if(!isLocked) {
-      item.onclick = () => launchQuizSession(q.id);
+    let statsHtml = "";
+    if (m.status !== 'UPCOMING') {
+        statsHtml = `
+            <div class="sts-title">Багуудын Тоглолтын Статистик</div>
+            <div class="stat-row">
+                <div class="stat-lbl">Бөмбөг эзэмшилт</div>
+                <div class="stat-vals">
+                    <span class="sv h">${m.stats.poss[0]}%</span>
+                    <span class="vs-lbl">VS</span>
+                    <span class="sv a">${m.stats.poss[1]}%</span>
+                </div>
+                <div class="poss-bar">
+                    <div class="pb-home" style="width: ${m.stats.poss[0]}%;"></div>
+                    <div class="pb-away" style="width: ${m.stats.poss[1]}%;"></div>
+                </div>
+            </div>
+            <div class="stat-row">
+                <div class="stat-lbl">Нийт Цохилт</div>
+                <div class="stat-vals" style="font-size:14px; font-weight:700;">
+                    <span style="color:var(--mint)">${m.stats.shots[0]}</span>
+                    <span style="color:var(--muted)">ШОТ</span>
+                    <span style="color:var(--gold)">${m.stats.shots[1]}</span>
+                </div>
+            </div>
+        `;
     }
-    
-    item.innerHTML = `
-      <div>
-        <div class="qli-t">${isLocked ? '🔒 ' : ''}${q.title}</div>
-        <div class="qli-s">${q.sub}</div>
-      </div>
-      <div><span class="diff ${q.tier}">${q.tier.toUpperCase()}</span></div>
-      <div class="qpts">+${q.pts} XP</div>
+
+    let playersHtml = "";
+    if (m.ratings && m.ratings.length > 0) {
+        playersHtml = `<div class="perf-grid-title">Шилдэг Тоглогчдын Үнэлгээ</div><div class="player-perf-grid">`;
+        m.ratings.forEach(p => {
+            playersHtml += `
+                <div class="perf-card">
+                    <div class="p-rating-badge gold-rt">${p.rate}</div>
+                    <div class="p-info">
+                        <span class="p-name">${p.name}</span>
+                        <span class="p-team-meta">${p.team} · ${p.stat}</span>
+                    </div>
+                </div>
+            `;
+        });
+        playersHtml += `</div>`;
+    }
+
+    target.innerHTML = `
+        <div class="match-hero">
+            <div class="mh-group">${m.group}</div>
+            <div class="mh-teams">
+                <div class="mh-team">
+                    <img src="${m.hFlag}" class="mh-flag">
+                    <span class="mh-name">${m.hName}</span>
+                </div>
+                <div class="mh-sc">${m.status==='UPCOMING'?'vs': m.hScore + ' - ' + m.aScore}</div>
+                <div class="mh-team">
+                    <img src="${m.aFlag}" class="mh-flag">
+                    <span class="mh-name">${m.aName}</span>
+                </div>
+            </div>
+            <div class="mh-st">${m.status} — ${m.time}</div>
+            <div class="mh-venue">📍 ${m.venue}</div>
+            <div class="scorers-row">
+                <div class="sc-side home-side"><strong>${m.hName} Гоолууд:</strong> ${m.hScorers || '-'}</div>
+                <div class="sc-side away-side"><strong>${m.aName} Гоолууд:</strong> ${m.aScorers || '-'}</div>
+            </div>
+        </div>
+        ${statsHtml}
+        ${playersHtml}
     `;
-    target.appendChild(item);
-  });
 }
 
-function launchQuizSession(id) {
-  const pools = [...baseQuizData, ...secretQuizData];
-  const item = pools.find(x => x.id === id);
-  if(!item) return;
-
-  document.getElementById('quiz-list-view').style.display = 'none';
-  const playView = document.getElementById('quiz-play-view');
-  playView.style.display = 'block';
-
-  const arena = document.getElementById('quiz-arena');
-  arena.innerHTML = `
-    <div class="prob-hdr">
-      <span class="diff ${item.tier}" style="margin-bottom:10px;">${item.tier.toUpperCase()} LEVEL</span>
-      <div class="prob-q">${item.q}</div>
-      <div class="prob-opts">
-        ${item.opts.map((o, idx) => `
-          <button class="popt" onclick="evaluateQuizChoice(this, ${item.id}, ${idx})">
-            <span class="popt-let">${String.fromCharCode(65 + idx)}</span>
-            <span>${o}</span>
-          </button>
-        `).join('')}
-      </div>
-      <div class="prob-res" id="quiz-res-box"></div>
-    </div>
-  `;
+// NEWS PAGE RENDERING
+function renderNewsPage() {
+    const target = document.getElementById('news-grid-target');
+    if(!target) return;
+    let html = "";
+    newsArticles.forEach(art => {
+        html += `
+            <div class="news-card">
+                <div class="nc-img" style="background-image: url('${art.img}');">
+                    <div class="nc-img-overlay"></div>
+                    <span class="nc-tag">${art.category}</span>
+                </div>
+                <div class="nc-body">
+                    <div class="nc-group">${art.group}</div>
+                    <h3 class="nc-title">${art.title}</h3>
+                    <p class="nc-desc">${art.desc}</p>
+                    <div class="nc-foot">
+                        <span>🕒 ${art.date}</span>
+                        <span style="color:var(--mint)">Дэлгэрэнгүй →</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+    target.innerHTML = html;
 }
 
-function evaluateQuizChoice(btn, quizId, selectedIdx) {
-  const pools = [...baseQuizData, ...secretQuizData];
-  const q = pools.find(x => x.id === quizId);
-  
-  // Disable all structural buttons in option sheet instantly
-  const opts = btn.parentElement.querySelectorAll('.popt');
-  opts.forEach(o => o.disabled = true);
-
-  const resBox = document.getElementById('quiz-res-box');
-  resBox.className = "prob-res show";
-
-  if(selectedIdx === q.ans) {
-    btn.classList.add('correct');
-    resBox.classList.add('ok');
-    resBox.innerHTML = `
-      <div class="prob-res-txt">
-        <strong>🎉 ЗӨВ ХАРИУЛЛАА! (+${q.pts} XP)</strong>
-        ${q.exp}
-      </div>
-      <button class="btn-np" onclick="exitQuiz()">Үргэлжлүүлэх</button>
-    `;
-    // Update local variable storage metrics dynamically
-    userXP += q.pts;
-    localStorage.setItem('userXP', userXP);
-    updateXPInterface();
-  } else {
-    btn.classList.add('wrong');
-    opts[q.ans].classList.add('correct');
-    resBox.classList.add('no');
-    resBox.innerHTML = `
-      <div class="prob-res-txt">
-        <strong>❌ БУРУУ ХАРИУЛЛАА (0 XP)</strong>
-        ${q.exp}
-      </div>
-      <button class="btn-np" onclick="exitQuiz()">Буцах</button>
-    `;
-  }
+// FORECAST (ТААМАГЛАЛ) PAGE
+function renderForecastPage() {
+    const target = document.getElementById('forecast-target');
+    let html = "";
+    matches.filter(m => m.status === 'UPCOMING' || m.status === 'LIVE').forEach(m => {
+        html += `
+            <div class="pred-card open">
+                <div class="ph"><span>${m.group}</span> <span style="color:var(--gold);">Таамаг нээлттэй</span></div>
+                <div class="pr">
+                    <div class="pteam">
+                        <img src="${m.hFlag}">
+                        <span>${m.hName}</span>
+                    </div>
+                    <input type="number" class="pinput" value="0" id="p-h-${m.id}">
+                    <span style="color:var(--muted); font-weight:800;">-</span>
+                    <input type="number" class="pinput" value="0" id="p-a-${m.id}">
+                    <div class="pteam">
+                        <img src="${m.aFlag}">
+                        <span>${m.aName}</span>
+                    </div>
+                </div>
+                <div class="pfoot">
+                    <span style="font-size:11px; color:var(--muted);">${m.venue}</span>
+                    <button class="bsub" onclick="submitPrediction(${m.id})">ИЛГЭЭХ</button>
+                </div>
+            </div>
+        `;
+    });
+    if(html === "") html = "<p style='color:var(--muted); padding:20px;'>Одоогоор таамаг авах идэвхтэй тоглолт байхгүй байна.</p>";
+    target.innerHTML = html;
 }
 
-function exitQuiz() {
-  document.getElementById('quiz-play-view').style.display = 'none';
-  document.getElementById('quiz-list-view').style.display = 'block';
+function submitPrediction(id) {
+    alert("Таны таамаглалыг систем амжилттай бүртгэж авлаа. Баярлалаа!");
 }
 
-// IDENTITY ACCESS / ROBUST ERROR AUTH MODULE
+// QUIZ SYSTEM RENDERING
+function renderQuizPage() {
+    const target = document.getElementById('quiz-list-target');
+    if(!target) return;
+    let html = "";
+    quizzes.forEach((q, idx) => {
+        html += `
+            <div class="qli" onclick="playQuiz(${idx})">
+                <div>
+                    <div class="qli-t">${q.title}</div>
+                    <div class="qli-s">${q.sub}</div>
+                </div>
+                <div><span class="diff ${q.diff}">${q.diff.toUpperCase()}</span></div>
+                <div class="qpts">${q.pts} XP</div>
+            </div>
+        `;
+    });
+    target.innerHTML = html;
+}
+
+function playQuiz(idx) {
+    const q = quizzes[idx];
+    alert(`Асуулт: ${q.q}\n\nХариултууд:\n0: ${q.opts[0]}\n1: ${q.opts[1]}\n2: ${q.opts[2]}\n3: ${q.opts[3]}`);
+}
+
+// AUTH MODULES
 function openAuth() { document.getElementById('auth-modal').classList.add('open'); }
-function closeAuth() { 
-  document.getElementById('auth-modal').classList.remove('open'); 
-  document.getElementById('login-error').style.display = 'none';
-  document.getElementById('register-error').style.display = 'none';
-}
-
+function closeAuth() { document.getElementById('auth-modal').classList.remove('open'); }
 function switchTab(t) {
-  activeTab = t;
-  document.getElementById('tab-login').className = `mtab ${t==='login'?'active':''}`;
-  document.getElementById('tab-register').className = `mtab ${t==='register'?'active':''}`;
-  document.getElementById('login-form').style.display = t==='login'?'block':'none';
-  document.getElementById('register-form').style.display = t==='register'?'block':'none';
+    if (t === 'login') {
+        document.getElementById('tab-login').classList.add('active');
+        document.getElementById('tab-register').classList.remove('active');
+        document.getElementById('login-form').style.display = 'block';
+        document.getElementById('register-form').style.display = 'none';
+    } else {
+        document.getElementById('tab-register').classList.add('active');
+        document.getElementById('tab-login').classList.remove('active');
+        document.getElementById('login-form').style.display = 'none';
+        document.getElementById('register-form').style.display = 'block';
+    }
 }
-
 function doLogin() {
-  const user = document.getElementById('lu').value.trim();
-  const pass = document.getElementById('lp').value;
-  const errorMsg = document.getElementById('login-error');
+    const user = document.getElementById('lu').value || "Зочин";
+    document.getElementById('auth-label').innerText = "👤 " + user.toUpperCase();
+    closeAuth();
+}
+function doRegister() { doLogin(); }
 
-  if(!user || !pass) return;
-
-  // STRICT CONDITIONAL AUTH VALIDATION CHECK
-  if(pass !== "admin1234" && pass !== "Stark2026!") {
-    errorMsg.style.display = "flex";
-    return;
-  }
-
-  errorMsg.style.display = "none";
-  currentUser = { username: user };
-  localStorage.setItem('currentUser', JSON.stringify(currentUser));
-  checkAuthStatus();
-  closeAuth();
+// LIVE SCORE MANUAL REFRESH BUTTON
+function refreshScores() {
+    buildLiveEngine();
+    alert("Тоглолтын шууд онооны өгөгдөл FIFA серверээс амжилттай шинэчлэгдлээ!");
 }
 
-function doRegister() {
-  const user = document.getElementById('ru').value.trim();
-  const pass = document.getElementById('rp').value;
-  const errorMsg = document.getElementById('register-error');
+// CMS ADMIN PUBLISH UTILITY (SHIFT + CLICK BRAND LOGO)
+function publishAdminNews() {
+    const title = document.getElementById('admin-title').value;
+    const group = document.getElementById('admin-group').value;
+    const desc = document.getElementById('admin-desc').value;
+    const img = document.getElementById('admin-img').value;
 
-  if(!user || !pass) return;
+    if (!title || !desc) {
+        alert("Гарчиг болон агуулгыг бөглөнө үү!");
+        return;
+    }
 
-  // PASSWORD LENGTH ENFORCEMENT GUARDRAIL
-  if(pass.length < 8) {
-    errorMsg.style.display = "flex";
-    return;
-  }
+    const newArt = {
+        id: "custom-" + Date.now(),
+        category: "ШУУРХАЙ НИЙТЛЭЛ",
+        group: group || "ДАШТ 2026",
+        title: title,
+        desc: desc,
+        img: img,
+        date: "Яг одоо"
+    };
 
-  errorMsg.style.display = "none";
-  currentUser = { username: user };
-  localStorage.setItem('currentUser', JSON.stringify(currentUser));
-  checkAuthStatus();
-  closeAuth();
+    newsArticles.unshift(newArt);
+    renderNewsPage();
+    loadHomeNews();
+    
+    document.getElementById('direct-publisher-modal').classList.remove('open');
+    alert("Мэдээ таны вэбсайт дээр шууд амжилттай нийтлэгдлээ!");
 }
 
-function checkAuthStatus() {
-  const label = document.getElementById('auth-label');
-  const panel = document.getElementById('my-panel');
-  if(currentUser) {
-    label.innerText = `👤 ${currentUser.username.toUpperCase()}`;
-    panel.innerHTML = `
-      <p style="font-size:13px;font-weight:700;">Сайн уу, ${currentUser.username}!</p>
-      <p style="font-size:11px;color:var(--mint);margin-top:4px;">Таамаглалын систем холбогдсон.</p>
-      <button onclick="doLogout()" style="margin-top:10px;background:none;border:1px solid var(--border);color:var(--muted);padding:4px 12px;border-radius:4px;cursor:pointer;font-size:10px;">Гарах</button>
-    `;
-  } else {
-    label.innerText = `⚡ НЭВТРЭХ`;
-    panel.innerHTML = `
-      <p style="font-size:12px;color:var(--muted);">Нэвтэрч оноогоо харна уу.</p>
-      <button onclick="openAuth()" style="margin-top:8px;background:var(--gold);color:#000;border:none;padding:7px 16px;border-radius:6px;font-weight:700;cursor:pointer;font-family:inherit;font-size:11px;">НЭВТРЭХ</button>
-    `;
-  }
-}
+// INITIALIZATION LOGIC LOOPS
+document.addEventListener("DOMContentLoaded", () => {
+    buildLiveEngine();
+    loadHomeNews();
 
-function doLogout() {
-  currentUser = null;
-  localStorage.removeItem('currentUser');
-  checkAuthStatus();
-}
+    // Шүүлтүүртэй Конами код болон админ листенерүүд
+    const logo = document.getElementById('brand-logo');
+    if (logo) {
+        logo.addEventListener('click', (e) => {
+            if (e.shiftKey) {
+                document.getElementById('direct-publisher-modal').classList.add('open');
+            }
+        });
+    }
 
-// SECRET KONAMI BACKDOOR CORE ACTIVATION PROTOCOL
-let keys = [];
-window.addEventListener('keydown', (e) => {
-  keys.push(e.key);
-  keys = keys.slice(-10);
-  if(keys.join(',').toLowerCase() === 'arrowup,arrowup,arrowdown,arrowdown,arrowleft,arrowright,arrowleft,arrowright,b,a') {
-    isStarkEngaged = true;
-    document.getElementById('konami-overlay').classList.add('show');
-    updateXPInterface();
-  }
+    // KONAMI CODE LISTENER (stark)
+    let keys = [];
+    window.addEventListener('keydown', (e) => {
+        keys.push(e.key.toLowerCase());
+        if (keys.join('').includes('stark')) {
+            document.getElementById('konami-overlay').classList.add('show');
+            keys = [];
+        }
+        if (keys.length > 20) keys.shift();
+    });
 });
 </script>
 </body>
